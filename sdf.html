@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding of Amar & Aulia</title>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6b151e; 
+            --primary-light: #8B1E28; 
+            --gold: #D4AF37; 
+            --gold-light: #F3E5AB;
+            --bg-dark: #0f0a0a;
+            --text-light: #fdfbf7;
+            --glass-bg: rgba(30, 15, 15, 0.4);
+            --glass-border: rgba(212, 175, 55, 0.2);
+            --font-display: 'Cinzel', serif;
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Outfit', sans-serif;
+            --font-hand: 'Great Vibes', cursive;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body.lock-scroll { overflow: hidden !important; height: 100vh; }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-dark); color: var(--text-light);
+            display: flex; justify-content: center; overflow-x: hidden;
+            background-image: radial-gradient(circle at top, #2a0b10 0%, #050202 100%);
+        }
+
+        /* 1. ANIMASI PINTU GERBANG & SEGEL LILIN (SPLASH SCREEN) */
+        .gate-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 9999; display: flex; pointer-events: none; }
+        .gate { width: 50%; height: 100%; background: var(--primary); position: relative; transition: 1.5s cubic-bezier(0.77, 0, 0.175, 1); pointer-events: auto; box-shadow: inset 0 0 50px rgba(0,0,0,0.8); background-image: radial-gradient(rgba(212, 175, 55, 0.1) 1px, transparent 1px); background-size: 20px 20px; }
+        .gate-left { border-right: 2px solid var(--gold); }
+        .gate-right { border-left: 2px solid var(--gold); }
+        .gate-left.open { transform: translateX(-100%); }
+        .gate-right.open { transform: translateX(100%); }
+        
+        .wax-seal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90px; height: 90px; background: radial-gradient(circle, #D4AF37, #9c7b16);
+            border-radius: 50%; z-index: 10000; display: flex; justify-content: center; align-items: center;
+            flex-direction: column; cursor: pointer; pointer-events: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.4);
+            transition: 0.5s; animation: pulseGold 2s infinite; border: 2px solid #fff;
+        }
+        .wax-seal h3 { font-family: var(--font-hand); font-size: 35px; color: #fff; line-height: 0.8; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .wax-seal span { font-size: 8px; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; margin-top: 5px; color: #fff; }
+        .wax-seal:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 40px var(--gold); }
+        .wax-seal.hide { opacity: 0; transform: translate(-50%, -50%) scale(2); pointer-events: none; }
+
+        @keyframes pulseGold { 0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); } 70% { box-shadow: 0 0 0 20px rgba(212, 175, 55, 0); } 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); } }
+
+        /* WADAH UTAMA */
+        .mobile-container { width: 100%; max-width: 450px; min-height: 100vh; position: relative; z-index: 10; overflow: hidden; padding-bottom: 50px; }
+        section { padding: 60px 20px; position: relative; text-align: center; }
+
+        /* 2. GLASSMORPHISM CARDS */
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); border-radius: 20px;
+            padding: 35px 25px; margin-bottom: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative; overflow: hidden;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 60%);
+            animation: spinBg 15s linear infinite; pointer-events: none;
+        }
+        @keyframes spinBg { 100% { transform: rotate(360deg); } }
+
+        /* TYPOGRAPHY */
+        .subtitle { font-family: var(--font-sans); font-size: 11px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 15px; font-weight: 600; }
+        h1 { font-family: var(--font-display); font-size: 42px; line-height: 1.1; color: var(--gold-light); font-weight: 500; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .ampersand { font-family: var(--font-hand); font-size: 50px; color: var(--primary-light); margin: -5px 0; text-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        h2 { font-family: var(--font-display); font-size: 28px; margin-bottom: 20px; color: var(--gold); border-bottom: 1px solid rgba(212, 175, 55, 0.3); padding-bottom: 10px; display: inline-block; }
+
+        /* 3. AESTHETIC PHOTO FRAME */
+        .aesthetic-frame {
+            position: relative; width: 85%; margin: 30px auto;
+            background: #fff; padding: 12px 12px 45px 12px;
+            border-radius: 4px; box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            transform: rotate(-2deg); transition: 0.5s;
+        }
+        .aesthetic-frame:hover { transform: rotate(0deg) scale(1.05); }
+        .aesthetic-frame img { width: 100%; height: 350px; object-fit: cover; filter: contrast(1.1) sepia(15%); border-radius: 2px; animation: kenBurns 15s alternate infinite ease-in-out; }
+        @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        .paper-clip { position: absolute; top: -15px; right: 20px; font-size: 35px; color: var(--gold); filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); z-index: 5; }
+        .frame-caption { position: absolute; bottom: 10px; left: 0; width: 100%; font-family: var(--font-hand); font-size: 24px; color: var(--bg-dark); }
+
+        /* BUTTONS */
+        .btn-gold {
+            display: inline-block; background: linear-gradient(135deg, var(--gold), #9c7b16); color: var(--bg-dark);
+            padding: 14px 30px; border-radius: 30px; font-weight: 600; text-decoration: none; font-family: var(--font-sans);
+            letter-spacing: 1px; width: 100%; border: none; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); text-transform: uppercase; font-size: 13px;
+        }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.5); background: #fff; color: var(--primary); }
+
+        /* COUNTDOWN */
+        .cd-wrapper { display: flex; justify-content: space-between; gap: 8px; margin-top: 25px; }
+        .cd-item { background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); border-radius: 12px; padding: 15px 5px; flex: 1; backdrop-filter: blur(5px); }
+        .cd-num { font-family: var(--font-display); font-size: 24px; color: var(--gold-light); font-weight: bold; }
+        .cd-label { font-size: 9px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+        /* RSVP UI */
+        .input-form {
+            width: 100%; padding: 15px; border: 1px solid var(--glass-border); border-radius: 10px;
+            margin-bottom: 15px; font-family: var(--font-sans); font-size: 14px;
+            background: rgba(0,0,0,0.3); color: #fff; transition: 0.3s;
+        }
+        .input-form::placeholder { color: #888; }
+        .input-form:focus { outline: none; border-color: var(--gold); background: rgba(0,0,0,0.6); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        
+        .guestbook-area { margin-top: 30px; text-align: left; max-height: 250px; overflow-y: auto; padding-right: 5px; }
+        .guestbook-area::-webkit-scrollbar { width: 3px; } .guestbook-area::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        
+        .comment-item { border-left: 2px solid var(--gold); padding: 15px; margin-bottom: 15px; background: rgba(255,255,255,0.03); border-radius: 0 10px 10px 0; animation: slideIn 0.5s ease-out; }
+        .comment-name { font-weight: 600; color: var(--gold-light); font-size: 14px; }
+        .comment-text { font-family: var(--font-serif); font-size: 14px; color: #ccc; font-style: italic; margin-top: 5px; line-height: 1.5; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* 4. VINYL MUSIC PLAYER */
+        .vinyl-btn {
+            position: fixed; bottom: 25px; right: 25px; z-index: 100;
+            width: 55px; height: 55px; background: #111; border-radius: 50%;
+            border: 2px solid var(--gold); display: flex; justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.5); transition: 0.3s;
+            opacity: 0; pointer-events: none; 
+        }
+        .vinyl-btn.show { opacity: 1; pointer-events: auto; }
+        .vinyl-btn::before { content: ''; position: absolute; width: 15px; height: 15px; background: var(--primary); border-radius: 50%; z-index: 2; border: 1px solid var(--gold); }
+        .vinyl-btn::after { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 1px dashed rgba(212,175,55,0.3); }
+        .vinyl-btn.playing { animation: spinVinyl 4s linear infinite; box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+        @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
+
+        /* MAGIC DUST & RAIN CSS */
+        .particle { position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999; }
+        .magic-rain { 
+            position: fixed; top: -10px; width: 3px; height: 3px; background: var(--gold);
+            box-shadow: 0 0 10px var(--gold); border-radius: 50%; z-index: 1; pointer-events: none;
+            animation: rainFall linear infinite; opacity: 0;
+        }
+        @keyframes rainFall { 0% { opacity: 0; transform: translateY(0) scale(0.5); } 20% { opacity: 0.6; transform: scale(1); } 80% { opacity: 0.6; } 100% { transform: translateY(100vh) scale(0.5); opacity: 0; } }
+    </style>
+</head>
+<body class="lock-scroll">
+
+    <!-- PEMUTAR YOUTUBE TERSEMBUNYI (ANTI BLOKIR BROWSER) -->
+    <!-- Ingat: Tetap tidak akan berbunyi jika dibuka dari file:///C:/... -->
+    <div id="youtube-player" style="position: absolute; width: 0; height: 0; border: none; overflow: hidden; opacity: 0; z-index: -1;"></div>
+
+    <!-- EFEK HUJAN BINTANG EMAS -->
+    <div id="particle-container"></div>
+    <div id="rain-container"></div>
+
+    <!-- PINTU GERBANG & SEGEL (SPLASH SCREEN) -->
+    <div class="gate-container">
+        <div class="gate gate-left" id="gateLeft"></div>
+        <div class="gate gate-right" id="gateRight"></div>
+    </div>
+    
+    <div class="wax-seal" id="waxSeal" onclick="openGate()">
+        <h3>A&A</h3>
+        <span>Open</span>
+    </div>
+
+    <!-- KONTEN UTAMA UNDANGAN -->
+    <div class="mobile-container">
+        
+        <!-- SECTION 1: HERO -->
+        <section style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 40px;">
+            <div data-aos="fade-down" data-aos-duration="1500">
+                <p class="subtitle">The Wedding Celebration Of</p>
+                <h1>AMAR</h1>
+                <div class="ampersand">&</div>
+                <h1>AULIA</h1>
+            </div>
+
+            <!-- Frame Scrapbook Aesthetic -->
+            <div class="aesthetic-frame" data-aos="zoom-in" data-aos-duration="2000">
+                <div class="paper-clip">📎</div>
+                <div style="overflow: hidden; border-radius: 2px;">
+                    <img src="https://image.pollinations.ai/prompt/Aesthetic%20Muslim%20wedding%20couple.%20Bride%20wearing%20white%20niqab%20face%20veil.%20Groom%20wearing%20face%20mask%20cover.%20No%20faces%20visible,%20faceless%20portrait,%20cinematic%20warm%20lighting,%20elegant?width=600&height=800&nologo=true" alt="Amar & Aulia">
+                </div>
+                <div class="frame-caption">Save Our Date</div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300">
+                <p style="font-family: var(--font-serif); font-size: 18px; letter-spacing: 5px; color: var(--gold-light);">29 . 06 . 2026</p>
+            </div>
+        </section>
+
+        <!-- SECTION 2: QUOTE -->
+        <section>
+            <div class="glass-card" data-aos="fade-up" data-aos-duration="1200">
+                <p style="font-size: 24px; color: var(--gold); margin-bottom: 15px;">بسم الله الرحمن الرحيم</p>
+                <p style="font-family: var(--font-serif); font-size: 15px; line-height: 1.8; color: #ddd; font-style: italic;">"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."</p>
+                <p style="margin-top: 20px; font-weight: 600; font-size: 12px; letter-spacing: 3px; color: var(--gold);">QS. AR-RUM : 21</p>
+            </div>
+        </section>
+
+        <!-- SECTION 3: EVENT DETAILS & COUNTDOWN -->
+        <section>
+            <div class="glass-card" data-aos="fade-up" data-aos-duration="1200">
+                <p class="subtitle" style="margin-bottom: 5px;">Rangkaian Acara</p>
+                <h2>Akad & Resepsi</h2>
+                
+                <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 12px; margin: 25px 0; border: 1px solid rgba(255,255,255,0.05);">
+                    <p style="font-family: var(--font-display); font-size: 22px; color: var(--gold-light); font-weight: bold;">SENIN, 29 JUNI 2026</p>
+                    <p style="font-size: 14px; color: #aaa; margin-top: 8px; border-top: 1px solid rgba(212,175,55,0.2); padding-top: 8px;">Pukul 10:00 WITA - Selesai</p>
+                </div>
+
+                <p style="font-weight: 600; font-size: 18px; color: #fff; letter-spacing: 1px;">Sriti Convention Hall</p>
+                <p style="font-size: 14px; line-height: 1.6; color: #bbb; margin-top: 5px; margin-bottom: 30px;">Palu Barat, Kota Palu<br>Sulawesi Tengah</p>
+                
+                <a href="https://maps.google.com/?q=Sriti+Convention+Hall+Palu" target="_blank" class="btn-gold">Buka Google Maps 📍</a>
+            </div>
+
+            <!-- Countdown Mewah -->
+            <div data-aos="fade-up" style="margin-top: 40px;">
+                <p class="subtitle">Menuju Hari Bahagia</p>
+                <div class="cd-wrapper">
+                    <div class="cd-item"><div class="cd-num" id="hari">00</div><div class="cd-label">Hari</div></div>
+                    <div class="cd-item"><div class="cd-num" id="jam">00</div><div class="cd-label">Jam</div></div>
+                    <div class="cd-item"><div class="cd-num" id="menit">00</div><div class="cd-label">Menit</div></div>
+                    <div class="cd-item"><div class="cd-num" id="detik">00</div><div class="cd-label">Detik</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: RSVP & GUESTBOOK -->
+        <section>
+            <div class="glass-card" data-aos="fade-up" data-aos-duration="1200" style="text-align: left;">
+                <h2 style="text-align: center; display: block;">Buku Tamu</h2>
+                <p style="text-align: center; font-size: 13px; color: #aaa; margin-bottom: 25px;">Kehadiran dan doa Anda adalah anugerah terindah bagi kami.</p>
+                
+                <input type="text" id="namaTamu" class="input-form" placeholder="Nama Lengkap...">
+                <textarea id="pesanTamu" class="input-form" rows="3" placeholder="Tulis doa dan harapan..."></textarea>
+                <select id="hadirTamu" class="input-form">
+                    <option value="Ya, Saya Hadir">Ya, Saya Akan Hadir 🤍</option>
+                    <option value="Maaf, Tidak Bisa Hadir">Maaf, Belum Bisa Hadir 🙏</option>
+                </select>
+                <button onclick="kirimPesan()" class="btn-gold">Kirim Konfirmasi</button>
+
+                <!-- Guestbook List -->
+                <div id="daftarKomentar" class="guestbook-area">
+                    <div class="comment-item">
+                        <div class="comment-name">Keluarga Alfamidi <span style="font-weight:normal; color:#888; font-size:11px;">(Ya, Saya Hadir)</span></div>
+                        <div class="comment-text">"Selamat berbahagia Amar & Aulia! Semoga dilancarkan sampai hari H dan menjadi keluarga Sakinah."</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: WEDDING GIFT -->
+        <section>
+            <div class="glass-card" data-aos="zoom-in" data-aos-duration="1500">
+                <h2>Tanda Kasih</h2>
+                <p style="font-size: 13px; color: #bbb; margin-bottom: 25px; line-height: 1.6;">Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih dapat melalui tautan di bawah ini:</p>
+                
+                <div style="background: rgba(0,0,0,0.5); padding: 25px 20px; border-radius: 15px; border: 1px solid rgba(212,175,55,0.3);">
+                    <p style="font-weight: 700; font-size: 16px; color: var(--gold); letter-spacing: 2px;">BANK BCA</p>
+                    <p style="font-family: var(--font-display); font-size: 28px; font-weight: bold; margin: 15px 0; color: #fff;" id="rek-bca">1234567890</p>
+                    <p style="font-size: 14px; color: #ccc; margin-bottom: 25px;">A.n. Aulia</p>
+                    <button class="btn-gold" style="background: transparent; border: 1px solid var(--gold); color: var(--gold); box-shadow: none;" onclick="copyRek()">Salin Rekening 📋</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FOOTER -->
+        <div style="text-align: center; padding: 40px 20px 80px 20px;" data-aos="fade-in" data-aos-duration="2000">
+            <p style="font-family: var(--font-sans); font-size: 12px; letter-spacing: 3px; color: #888; text-transform: uppercase;">Terima Kasih</p>
+            <h1 style="font-family: var(--font-hand); font-size: 50px; color: var(--gold-light); margin-top: 10px; text-shadow: none;">Amar & Aulia</h1>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT UNTUK YOUTUBE API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- VINYL MUSIC BUTTON -->
+    <div class="vinyl-btn" id="music-btn" title="Putar/Jeda Musik" onclick="toggleMusic()"></div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // INISIALISASI ANIMASI SCROLL
+        AOS.init({ once: false, offset: 50, duration: 1000 });
+
+        // FUNGSI LEDAKAN EMAS SAAT SEGEL DIBUKA
+        function createExplosion() {
+            const container = document.getElementById('particle-container');
+            const colors = ['#D4AF37', '#FFF8E7', '#C5A059'];
+            for(let i=0; i<80; i++) {
+                let p = document.createElement('div');
+                p.className = 'particle';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.width = (Math.random() * 5 + 2) + 'px';
+                p.style.height = p.style.width;
+                p.style.top = '50%'; p.style.left = '50%';
+                
+                let angle = Math.random() * Math.PI * 2;
+                let velocity = 80 + Math.random() * 200; 
+                let tx = Math.cos(angle) * velocity;
+                let ty = Math.sin(angle) * velocity;
+                
+                p.animate([
+                    { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+                ], { duration: 1000 + Math.random() * 1500, easing: 'cubic-bezier(0, .9, .57, 1)' });
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 2500);
+            }
+        }
+
+        // FUNGSI HUJAN EMAS DI BACKGROUND
+        function startMagicRain() {
+            const container = document.getElementById('rain-container');
+            setInterval(() => {
+                let rain = document.createElement('div');
+                rain.className = 'magic-rain';
+                rain.style.left = Math.random() * 100 + 'vw';
+                rain.style.animationDuration = (Math.random() * 4 + 4) + 's'; 
+                container.appendChild(rain);
+                setTimeout(() => rain.remove(), 8000); 
+            }, 400); 
+        }
+
+        // SETUP PEMUTAR YOUTUBE (ID: UDByyBpGkUA)
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0', 
+                width: '0', 
+                videoId: 'UDByyBpGkUA', // <-- INI ADALAH ID LAGU ANDA
+                playerVars: { 
+                    'autoplay': 0, 
+                    'controls': 0, 
+                    'showinfo': 0, 
+                    'rel': 0, 
+                    'loop': 1, 
+                    'playlist': 'UDByyBpGkUA' 
+                }
+            });
+        }
+
+        // LOGIKA SPLASH SCREEN (BUKA PINTU & PUTAR MUSIK)
+        function openGate() {
+            const gateLeft = document.getElementById('gateLeft');
+            const gateRight = document.getElementById('gateRight');
+            const seal = document.getElementById('waxSeal');
+            const musicBtn = document.getElementById('music-btn');
+            
+            // 1. Ledakan Partikel
+            createExplosion();
+            
+            // 2. Hilangkan Segel & Buka Pintu
+            seal.classList.add('hide');
+            gateLeft.classList.add('open');
+            gateRight.classList.add('open');
+            
+            // 3. Buka Kunci Scroll & Tampilkan Musik
+            document.body.classList.remove('lock-scroll');
+            musicBtn.classList.add('show');
+            
+            // 4. Mulai Hujan Emas
+            startMagicRain();
+
+            // 5. Hilangkan pintu sepenuhnya dari DOM agar tidak mengganggu klik
+            setTimeout(() => {
+                document.querySelector('.gate-container').style.display = 'none';
+                AOS.refresh(); 
+            }, 1500);
+
+            // 6. Putar Musik YouTube! (HANYA BERBUNYI JIKA DI-HOSTING ONLINE)
+            try {
+                if (player && typeof player.playVideo === 'function') {
+                    player.playVideo();
+                    musicBtn.classList.add('playing');
+                } else {
+                    console.log("Player YouTube belum siap, atau Anda membukanya secara Offline.");
+                }
+            } catch (e) { 
+                console.log("Error memutar musik:", e); 
+            }
+        }
+
+        // FUNGSI JEDA/PUTAR MUSIK YOUTUBE
+        function toggleMusic() {
+            var btn = document.getElementById("music-btn");
+            
+            if (player && typeof player.getPlayerState === 'function') {
+                if (player.getPlayerState() === 1) { // 1 = Sedang Bermain (Playing)
+                    player.pauseVideo(); 
+                    btn.classList.remove("playing");
+                } else { 
+                    player.playVideo(); 
+                    btn.classList.add("playing");
+                }
+            }
+        }
+
+        // COUNTDOWN
+        const targetDate = new Date("Jun 29, 2026 10:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if (distance > 0) {
+                document.getElementById("hari").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById("jam").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById("menit").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById("detik").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+
+        function copyRek() {
+            var rekText = document.getElementById("rek-bca").innerText;
+            navigator.clipboard.writeText(rekText).then(() => { alert("Nomor Rekening BCA berhasil disalin! 💳"); });
+        }
+
+        // RSVP LOGIC WHATSAPP
+        function kirimPesan() {
+            var nama = document.getElementById("namaTamu").value;
+            var pesan = document.getElementById("pesanTamu").value;
+            var hadir = document.getElementById("hadirTamu").value;
+            
+            if(nama === "" || pesan === "") { alert("Mohon lengkapi Nama dan Pesan Anda ✨"); return; }
+
+            var areaKomentar = document.getElementById("daftarKomentar");
+            var elemenBaru = document.createElement("div");
+            elemenBaru.className = "comment-item";
+            elemenBaru.innerHTML = `<div class="comment-name">${nama} <span style="font-weight:normal; color:#888; font-size:11px;">(${hadir})</span></div><div class="comment-text">"${pesan}"</div>`;
+
+            areaKomentar.prepend(elemenBaru);
+            document.getElementById("namaTamu").value = ""; document.getElementById("pesanTamu").value = "";
+
+            setTimeout(function() {
+                var noWA = "6281234567890"; // <-- MASUKKAN NOMOR WHATSAPP ANDA DI SINI
+                var teksWA = "Halo Amar & Aulia!%0A%0A*Nama:* " + nama + "%0A*Kehadiran:* " + hadir + "%0A*Pesan:* " + pesan + "%0A%0ATerima kasih!";
+                window.open("https://wa.me/" + noWA + "?text=" + teksWA, '_blank');
+            }, 600); 
+        }
+    </script>
+</body>
+</html>
