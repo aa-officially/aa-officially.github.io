@@ -26,19 +26,36 @@
             --font-arabic: 'Amiri', serif;
         }
 
+        /* PERBAIKAN: Pastikan html dan body mereset padding dan overflow dengan benar */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden; /* Mencegah geser kanan-kiri yang bocor */
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        /* Class lock-scroll untuk amplop awal */
         body.lock-scroll { overflow: hidden !important; height: 100vh; }
 
         body {
-            font-family: var(--font-sans); background-color: #111; 
-            color: var(--text-dark); display: flex; justify-content: center;
+            font-family: var(--font-sans); 
+            background-color: #111; 
+            color: var(--text-dark); 
+            /* PERBAIKAN: display: flex dihapus agar tidak menyebabkan scroll terkancing di HP */
         }
 
         .mobile-container { 
-            width: 100%; max-width: 480px; min-height: 100vh; 
+            width: 100%; 
+            max-width: 480px; 
+            min-height: 100vh; 
+            margin: 0 auto; /* PERBAIKAN: Ini cara yang lebih aman menengahkan container di HP */
             background-color: var(--bg-paper);
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            position: relative; overflow-x: hidden; padding-bottom: 30px;
+            position: relative; 
+            overflow-x: hidden; 
+            padding-bottom: 30px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
 
@@ -119,7 +136,10 @@
         .couple-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; margin-top: 20px; }
         .couple-box { width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; }
         .floral-wreath { position: relative; width: 180px; height: 180px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
-        .floral-wreath img.wreath-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; pointer-events: none; animation: spinSlow 30s linear infinite; }
+        
+        /* Tambahan style membulat untuk placeholder wreath */
+        .floral-wreath img.wreath-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; pointer-events: none; animation: spinSlow 30s linear infinite; border-radius: 50%; }
+        
         .floral-wreath img.couple-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; z-index: 1; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .couple-name { font-family: var(--font-serif); font-size: 34px; color: var(--text-dark); margin-bottom: 5px; font-weight: 700; text-align: center; }
         .parent-name { font-size: 12px; color: #777; line-height: 1.6; font-style: italic; }
@@ -127,13 +147,11 @@
 
         .date-container { border-top: 1px solid rgba(197,168,128,0.3); border-bottom: 1px solid rgba(197,168,128,0.3); padding: 20px 0; margin: 30px 0; }
         
-        /* COUNTDOWN STYLES */
         .countdown-wrapper { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
         .count-box { background: rgba(197, 168, 128, 0.05); border: 1px solid rgba(197, 168, 128, 0.4); border-radius: 8px; padding: 10px; width: 65px; box-shadow: 0 5px 10px rgba(0,0,0,0.02); }
         .count-num { font-family: var(--font-serif); font-size: 26px; font-weight: bold; color: var(--accent-pink); line-height: 1; }
         .count-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #777; margin-top: 5px; }
 
-        /* GALLERY STYLES */
         .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
         .gallery-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(197, 168, 128, 0.4); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
 
@@ -175,7 +193,8 @@
         <div class="env-back"></div>
         
         <div class="env-paper" id="envPaper">
-            <img src="gambar/bunga-kertas.png" style="position: absolute; top: -10px; left: -10px; width: 130px; opacity: 0.8;" alt="Hiasan Bunga">
+            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+            <img src="https://via.placeholder.com/130/FDFBF7/D4A3A3?text=Bunga+Atas" style="position: absolute; top: -10px; left: -10px; width: 130px; opacity: 0.8;" alt="Hiasan Bunga">
             <div style="margin-top: 70px;">
                 <p class="arabic-text" style="font-size: 32px;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
                 <p style="font-family: var(--font-serif); font-size: 16px; color: var(--gold); margin-top: 15px; letter-spacing: 2px;">Pernikahan</p>
@@ -202,7 +221,8 @@
 
     <div class="mobile-container" id="mainContainer">
 
-        <img src="gambar/bunga-sudut-kiri.png" class="floral-corner top-left" alt="Bunga Kiri Atas">
+        <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+        <img src="https://via.placeholder.com/220/FDFBF7/8DA399?text=Bunga+Kiri" class="floral-corner top-left" style="border-radius: 50%;" alt="Bunga Kiri Atas">
 
         <section style="padding-top: 80px; padding-bottom: 10px;">
             <div data-aos="fade-down" data-aos-duration="1500">
@@ -210,7 +230,8 @@
                 <p class="arabic-text" style="font-size: 26px; margin-top: 10px;">السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</p>
             </div>
             
-            <img src="gambar/garis-pembatas-bunga.png" class="floral-divider" data-aos="zoom-in" alt="Pembatas Halaman">
+            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+            <img src="https://via.placeholder.com/150x30/FDFBF7/D4A3A3?text=Garis+Pembatas" class="floral-divider" data-aos="zoom-in" alt="Pembatas Halaman">
             
             <div data-aos="fade-up" data-aos-duration="1500">
                 <p style="font-family: var(--font-serif); font-size: 17px; line-height: 1.8; color: #666; font-style: italic; padding: 0 10px;">
@@ -227,8 +248,9 @@
                 <div class="couple-wrapper">
                     <div class="couple-box" data-aos="fade-up" data-aos-delay="200">
                         <div class="floral-wreath">
-                            <img src="gambar/lingkaran-bunga.png" class="wreath-bg" alt="Lingkaran Bunga">
-                            <img src="gambar/foto-mempelai-pria.jpg" class="couple-img" alt="Amar Mansur">
+                            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+                            <img src="https://via.placeholder.com/180/FDFBF7/D4A3A3?text=Bingkai" class="wreath-bg" alt="Lingkaran Bunga">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80" class="couple-img" alt="Amar Mansur">
                         </div>
                         <h2 class="couple-name">Amar Mansur</h2>
                         <p class="parent-name">Putra dari Bapak Fulan<br>& Ibu Fulanah</p>
@@ -238,8 +260,9 @@
 
                     <div class="couple-box" data-aos="fade-up" data-aos-delay="600">
                         <div class="floral-wreath">
-                            <img src="gambar/lingkaran-bunga.png" class="wreath-bg" alt="Lingkaran Bunga">
-                            <img src="gambar/foto-mempelai-wanita.jpg" class="couple-img" alt="Aulia">
+                            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+                            <img src="https://via.placeholder.com/180/FDFBF7/D4A3A3?text=Bingkai" class="wreath-bg" alt="Lingkaran Bunga">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="couple-img" alt="Aulia">
                         </div>
                         <h2 class="couple-name">Aulia</h2>
                         <p class="parent-name">Putri dari Bapak Fulan<br>& Ibu Fulanah</p>
@@ -253,7 +276,6 @@
                 <p class="section-subtitle">Simpan Tanggalnya</p>
                 <h2 class="section-title">Akad & Resepsi</h2>
                 
-                <!-- FITUR HITUNG MUNDUR DITAMBAHKAN DI SINI -->
                 <div class="countdown-wrapper" data-aos="zoom-in">
                     <div class="count-box"><div class="count-num" id="hari">00</div><div class="count-label">Hari</div></div>
                     <div class="count-box"><div class="count-num" id="jam">00</div><div class="count-label">Jam</div></div>
@@ -265,7 +287,6 @@
                     <p style="font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-green);">Senin</p>
                     <p style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--text-dark); margin: 5px 0;">29 Juni 2026</p>
                     
-                    <!-- PEMISAHAN WAKTU AKAD DAN RESEPSI -->
                     <div style="display: flex; justify-content: space-around; margin-top: 15px; border-top: 1px dashed rgba(197,168,128,0.3); padding-top: 15px;">
                         <div>
                             <p style="font-weight: 600; color: var(--accent-pink); font-size: 14px;">AKAD NIKAH</p>
@@ -291,7 +312,6 @@
             </div>
         </section>
 
-        <!-- FITUR GALERI FOTO DITAMBAHKAN DI SINI -->
         <section>
             <div class="classic-card" data-aos="fade-up">
                 <p class="section-subtitle">Momen Bahagia</p>
@@ -347,7 +367,8 @@
         </section>
         
         <section style="padding: 20px 20px 60px 20px;" data-aos="fade-in">
-            <img src="gambar/garis-pembatas-bunga.png" class="floral-divider" alt="Pembatas Halaman" style="margin-bottom: 15px;">
+            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+            <img src="https://via.placeholder.com/150x30/FDFBF7/D4A3A3?text=Garis+Pembatas" class="floral-divider" alt="Pembatas Halaman" style="margin-bottom: 15px;">
             
             <p class="section-subtitle" style="margin-bottom: 5px;">Terima Kasih</p>
             <h1 style="font-family: var(--font-hand); font-size: 55px; color: var(--accent-pink);">Amar & Aulia</h1>
@@ -358,7 +379,8 @@
             </div>
         </section>
 
-        <img src="gambar/bunga-sudut-kanan.png" class="floral-corner bottom-right" alt="Bunga Kanan Bawah">
+        <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
+        <img src="https://via.placeholder.com/220/FDFBF7/8DA399?text=Bunga+Kanan" class="floral-corner bottom-right" style="border-radius: 50%;" alt="Bunga Kanan Bawah">
     </div>
 
     <div class="music-disc" id="musicBtn" onclick="aturMusik()" title="Mainkan/Jeda Musik"></div>
@@ -411,6 +433,8 @@
 
             setTimeout(() => {
                 sampul.classList.add('fade-out');
+                // PERBAIKAN: Memastikan class lock-scroll dihapus dari html maupun body
+                document.documentElement.classList.remove('lock-scroll');
                 document.body.classList.remove('lock-scroll');
                 buatPercikan();
                 tombolMusik.classList.add('show');
@@ -464,7 +488,6 @@
             }, 600); 
         }
 
-        // FUNGSI HITUNG MUNDUR (COUNTDOWN)
         var tanggalTujuan = new Date("Jun 29, 2026 09:00:00").getTime();
         var hitungMundur = setInterval(function() {
             var sekarang = new Date().getTime();
