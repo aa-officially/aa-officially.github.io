@@ -2,9 +2,10 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pernikahan Amar & Aulia</title>
     
+    <!-- Huruf Premium -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
@@ -12,10 +13,7 @@
 
     <style>
         :root {
-            /* Warna Amplop Luar */
             --bg-maroon: #4a0d18; 
-            
-            /* Warna Kertas Isi */
             --bg-paper: #FDFBF7; 
             --text-dark: #3E4C59; 
             --accent-pink: #D4A3A3; 
@@ -30,18 +28,19 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        body.lock-scroll { overflow: hidden !important; height: 100vh; }
+        
+        /* Kunci Scroll di Awal */
+        body.lock-scroll { overflow: hidden !important; height: 100vh !important; touch-action: none; }
 
         body {
             font-family: var(--font-sans); background-color: #111; 
             color: var(--text-dark); display: flex; justify-content: center;
         }
 
-        /* WADAH UTAMA RESPONSIF (Isi Undangan) */
+        /* WADAH UTAMA */
         .mobile-container { 
             width: 100%; max-width: 480px; min-height: 100vh; 
             background-color: var(--bg-paper);
-            /* Pastikan gambar tekstur ini juga disimpan secara lokal jika ingin lebih cepat */
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
             position: relative; overflow-x: hidden; padding-bottom: 30px;
             box-shadow: 0 0 30px rgba(0,0,0,0.5);
@@ -67,13 +66,11 @@
         }
         .cover-overlay.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* Bagian Belakang Amplop */
         .env-back {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: #2b060d; z-index: 1;
         }
 
-        /* Kertas Surat di dalam Amplop (Akan ditarik keluar) */
         .env-paper {
             position: absolute; bottom: 0; left: 5%; width: 90%; height: 85%;
             background: var(--bg-paper) url('https://www.transparenttextures.com/patterns/cream-paper.png');
@@ -84,7 +81,6 @@
         }
         .env-paper.pull-up { transform: translateY(10%); }
 
-        /* Saku Bawah Amplop */
         .env-bottom {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
             z-index: 3; pointer-events: none;
@@ -95,13 +91,11 @@
             clip-path: polygon(0 35%, 50% 55%, 100% 35%, 100% 100%, 0 100%);
         }
         
-        /* Teks Sampul di luar saku amplop */
         .cover-content { position: absolute; bottom: 12%; width: 100%; text-align: center; }
         .cover-title { font-family: var(--font-hand); font-size: 60px; color: var(--gold-light); text-shadow: 0 5px 15px rgba(0,0,0,0.8); line-height: 0.9; margin-bottom: 5px; }
         .cover-subtitle { font-family: var(--font-sans); font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); }
         .tap-instruction { font-size: 10px; letter-spacing: 3px; color: rgba(245,235,213,0.5); text-transform: uppercase; margin-top: 25px; animation: pulseSeal 2s infinite; }
 
-        /* Penutup Atas Amplop (Lipatan) */
         .env-flap {
             position: absolute; top: 0; left: 0; width: 100%; height: 55%;
             z-index: 4; transform-origin: top;
@@ -115,7 +109,6 @@
             clip-path: polygon(0 0, 100% 0, 50% 100%);
         }
 
-        /* Segel Lilin */
         .wax-seal {
             position: absolute; bottom: -35px; left: 50%; margin-left: -35px;
             width: 70px; height: 70px;
@@ -127,28 +120,26 @@
             transition: opacity 0.3s;
         }
         .wax-seal::after { content: ''; position: absolute; width: 80px; height: 80px; border-radius: 50%; border: 1px dashed var(--gold); opacity: 0.6; animation: spinSlow 8s linear infinite; }
-        .env-flap.open .wax-seal { opacity: 0; }
+        .env-flap.open .wax-seal { opacity: 0; pointer-events: none; }
         @keyframes pulseSeal { 0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.6); } 50% { transform: scale(1.08); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); } }
         @keyframes spinSlow { 100% { transform: rotate(360deg); } }
 
         /* =========================================
-           2. ISI UNDANGAN: TEMA BUNGA KLASIK
+           2. ISI UNDANGAN
            ========================================= */
         section { padding: 60px 25px; position: relative; text-align: center; z-index: 10; }
         
-        .floral-divider { width: 150px; margin: 25px auto; opacity: 0.8; }
+        .floral-divider { width: 150px; height: auto; margin: 25px auto; opacity: 0.8; }
 
         .arabic-text { font-family: var(--font-arabic); font-size: 40px; background: linear-gradient(to right, var(--gold), #FFF, var(--gold), #9c7b16); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shineText 4s linear infinite, floatSlow 3s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); line-height: 1.8; margin-bottom: 5px; }
         @keyframes shineText { to { background-position: 200% center; } }
         @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-        /* BUNGA SUDUT KERTAS */
-        .floral-corner { position: absolute; width: 220px; pointer-events: none; z-index: 5; opacity: 0.9; }
+        .floral-corner { position: absolute; width: 220px; pointer-events: none; z-index: 5; opacity: 0.6; border-radius: 50%; }
         .top-left { top: -20px; left: -20px; animation: floatLeaf 6s ease-in-out infinite alternate; }
         .bottom-right { bottom: -20px; right: -20px; transform: rotate(180deg); animation: floatLeaf 7s ease-in-out infinite alternate-reverse; }
         @keyframes floatLeaf { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(10px) rotate(2deg); } }
 
-        /* KARTU KERTAS KLASIK */
         .classic-card {
             background: #fff; border: 1px solid rgba(197, 168, 128, 0.3);
             padding: 45px 25px; border-radius: 12px; margin-bottom: 25px;
@@ -159,42 +150,35 @@
         .section-title { font-family: var(--font-hand); font-size: 48px; color: var(--accent-pink); margin-bottom: 10px; }
         .section-subtitle { font-family: var(--font-sans); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent-green); margin-bottom: 25px; font-weight: 600; }
 
-        /* SANG MEMPELAI */
         .couple-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; margin-top: 20px; }
         .couple-box { width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; }
         .floral-wreath { position: relative; width: 180px; height: 180px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
-        .floral-wreath img.wreath-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; pointer-events: none; animation: spinSlow 30s linear infinite; }
+        .floral-wreath img.wreath-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; pointer-events: none; animation: spinSlow 30s linear infinite; border-radius: 50%; opacity: 0.5;}
         .floral-wreath img.couple-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; z-index: 1; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .couple-name { font-family: var(--font-serif); font-size: 34px; color: var(--text-dark); margin-bottom: 5px; font-weight: 700; }
         .parent-name { font-size: 12px; color: #777; line-height: 1.6; font-style: italic; }
         .middle-ampersand { font-family: var(--font-hand); font-size: 45px; color: var(--gold); margin: 5px 0; }
 
-        /* TANGGAL ACARA */
         .date-container { border-top: 1px solid rgba(197,168,128,0.3); border-bottom: 1px solid rgba(197,168,128,0.3); padding: 20px 0; margin: 30px 0; }
 
-        /* PETA CLASSIC (FILTER SEPIA) */
         .map-wrapper { position: relative; width: 100%; height: 220px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(197, 168, 128, 0.4); margin: 25px 0 30px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .map-wrapper iframe { width: 100%; height: 100%; border: none; filter: sepia(40%) contrast(95%) hue-rotate(-10deg) saturate(80%); }
 
-        /* KARTU BANK KLASIK */
         .credit-card { background: linear-gradient(135deg, #fcfaf5 0%, #f0e6d8 100%); border: 1px solid var(--gold); border-radius: 12px; padding: 25px 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); position: relative; text-align: left; margin-top: 20px; }
         .cc-chip { width: 35px; height: 25px; background: linear-gradient(135deg, #e6c27a, #c29f55); border-radius: 4px; margin-bottom: 20px; border: 1px solid #a8853b; }
         .cc-bank { position: absolute; top: 25px; right: 20px; font-family: var(--font-sans); font-weight: 700; font-size: 18px; color: var(--text-dark); }
         .cc-number { font-family: var(--font-serif); font-size: 28px; font-weight: bold; color: var(--text-dark); letter-spacing: 2px; margin-bottom: 10px; }
         .cc-name { font-family: var(--font-sans); font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* FORM & TOMBOL */
         .input-line { width: 100%; padding: 14px 10px; background: #faf8f5; border: 1px solid rgba(197, 168, 128, 0.4); border-radius: 6px; color: var(--text-dark); font-family: var(--font-sans); font-size: 13px; margin-bottom: 20px; transition: 0.3s; }
         .input-line:focus { outline: none; border-color: var(--accent-pink); background: #fff; box-shadow: 0 0 10px rgba(212, 163, 163, 0.2); }
         .btn-classic { display: inline-block; background: var(--accent-pink); color: #fff; border: none; padding: 14px 35px; border-radius: 30px; font-weight: 600; font-family: var(--font-sans); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(212, 163, 163, 0.3); width: 100%; text-decoration: none; }
         .btn-classic:hover { background: var(--accent-green); box-shadow: 0 10px 20px rgba(141, 163, 153, 0.4); transform: translateY(-3px); }
 
-        /* NAMA PEMBUAT (WATERMARK) */
         .watermark-container { display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding-top: 25px; border-top: 1px dashed rgba(197, 168, 128, 0.5); width: 80%; margin-left: auto; margin-right: auto; }
         .watermark-label { font-family: var(--font-sans); font-size: 9px; letter-spacing: 4px; color: #999; text-transform: uppercase; margin-bottom: 5px; }
         .watermark-signature { font-family: var(--font-hand); font-size: 34px; background: linear-gradient(45deg, #a67c00, #F3E5AB, #D4AF37, #a67c00); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shineText 3s linear infinite; }
 
-        /* PEMUTAR MUSIK */
         #youtube-player { position: absolute; width: 0; height: 0; border: none; opacity: 0; }
         .music-disc { position: fixed; bottom: 25px; right: 25px; z-index: 1000; width: 50px; height: 50px; background: #111; border-radius: 50%; border: 2px solid var(--gold); display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.5s; opacity: 0; transform: scale(0); }
         .music-disc.show { opacity: 1; transform: scale(1); }
@@ -211,11 +195,13 @@
     <div class="lace-frame"></div>
     <div id="youtube-player"></div>
     
+    <!-- 1. LAYAR PEMBUKA -->
     <div class="cover-overlay" id="coverScreen">
         <div class="env-back"></div>
         
         <div class="env-paper" id="envPaper">
-            <img src="gambar/bunga-kertas.png" style="position: absolute; top: -10px; left: -10px; width: 130px; opacity: 0.8;" alt="Hiasan Bunga">
+            <!-- Link Bunga Atas Kertas yang Ringan & Cepat -->
+            <img src="https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&auto=format&fit=crop&q=60" style="position: absolute; top: -10px; left: -10px; width: 130px; opacity: 0.8; border-radius: 50%;" alt="Hiasan Bunga">
             <div style="margin-top: 70px;">
                 <p class="arabic-text" style="font-size: 32px;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
                 <p style="font-family: var(--font-serif); font-size: 16px; color: var(--gold); margin-top: 15px; letter-spacing: 2px;">Pernikahan</p>
@@ -240,9 +226,11 @@
         </div>
     </div>
 
+    <!-- 2. WADAH UTAMA -->
     <div class="mobile-container" id="mainContainer">
 
-        <img src="gambar/bunga-sudut-kiri.png" class="floral-corner top-left" alt="Bunga Kiri Atas">
+        <!-- Gambar Hiasan Kiri Atas yang Cepat -->
+        <img src="https://images.unsplash.com/photo-1550060959-1e17c08a5cb3?w=400&auto=format&fit=crop&q=60" class="floral-corner top-left" alt="Bunga Kiri Atas">
 
         <section style="padding-top: 80px; padding-bottom: 10px;">
             <div data-aos="fade-down" data-aos-duration="1500">
@@ -250,9 +238,7 @@
                 <p class="arabic-text" style="font-size: 26px; margin-top: 10px;">السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</p>
             </div>
             
-            <img src="gambar/garis-pembatas-bunga.png" class="floral-divider" data-aos="zoom-in" alt="Pembatas Halaman">
-            
-            <div data-aos="fade-up" data-aos-duration="1500">
+            <div data-aos="fade-up" data-aos-duration="1500" style="margin-top: 40px;">
                 <p style="font-family: var(--font-serif); font-size: 17px; line-height: 1.8; color: #666; font-style: italic; padding: 0 10px;">
                     "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."
                 </p>
@@ -260,6 +246,7 @@
             </div>
         </section>
 
+        <!-- SANG MEMPELAI -->
         <section>
             <div class="classic-card" data-aos="zoom-in" data-aos-duration="1500">
                 <p class="section-subtitle">Sang Mempelai</p>
@@ -267,8 +254,8 @@
                 <div class="couple-wrapper">
                     <div class="couple-box" data-aos="fade-up" data-aos-delay="200">
                         <div class="floral-wreath">
-                            <img src="gambar/lingkaran-bunga.png" class="wreath-bg" alt="Lingkaran Bunga">
-                            <img src="gambar/foto-mempelai-pria.jpg" class="couple-img" alt="Amar">
+                            <!-- Link Foto Mempelai Pria (Ilustrasi Sementara) -->
+                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=300&auto=format&fit=crop&q=60" class="couple-img" alt="Amar">
                         </div>
                         <h2 class="couple-name">Amar</h2>
                         <p class="parent-name">Putra dari Bapak Fulan<br>& Ibu Fulanah</p>
@@ -278,8 +265,8 @@
 
                     <div class="couple-box" data-aos="fade-up" data-aos-delay="600">
                         <div class="floral-wreath">
-                            <img src="gambar/lingkaran-bunga.png" class="wreath-bg" alt="Lingkaran Bunga">
-                            <img src="gambar/foto-mempelai-wanita.jpg" class="couple-img" alt="Aulia">
+                            <!-- Link Foto Mempelai Wanita (Ilustrasi Sementara) -->
+                            <img src="https://images.unsplash.com/photo-1541250848049-b4f7146173bb?w=300&auto=format&fit=crop&q=60" class="couple-img" alt="Aulia">
                         </div>
                         <h2 class="couple-name">Aulia</h2>
                         <p class="parent-name">Putri dari Bapak Fulan<br>& Ibu Fulanah</p>
@@ -354,8 +341,6 @@
         </section>
         
         <section style="padding: 20px 20px 60px 20px;" data-aos="fade-in">
-            <img src="gambar/garis-pembatas-bunga.png" class="floral-divider" alt="Pembatas Halaman" style="margin-bottom: 15px;">
-            
             <p class="section-subtitle" style="margin-bottom: 5px;">Terima Kasih</p>
             <h1 style="font-family: var(--font-hand); font-size: 55px; color: var(--accent-pink);">Amar & Aulia</h1>
             
@@ -365,15 +350,18 @@
             </div>
         </section>
 
-        <img src="gambar/bunga-sudut-kanan.png" class="floral-corner bottom-right" alt="Bunga Kanan Bawah">
+        <!-- Gambar Hiasan Kanan Bawah yang Cepat -->
+        <img src="https://images.unsplash.com/photo-1550060959-1e17c08a5cb3?w=400&auto=format&fit=crop&q=60" class="floral-corner bottom-right" alt="Bunga Kanan Bawah">
     </div>
 
+    <!-- TOMBOL MUSIK -->
     <div class="music-disc" id="musicBtn" onclick="aturMusik()" title="Mainkan/Jeda Musik"></div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
+        // Inisialisasi animasi scroll
         AOS.init({ once: false, offset: 50, duration: 1200 });
 
         function buatPercikan() {
@@ -393,19 +381,15 @@
 
         var pemutar;
         function onYouTubeIframeAPIReady() {
-            pemutar = new YT.Player('youtube-player', {
-                height: '0', width: '0', videoId: 'tf1eWhA3MMw',
-                // autoplay disetel ke 1, tapi biasanya peramban tetap memblokir sampai ada klik layar
-                playerVars: { 'autoplay': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'loop': 1, 'playlist': 'tf1eWhA3MMw' },
-                events: {
-                    'onReady': function(event) {
-                        event.target.playVideo();
-                    }
-                }
-            });
+            try {
+                pemutar = new YT.Player('youtube-player', {
+                    height: '0', width: '0', videoId: 'tf1eWhA3MMw',
+                    playerVars: { 'autoplay': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'loop': 1, 'playlist': 'tf1eWhA3MMw' }
+                });
+            } catch(e) { console.log('Youtube Player belum siap.'); }
         }
 
-        /* FUNGSI ANIMASI AMPLOP 3D */
+        /* FUNGSI UTAMA BUKA AMPLOP & PAKSA SCROLL JALAN */
         function bukaAmplop() {
             const lipatan = document.getElementById('envFlap');
             const kertas = document.getElementById('envPaper');
@@ -413,26 +397,33 @@
             const tombolMusik = document.getElementById('musicBtn');
             
             // 1. Putar tutup amplop ke atas
-            lipatan.classList.add('open');
+            if(lipatan) lipatan.classList.add('open');
             
-            // 2. Tarik kertas surat keluar setelah jeda 0.6 detik
+            // 2. Tarik kertas surat keluar
             setTimeout(() => {
-                kertas.classList.add('pull-up');
+                if(kertas) kertas.classList.add('pull-up');
             }, 600);
 
-            // 3. Pudarkan seluruh layar sampul untuk memunculkan konten asli yang bisa digulir
+            // 3. Pudarkan sampul dan PAKSA KUNCI SCROLL DIBUKA
             setTimeout(() => {
-                sampul.classList.add('fade-out');
-                document.body.classList.remove('lock-scroll');
-                buatPercikan();
-                tombolMusik.classList.add('show');
+                if(sampul) sampul.classList.add('fade-out');
                 
+                // MENGHAPUS KUNCI SCROLL SECARA PAKSA AGAR BISA DI HP
+                document.body.classList.remove('lock-scroll');
+                document.body.style.overflow = 'auto';
+                document.body.style.height = 'auto';
+                document.documentElement.style.overflow = 'auto';
+                
+                buatPercikan();
+                if(tombolMusik) tombolMusik.classList.add('show');
+                
+                // Putar musik jika bisa
                 try {
                     if (pemutar && typeof pemutar.playVideo === 'function') {
                         pemutar.playVideo();
                         tombolMusik.classList.add('playing');
                     }
-                } catch (e) { console.log(e); }
+                } catch (e) { console.log('Auto-play terblokir sementara oleh HP.'); }
                 
                 AOS.refresh();
             }, 2300);
@@ -451,7 +442,7 @@
 
         function salinRekening() {
             var teksRekening = document.getElementById("rek-bca").innerText.replace(/\s+/g, '');
-            navigator.clipboard.writeText(teksRekening).then(() => { alert("✨ Nomor Rekening BCA berhasil disalin!"); });
+            navigator.clipboard.writeText(teksRekening).then(() => { alert("✨ Nomor Rekening BCA berhasil disalin!"); }).catch(() => { alert("Gagal menyalin."); });
         }
 
         function kirimPesan() {
