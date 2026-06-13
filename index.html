@@ -3,514 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pernikahan Amar & Aulia</title>
+    <title>Walimatul 'Urs | Amar & Aulia</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg-maroon: #4a0d18; 
-            --bg-paper: #FDFBF7; 
-            --text-dark: #3E4C59; 
-            --accent-pink: #D4A3A3; 
-            --accent-green: #8DA399; 
-            --gold: #D4AF37; 
-            --gold-light: #F3E5AB;
-            
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-hand: 'Great Vibes', cursive;
-            --font-sans: 'Montserrat', sans-serif;
-            --font-arabic: 'Amiri', serif;
-        }
-
-        /* PERBAIKAN: Pastikan html dan body mereset padding dan overflow dengan benar */
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            overflow-x: hidden; /* Mencegah geser kanan-kiri yang bocor */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-        
-        /* Class lock-scroll untuk amplop awal */
-        body.lock-scroll { overflow: hidden !important; height: 100vh; }
-
-        body {
-            font-family: var(--font-sans); 
-            background-color: #111; 
-            color: var(--text-dark); 
-            /* PERBAIKAN: display: flex dihapus agar tidak menyebabkan scroll terkancing di HP */
-        }
-
-        .mobile-container { 
-            width: 100%; 
-            max-width: 480px; 
-            min-height: 100vh; 
-            margin: 0 auto; /* PERBAIKAN: Ini cara yang lebih aman menengahkan container di HP */
-            background-color: var(--bg-paper);
-            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            position: relative; 
-            overflow-x: hidden; 
-            padding-bottom: 30px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
-
-        .lace-frame {
-            position: fixed; top: 12px; left: 12px; right: 12px; bottom: 12px;
-            border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 15px; pointer-events: none; z-index: 100;
-        }
-        .lace-frame::before, .lace-frame::after { content: '✧'; position: absolute; color: var(--gold); font-size: 24px; }
-        .lace-frame::before { top: -14px; left: -4px; animation: spin 10s linear infinite; }
-        .lace-frame::after { bottom: -14px; right: -4px; animation: spin 10s linear infinite; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* AMPLOP AWAL */
-        .cover-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: #111; z-index: 9999; display: flex; justify-content: center;
-            transition: opacity 1.2s ease, visibility 1.2s ease;
-        }
-        .cover-overlay.fade-out { opacity: 0; visibility: hidden; pointer-events: none; }
-        .env-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2b060d; z-index: 1; }
-        .env-paper {
-            position: absolute; bottom: 0; left: 5%; width: 90%; height: 85%;
-            background: var(--bg-paper) url('https://www.transparenttextures.com/patterns/cream-paper.png');
-            border-radius: 10px 10px 0 0; z-index: 2; transform: translateY(100%);
-            transition: transform 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.6); overflow: hidden; text-align: center;
-        }
-        .env-paper.pull-up { transform: translateY(10%); }
-        .env-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
-        .bottom-bg {
-            width: 100%; height: 100%; background: var(--bg-maroon) url('https://www.transparenttextures.com/patterns/stardust.png');
-            clip-path: polygon(0 35%, 50% 55%, 100% 35%, 100% 100%, 0 100%);
-        }
-        .cover-content { position: absolute; bottom: 12%; width: 100%; text-align: center; }
-        .cover-title { font-family: var(--font-hand); font-size: 60px; color: var(--gold-light); text-shadow: 0 5px 15px rgba(0,0,0,0.8); line-height: 0.9; margin-bottom: 5px; }
-        .cover-subtitle { font-family: var(--font-sans); font-size: 11px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); }
-        .tap-instruction { font-size: 10px; letter-spacing: 3px; color: rgba(245,235,213,0.5); text-transform: uppercase; margin-top: 25px; animation: pulseSeal 2s infinite; }
-        .env-flap {
-            position: absolute; top: 0; left: 0; width: 100%; height: 55%; z-index: 4; transform-origin: top;
-            transition: transform 1.2s cubic-bezier(0.645, 0.045, 0.355, 1); filter: drop-shadow(0 10px 10px rgba(0,0,0,0.6));
-        }
-        .env-flap.open { transform: rotateX(180deg); }
-        .flap-bg {
-            width: 100%; height: 100%; background: #3a0811 url('https://www.transparenttextures.com/patterns/stardust.png');
-            clip-path: polygon(0 0, 100% 0, 50% 100%);
-        }
-        .wax-seal {
-            position: absolute; bottom: -35px; left: 50%; margin-left: -35px; width: 70px; height: 70px;
-            background: radial-gradient(circle, #b31b1b 0%, #610000 100%); border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 5px 20px rgba(0,0,0,0.6); border: 2px solid #4a0000; cursor: pointer; pointer-events: auto;
-            animation: pulseSeal 2s infinite; font-family: var(--font-serif); font-size: 30px; font-weight: bold; color: rgba(255,255,255,0.9); transition: opacity 0.3s;
-        }
-        .wax-seal::after { content: ''; position: absolute; width: 80px; height: 80px; border-radius: 50%; border: 1px dashed var(--gold); opacity: 0.6; animation: spinSlow 8s linear infinite; }
-        .env-flap.open .wax-seal { opacity: 0; }
-        @keyframes pulseSeal { 0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,0,0,0.6); } 50% { transform: scale(1.08); box-shadow: 0 10px 30px rgba(212, 175, 55, 0.5); } }
-        @keyframes spinSlow { 100% { transform: rotate(360deg); } }
-
-        /* KONTEN UNDANGAN */
-        section { padding: 60px 25px; position: relative; text-align: center; z-index: 10; }
-        .floral-divider { width: 150px; margin: 25px auto; opacity: 0.8; }
-        .arabic-text { font-family: var(--font-arabic); font-size: 40px; background: linear-gradient(to right, var(--gold), #FFF, var(--gold), #9c7b16); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shineText 4s linear infinite, floatSlow 3s ease-in-out infinite; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3)); line-height: 1.8; margin-bottom: 5px; }
-        @keyframes shineText { to { background-position: 200% center; } }
-        @keyframes floatSlow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
-        .floral-corner { position: absolute; width: 220px; pointer-events: none; z-index: 5; opacity: 0.9; }
-        .top-left { top: -20px; left: -20px; animation: floatLeaf 6s ease-in-out infinite alternate; }
-        .bottom-right { bottom: -20px; right: -20px; transform: rotate(180deg); animation: floatLeaf 7s ease-in-out infinite alternate-reverse; }
-        @keyframes floatLeaf { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(10px) rotate(2deg); } }
-
-        .classic-card {
-            background: #fff; border: 1px solid rgba(197, 168, 128, 0.3); padding: 45px 25px; border-radius: 12px; margin-bottom: 25px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.04); position: relative; overflow: hidden;
-        }
-        .classic-card::before { content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 1px solid rgba(197, 168, 128, 0.2); pointer-events: none; }
-        .section-title { font-family: var(--font-hand); font-size: 48px; color: var(--accent-pink); margin-bottom: 10px; }
-        .section-subtitle { font-family: var(--font-sans); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent-green); margin-bottom: 25px; font-weight: 600; }
-
-        .couple-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; position: relative; margin-top: 20px; }
-        .couple-box { width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .floral-wreath { position: relative; width: 180px; height: 180px; display: flex; justify-content: center; align-items: center; margin-bottom: 15px; }
-        
-        /* Tambahan style membulat untuk placeholder wreath */
-        .floral-wreath img.wreath-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 2; pointer-events: none; animation: spinSlow 30s linear infinite; border-radius: 50%; }
-        
-        .floral-wreath img.couple-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; z-index: 1; border: 2px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .couple-name { font-family: var(--font-serif); font-size: 34px; color: var(--text-dark); margin-bottom: 5px; font-weight: 700; text-align: center; }
-        .parent-name { font-size: 12px; color: #777; line-height: 1.6; font-style: italic; }
-        .middle-ampersand { font-family: var(--font-hand); font-size: 45px; color: var(--gold); margin: 5px 0; }
-
-        .date-container { border-top: 1px solid rgba(197,168,128,0.3); border-bottom: 1px solid rgba(197,168,128,0.3); padding: 20px 0; margin: 30px 0; }
-        
-        .countdown-wrapper { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
-        .count-box { background: rgba(197, 168, 128, 0.05); border: 1px solid rgba(197, 168, 128, 0.4); border-radius: 8px; padding: 10px; width: 65px; box-shadow: 0 5px 10px rgba(0,0,0,0.02); }
-        .count-num { font-family: var(--font-serif); font-size: 26px; font-weight: bold; color: var(--accent-pink); line-height: 1; }
-        .count-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #777; margin-top: 5px; }
-
-        .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-        .gallery-img { width: 100%; height: 160px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(197, 168, 128, 0.4); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-
-        .map-wrapper { position: relative; width: 100%; height: 220px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(197, 168, 128, 0.4); margin: 25px 0 30px 0; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .map-wrapper iframe { width: 100%; height: 100%; border: none; filter: sepia(40%) contrast(95%) hue-rotate(-10deg) saturate(80%); }
-
-        .credit-card { background: linear-gradient(135deg, #fcfaf5 0%, #f0e6d8 100%); border: 1px solid var(--gold); border-radius: 12px; padding: 25px 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); position: relative; text-align: left; margin-top: 20px; }
-        .cc-chip { width: 35px; height: 25px; background: linear-gradient(135deg, #e6c27a, #c29f55); border-radius: 4px; margin-bottom: 20px; border: 1px solid #a8853b; }
-        .cc-bank { position: absolute; top: 25px; right: 20px; font-family: var(--font-sans); font-weight: 700; font-size: 18px; color: var(--text-dark); }
-        .cc-number { font-family: var(--font-serif); font-size: 28px; font-weight: bold; color: var(--text-dark); letter-spacing: 2px; margin-bottom: 10px; }
-        .cc-name { font-family: var(--font-sans); font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
-
-        .input-line { width: 100%; padding: 14px 10px; background: #faf8f5; border: 1px solid rgba(197, 168, 128, 0.4); border-radius: 6px; color: var(--text-dark); font-family: var(--font-sans); font-size: 13px; margin-bottom: 20px; transition: 0.3s; }
-        .input-line:focus { outline: none; border-color: var(--accent-pink); background: #fff; box-shadow: 0 0 10px rgba(212, 163, 163, 0.2); }
-        .btn-classic { display: inline-block; background: var(--accent-pink); color: #fff; border: none; padding: 14px 35px; border-radius: 30px; font-weight: 600; font-family: var(--font-sans); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: 0.4s; box-shadow: 0 10px 20px rgba(212, 163, 163, 0.3); width: 100%; text-decoration: none; text-align: center; }
-        .btn-classic:hover { background: var(--accent-green); box-shadow: 0 10px 20px rgba(141, 163, 153, 0.4); transform: translateY(-3px); }
-
-        .watermark-container { display: flex; flex-direction: column; align-items: center; margin-top: 40px; padding-top: 25px; border-top: 1px dashed rgba(197, 168, 128, 0.5); width: 80%; margin-left: auto; margin-right: auto; }
-        .watermark-label { font-family: var(--font-sans); font-size: 9px; letter-spacing: 4px; color: #999; text-transform: uppercase; margin-bottom: 5px; }
-        .watermark-signature { font-family: var(--font-hand); font-size: 34px; background: linear-gradient(45deg, #a67c00, #F3E5AB, #D4AF37, #a67c00); background-size: 200% auto; color: transparent; -webkit-background-clip: text; background-clip: text; animation: shineText 3s linear infinite; }
-
-        #youtube-player { position: absolute; width: 0; height: 0; border: none; opacity: 0; }
-        .music-disc { position: fixed; bottom: 25px; right: 25px; z-index: 1000; width: 50px; height: 50px; background: #111; border-radius: 50%; border: 2px solid var(--gold); display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.5); transition: 0.5s; opacity: 0; transform: scale(0); }
-        .music-disc.show { opacity: 1; transform: scale(1); }
-        .music-disc::after { content: ''; position: absolute; width: 10px; height: 10px; background: var(--bg-maroon); border-radius: 50%; border: 1px solid var(--gold); z-index: 2; }
-        .music-disc::before { content: ''; position: absolute; width: 100%; height: 100%; border-radius: 50%; background: repeating-radial-gradient(#222, #222 2px, #111 3px, #111 4px); }
-        .music-disc.playing { animation: spin 4s linear infinite; box-shadow: 0 0 15px rgba(212,175,55,0.6); }
-
-        .sparkle { position: absolute; background: #D4AF37; border-radius: 50%; pointer-events: none; animation: twinkle linear infinite; opacity: 0; z-index: 10; }
-        @keyframes twinkle { 0% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.8; transform: scale(1.5); box-shadow: 0 0 10px #D4AF37; } 100% { opacity: 0; transform: scale(0.5); } }
-    </style>
-</head>
-<body class="lock-scroll">
-
-    <div class="lace-frame"></div>
-    <div id="youtube-player"></div>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500&family=Amiri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
     
-    <div class="cover-overlay" id="coverScreen">
-        <div class="env-back"></div>
-        
-        <div class="env-paper" id="envPaper">
-            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-            <img src="https://via.placeholder.com/130/FDFBF7/D4A3A3?text=Bunga+Atas" style="position: absolute; top: -10px; left: -10px; width: 130px; opacity: 0.8;" alt="Hiasan Bunga">
-            <div style="margin-top: 70px;">
-                <p class="arabic-text" style="font-size: 32px;">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
-                <p style="font-family: var(--font-serif); font-size: 16px; color: var(--gold); margin-top: 15px; letter-spacing: 2px;">Pernikahan</p>
-                <h1 style="font-family: var(--font-hand); font-size: 45px; color: var(--accent-pink); margin-top: 5px;">Amar & Aulia</h1>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="lock">
+
+    <canvas id="goldLeafCanvas"></canvas>
+
+    <div id="youtube-player" style="display:none;"></div>
+    
+    <div class="murottal-pill paused" id="murottalPill" onclick="toggleMurottal()">
+        <div class="wave-anim"><span></span><span></span><span></span></div>
+        <span class="murottal-title">QS. AR-RUM</span>
+    </div>
+
+    <nav class="classic-nav" id="bottomNav">
+        <a href="#hero" class="nav-btn active"><i class="fas fa-leaf"></i></a>
+        <a href="#couple" class="nav-btn"><i class="fas fa-heart"></i></a>
+        <a href="#event" class="nav-btn"><i class="fas fa-calendar-alt"></i></a>
+        <a href="#rsvp" class="nav-btn"><i class="fas fa-paper-plane"></i></a>
+    </nav>
+
+    <div id="cover-screen">
+        <div class="envelope-wrapper">
+            <div class="envelope-flap"></div>
+            <div class="envelope-paper">
+                <div class="cover-text-wrap">
+                    <p class="cover-subtitle">WALIMATUL 'URS</p>
+                    <h1 class="cover-title">Amar & Aulia</h1>
+                    <div class="gold-line-short"></div>
+                </div>
+                
+                <div class="wax-seal-wrapper" onclick="unlockInvitation()">
+                    <div class="wax-seal">
+                        <span class="seal-monogram">A</span>
+                    </div>
+                    <p class="seal-instruction">TAP TO OPEN</p>
+                </div>
             </div>
         </div>
-
-        <div class="env-bottom">
-            <div class="bottom-bg"></div>
-            <div class="cover-content">
-                <p class="cover-subtitle" style="margin-bottom: 15px;">Pernikahan</p>
-                <h1 class="cover-title">Amar</h1>
-                <h1 class="cover-title" style="font-size: 40px; color: var(--gold); margin: -10px 0;">&</h1>
-                <h1 class="cover-title">Aulia</h1>
-                <p class="tap-instruction">Ketuk segel untuk membuka</p>
-            </div>
-        </div>
-
-        <div class="env-flap" id="envFlap">
-            <div class="flap-bg"></div>
-            <div class="wax-seal" onclick="bukaAmplop()" id="waxSeal">A</div>
+        <div class="cover-design-credit">
+            COVER DESIGN BY MUHAMMAD AMAR
         </div>
     </div>
 
-    <div class="mobile-container" id="mainContainer">
 
-        <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-        <img src="https://via.placeholder.com/220/FDFBF7/8DA399?text=Bunga+Kiri" class="floral-corner top-left" style="border-radius: 50%;" alt="Bunga Kiri Atas">
-
-        <section style="padding-top: 80px; padding-bottom: 10px;">
-            <div data-aos="fade-down" data-aos-duration="1500">
-                <p class="arabic-text">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
-                <p class="arabic-text" style="font-size: 26px; margin-top: 10px;">السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</p>
-            </div>
-            
-            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-            <img src="https://via.placeholder.com/150x30/FDFBF7/D4A3A3?text=Garis+Pembatas" class="floral-divider" data-aos="zoom-in" alt="Pembatas Halaman">
-            
+    <div class="container" id="mainContainer">
+        
+        <section id="hero" class="v-section">
             <div data-aos="fade-up" data-aos-duration="1500">
-                <p style="font-family: var(--font-serif); font-size: 17px; line-height: 1.8; color: #666; font-style: italic; padding: 0 10px;">
-                    "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya..."
+                <div class="arabic-heading">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+                <p class="salutation-sub">Assalamu'alaikum Warahmatullahi Wabarakatuh</p>
+                
+                <h2 class="editorial-title mt-12">The Marriage of Two Souls</h2>
+                <p class="editorial-desc mt-6">
+                    Dengan memohon rahmat dan ridha Allah Subhanahu wa Ta'ala, kami bermaksud menyelenggarakan Syukuran Pernikahan (Walimatul 'Urs) putra-putri kami:
                 </p>
-                <p style="margin-top: 15px; font-weight: 600; font-size: 11px; letter-spacing: 3px; color: var(--accent-green);">QS. AR-RUM : 21</p>
             </div>
         </section>
 
-        <section>
-            <div class="classic-card" data-aos="zoom-in" data-aos-duration="1500">
-                <p class="section-subtitle">Sang Mempelai</p>
-                
-                <div class="couple-wrapper">
-                    <div class="couple-box" data-aos="fade-up" data-aos-delay="200">
-                        <div class="floral-wreath">
-                            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-                            <img src="https://via.placeholder.com/180/FDFBF7/D4A3A3?text=Bingkai" class="wreath-bg" alt="Lingkaran Bunga">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80" class="couple-img" alt="Amar Mansur">
-                        </div>
-                        <h2 class="couple-name">Amar Mansur</h2>
-                        <p class="parent-name">Putra dari Bapak Fulan<br>& Ibu Fulanah</p>
-                    </div>
-
-                    <div class="middle-ampersand" data-aos="zoom-in" data-aos-delay="400">&</div>
-
-                    <div class="couple-box" data-aos="fade-up" data-aos-delay="600">
-                        <div class="floral-wreath">
-                            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-                            <img src="https://via.placeholder.com/180/FDFBF7/D4A3A3?text=Bingkai" class="wreath-bg" alt="Lingkaran Bunga">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" class="couple-img" alt="Aulia">
-                        </div>
-                        <h2 class="couple-name">Aulia</h2>
-                        <p class="parent-name">Putri dari Bapak Fulan<br>& Ibu Fulanah</p>
-                    </div>
+        <section id="quran" class="v-section" data-aos="fade-up">
+            <div class="editorial-quote-box">
+                <div class="arabic-text mb-6">
+                    وَمِنْ آيَاتِهِ أَنْ خَلَقَ Lَكُم مِّنْ أَنfُسِكُمْ أَزْوَاجًا Lِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً
                 </div>
+                <p class="translation-text">
+                    "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang..."
+                </p>
+                <div class="script-divider"></div>
+                <p class="verse-reference">Surah Ar-Rum : 21</p>
             </div>
         </section>
 
-        <section>
-            <div class="classic-card" data-aos="fade-up" style="text-align: center;">
-                <p class="section-subtitle">Simpan Tanggalnya</p>
-                <h2 class="section-title">Akad & Resepsi</h2>
-                
-                <div class="countdown-wrapper" data-aos="zoom-in">
-                    <div class="count-box"><div class="count-num" id="hari">00</div><div class="count-label">Hari</div></div>
-                    <div class="count-box"><div class="count-num" id="jam">00</div><div class="count-label">Jam</div></div>
-                    <div class="count-box"><div class="count-num" id="menit">00</div><div class="count-label">Menit</div></div>
-                    <div class="count-box"><div class="count-num" id="detik">00</div><div class="count-label">Detik</div></div>
-                </div>
+        <section id="couple" class="v-section">
+            <div class="profile-editorial" data-aos="fade-up">
+                <span class="profile-tag">WALIMAH PRIA</span>
+                <h3 class="mempelai-name">Muhammad Amar Mansur</h3>
+                <p class="mempelai-parents">Putra dari Bapak Fulan & Ibu Fulanah</p>
+            </div>
 
-                <div class="date-container">
-                    <p style="font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: var(--accent-green);">Senin</p>
-                    <p style="font-family: var(--font-serif); font-size: 38px; font-weight: 700; color: var(--text-dark); margin: 5px 0;">29 Juni 2026</p>
-                    
-                    <div style="display: flex; justify-content: space-around; margin-top: 15px; border-top: 1px dashed rgba(197,168,128,0.3); padding-top: 15px;">
-                        <div>
-                            <p style="font-weight: 600; color: var(--accent-pink); font-size: 14px;">AKAD NIKAH</p>
-                            <p style="font-size: 13px; color: #777;">09:00 WITA</p>
-                        </div>
-                        <div>
-                            <p style="font-weight: 600; color: var(--accent-pink); font-size: 14px;">RESEPSI</p>
-                            <p style="font-size: 13px; color: #777;">11:00 WITA - Selesai</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="editorial-ampersand" data-aos="zoom-in">&</div>
 
-                <div style="margin-bottom: 25px;">
-                    <p style="font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: var(--accent-pink); margin-bottom: 5px;">Sriti Convention Hall</p>
-                    <p style="font-size: 14px; line-height: 1.6; color: #666;">Palu Barat, Kota Palu<br>Sulawesi Tengah</p>
-                </div>
-
-                <div class="map-wrapper" data-aos="zoom-in">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.310049201831!2d119.851722!3d-0.890044!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8bede8!2sSriti+Convention+Hall!5e0!3m2!1sen!2sid!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                
-                <a href="https://maps.google.com/?q=Sriti+Convention+Hall+Palu" target="_blank" class="btn-classic">Petunjuk Arah Peta</a>
+            <div class="profile-editorial" data-aos="fade-up">
+                <span class="profile-tag">WALIMAH WANITA</span>
+                <h3 class="mempelai-name">Siti Aulia</h3>
+                <p class="mempelai-parents">Putri dari Bapak Fulan & Ibu Fulanah</p>
             </div>
         </section>
 
-        <section>
-            <div class="classic-card" data-aos="fade-up">
-                <p class="section-subtitle">Momen Bahagia</p>
-                <h2 class="section-title">Galeri Foto</h2>
-                <div class="gallery-grid">
-                    <img src="https://via.placeholder.com/300x400/FDFBF7/D4A3A3?text=Foto+1" class="gallery-img" data-aos="zoom-in" data-aos-delay="100" alt="Galeri 1">
-                    <img src="https://via.placeholder.com/300x400/FDFBF7/8DA399?text=Foto+2" class="gallery-img" data-aos="zoom-in" data-aos-delay="200" alt="Galeri 2">
-                    <img src="https://via.placeholder.com/300x400/FDFBF7/D4AF37?text=Foto+3" class="gallery-img" data-aos="zoom-in" data-aos-delay="300" alt="Galeri 3">
-                    <img src="https://via.placeholder.com/300x400/FDFBF7/3E4C59?text=Foto+4" class="gallery-img" data-aos="zoom-in" data-aos-delay="400" alt="Galeri 4">
+        <section id="event" class="v-section">
+            <div class="editorial-panel" data-aos="fade-up">
+                <h2 class="editorial-title text-gold mb-12">Waktu & Tempat</h2>
+
+                <div class="event-row">
+                    <h4 class="event-heading">Akad Nikah</h4>
+                    <p class="event-text">Senin, 29 Juni 2026</p>
+                    <p class="event-text">09:00 WITA - Selesai</p>
+                    <p class="event-location">Masjid Agung Palu</p>
+                </div>
+
+                <div class="editorial-line-divider"></div>
+
+                <div class="event-row mt-6">
+                    <h4 class="event-heading">Walimatul 'Urs</h4>
+                    <p class="event-text">Senin, 29 Juni 2026</p>
+                    <p class="event-text">11:00 WITA - Selesai</p>
+                    <p class="event-location">Sriti Convention Hall, Palu</p>
+                </div>
+
+                <div class="map-wrapper mt-8" data-aos="zoom-in">
+                    <iframe src="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqDAgAECMYJxiABBiKBTIMCAAQIxgnGIAEGIoFMgYIARBFGDkyDQgCEC4YrwEYxwEYgAQyFggDEC4YrwEYxwEYsQMYgAQYigUYjgUyCggEEAAYkgMYgAQyDQgFEAAYkgMYgAQYigUyCggGEAAYsQMYgAQyBggHEEUYPNIBBzkwN2owajeoAgiwAgHxBehv8ExSbT8u&um=1&ie=UTF-8&fb=1&gl=id&sa=X&geocode=Ka07uUat7YstMbQDFM0rizBn&daddr=Jl.+Diponegoro+No.6,+Lere,+Kec.+Palu+Bar.,+Kota+Palu,+Sulawesi+Tengah+94221" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <a href="https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqDAgAECMYJxiABBiKBTIMCAAQIxgnGIAEGIoFMgYIARBFGDkyDQgCEC4YrwEYxwEYgAQyFggDEC4YrwEYxwEYsQMYgAQYigUYjgUyCggEEAAYkgMYgAQyDQgFEAAYkgMYgAQYigUyCggGEAAYsQMYgAQyBggHEEUYPNIBBzkwN2owajeoAgiwAgHxBehv8ExSbT8u&um=1&ie=UTF-8&fb=1&gl=id&sa=X&geocode=Ka07uUat7YstMbQDFM0rizBn&daddr=Jl.+Diponegoro+No.6,+Lere,+Kec.+Palu+Bar.,+Kota+Palu,+Sulawesi+Tengah+94221" target="_blank" class="btn-editorial-gold w-full mt-4">
+                    <i class="fas fa-location-arrow mr-2"></i> Buka Rute Google Maps
+                </a>
+
+                <div class="countdown-editorial mt-12">
+                    <div class="c-box"><span id="hari">00</span><p>Hari</p></div>
+                    <div class="c-box"><span id="jam">00</span><p>Jam</p></div>
+                    <div class="c-box"><span id="menit">00</span><p>Menit</p></div>
+                    <div class="c-box"><span id="detik">00</span><p>Detik</p></div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div class="classic-card" data-aos="fade-up" style="text-align: left;">
-                <p class="section-subtitle" style="text-align: center;">Kehadiran</p>
-                <h2 class="section-title" style="text-align: center; font-size: 40px;">Buku Tamu</h2>
-                <p style="text-align: center; font-size: 13px; color: #777; margin-bottom: 30px; line-height: 1.6;">Merupakan suatu kehormatan apabila Bapak/Ibu/Saudara/i berkenan hadir.</p>
+        <section id="adab" class="v-section" data-aos="fade-up">
+            <div class="editorial-panel plain-panel text-left">
+                <h3 class="editorial-title text-center text-sm mb-6 tracking-widest uppercase">Adab Menghadiri Walimah</h3>
+                <ul class="adab-ul">
+                    <li><span class="bullet">✦</span> Meluruskan niat karena Allah Ta'ala.</li>
+                    <li><span class="bullet">✦</span> Berpakaian sopan, rapi, dan menutup aurat sesuai syariat.</li>
+                    <li><span class="bullet">✦</span> Menghindari ikhtilat (campur baur pria wanita) & tidak bersalaman dengan non-mahram.</li>
+                    <li><span class="bullet">✦</span> Mendoakan keberkahan kepada kedua mempelai sesuai sunnah.</li>
+                </ul>
                 
-                <input type="text" id="namaTamu" class="input-line" placeholder="Nama Lengkap Anda...">
-                <textarea id="pesanTamu" class="input-line" rows="3" placeholder="Doa & Harapan Terbaik..."></textarea>
-                <select id="hadirTamu" class="input-line" style="cursor: pointer;">
-                    <option value="Ya, Saya Hadir">Hadir 🤍</option>
-                    <option value="Maaf, Tidak Bisa Hadir">Belum Bisa Hadir 🙏</option>
-                </select>
-                
-                <button onclick="kirimPesan()" class="btn-classic">Kirim Konfirmasi</button>
-
-                <div id="daftarKomentar" style="margin-top: 35px; max-height: 200px; overflow-y: auto;">
-                    <div style="margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                        <p style="font-weight: 600; font-size: 13px; color: var(--text-dark);">Keluarga Alfamidi <span style="font-size: 10px; color: #999; font-weight: normal;">(Hadir)</span></p>
-                        <p style="font-family: var(--font-serif); font-size: 16px; font-style: italic; color: #666; margin-top: 5px;">"Selamat berbahagia Amar & Aulia! Semoga selalu diberkahi."</p>
-                    </div>
+                <div class="hadith-box mt-8 text-center italic text-sm text-gray">
+                    "Apabila seorang hamba menikah, maka ia telah menyempurnakan separuh agamanya..." <br>
+                    <span class="block mt-2 font-bold text-xs not-italic text-gold">— HR. Al-Baihaqi (Shahih)</span>
                 </div>
             </div>
         </section>
 
-        <section>
-            <div class="classic-card" data-aos="zoom-in">
-                <p class="section-subtitle">Kado Pernikahan</p>
-                <h2 class="section-title" style="font-size: 40px;">Tanda Kasih</h2>
-                <p style="font-size: 13px; color: #666; line-height: 1.6;">Doa restu Anda adalah hadiah terindah. Namun jika Anda ingin memberikan tanda kasih, dapat melalui tautan berikut:</p>
-                
-                <div class="credit-card">
-                    <div class="cc-chip"></div>
-                    <div class="cc-bank">BCA</div>
-                    <p class="cc-number" id="rek-bca">1234 5678 9000</p>
-                    <p class="cc-name">Aulia</p>
-                </div>
-                
-                <button class="btn-classic" onclick="salinRekening()" style="margin-top: 25px; background: transparent; border: 1px solid var(--accent-pink); color: var(--accent-pink); box-shadow: none;">Salin Nomor Rekening</button>
+        <section id="rsvp" class="v-section" data-aos="fade-up">
+            <div class="editorial-panel">
+                <h2 class="editorial-title mb-6">Konfirmasi Kehadiran</h2>
+                <form id="rsvpForm" class="text-left">
+                    <input type="text" id="namaTamu" name="nama" class="input-editorial" placeholder="Nama Lengkap Anda" required>
+                    <textarea id="pesanTamu" name="pesan" class="input-editorial" rows="3" placeholder="Doa & Ucapan Restu..." required></textarea>
+                    <select id="hadirTamu" name="kehadiran" class="input-editorial" required>
+                        <option value="" disabled selected>Pilih Kehadiran</option>
+                        <option value="Hadir">Insya Allah Hadir</option>
+                        <option value="Tidak Hadir">Udzur Syar'i (Tidak Hadir)</option>
+                    </select>
+                    <button type="submit" class="btn-editorial-dark w-full mt-6" id="btnSubmit">Kirim Konfirmasi</button>
+                </form>
             </div>
-        </section>
-        
-        <section style="padding: 20px 20px 60px 20px;" data-aos="fade-in">
-            <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-            <img src="https://via.placeholder.com/150x30/FDFBF7/D4A3A3?text=Garis+Pembatas" class="floral-divider" alt="Pembatas Halaman" style="margin-bottom: 15px;">
-            
-            <p class="section-subtitle" style="margin-bottom: 5px;">Terima Kasih</p>
-            <h1 style="font-family: var(--font-hand); font-size: 55px; color: var(--accent-pink);">Amar & Aulia</h1>
-            
-            <div class="watermark-container">
-                <p class="watermark-label">Dibuat Oleh</p>
-                <p class="watermark-signature">Muhammad Amar</p>
+
+            <div class="masterpiece-footer mt-16 text-center">
+                <div class="footer-line"></div>
+                <p class="footer-tag">DIGITAL MASTERPIECE BY</p>
+                <h4 class="footer-author">Muhammad Amar</h4>
             </div>
         </section>
 
-        <!-- LINK GAMBAR DIGANTI SEMENTARA KE PLACEHOLDER ONLINE -->
-        <img src="https://via.placeholder.com/220/FDFBF7/8DA399?text=Bunga+Kanan" class="floral-corner bottom-right" style="border-radius: 50%;" alt="Bunga Kanan Bawah">
     </div>
 
-    <div class="music-disc" id="musicBtn" onclick="aturMusik()" title="Mainkan/Jeda Musik"></div>
-
+    <script src="script.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <script>
-        AOS.init({ once: false, offset: 50, duration: 1200 });
-
-        function buatPercikan() {
-            const wadah = document.getElementById('mainContainer');
-            for(let i=0; i<30; i++) {
-                let bintang = document.createElement('div');
-                bintang.className = 'sparkle';
-                bintang.style.width = Math.random() * 4 + 1 + 'px';
-                bintang.style.height = bintang.style.width;
-                bintang.style.left = Math.random() * 100 + '%';
-                bintang.style.top = Math.random() * 100 + 'vh';
-                bintang.style.animationDuration = Math.random() * 3 + 2 + 's';
-                bintang.style.animationDelay = Math.random() * 2 + 's';
-                wadah.appendChild(bintang);
-            }
-        }
-
-        var pemutar;
-        function onYouTubeIframeAPIReady() {
-            pemutar = new YT.Player('youtube-player', {
-                height: '0', width: '0', videoId: 'tf1eWhA3MMw',
-                playerVars: { 'autoplay': 1, 'controls': 0, 'showinfo': 0, 'rel': 0, 'loop': 1, 'playlist': 'tf1eWhA3MMw' },
-                events: {
-                    'onReady': function(event) {
-                        event.target.playVideo();
-                    }
-                }
-            });
-        }
-
-        function bukaAmplop() {
-            const lipatan = document.getElementById('envFlap');
-            const kertas = document.getElementById('envPaper');
-            const sampul = document.getElementById('coverScreen');
-            const tombolMusik = document.getElementById('musicBtn');
-            
-            lipatan.classList.add('open');
-            
-            setTimeout(() => {
-                kertas.classList.add('pull-up');
-            }, 600);
-
-            setTimeout(() => {
-                sampul.classList.add('fade-out');
-                // PERBAIKAN: Memastikan class lock-scroll dihapus dari html maupun body
-                document.documentElement.classList.remove('lock-scroll');
-                document.body.classList.remove('lock-scroll');
-                buatPercikan();
-                tombolMusik.classList.add('show');
-                
-                try {
-                    if (pemutar && typeof pemutar.playVideo === 'function') {
-                        pemutar.playVideo();
-                        tombolMusik.classList.add('playing');
-                    }
-                } catch (e) { console.log(e); }
-                
-                AOS.refresh();
-            }, 2300);
-        }
-
-        function aturMusik() {
-            var tombol = document.getElementById("musicBtn");
-            if (pemutar && typeof pemutar.getPlayerState === 'function') {
-                if (pemutar.getPlayerState() === 1) { 
-                    pemutar.pauseVideo(); tombol.classList.remove("playing");
-                } else { 
-                    pemutar.playVideo(); tombol.classList.add("playing");
-                }
-            }
-        }
-
-        function salinRekening() {
-            var teksRekening = document.getElementById("rek-bca").innerText.replace(/\s+/g, '');
-            navigator.clipboard.writeText(teksRekening).then(() => { alert("✨ Nomor Rekening BCA berhasil disalin!"); });
-        }
-
-        function kirimPesan() {
-            var nama = document.getElementById("namaTamu").value;
-            var pesan = document.getElementById("pesanTamu").value;
-            var hadir = document.getElementById("hadirTamu").value;
-            
-            if(nama === "" || pesan === "") { alert("Mohon lengkapi Nama dan Pesan Anda ✨"); return; }
-
-            var areaKomentar = document.getElementById("daftarKomentar");
-            var elemenBaru = document.createElement("div");
-            elemenBaru.style.cssText = "margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;";
-            elemenBaru.innerHTML = `<p style="font-weight: 600; font-size: 13px; color: var(--text-dark);">${nama} <span style="font-size:10px; color:#999; font-weight:normal;">(${hadir})</span></p><p style="font-family: var(--font-serif); font-size: 16px; font-style: italic; color: #666; margin-top: 5px;">"${pesan}"</p>`;
-            areaKomentar.prepend(elemenBaru);
-            
-            document.getElementById("namaTamu").value = ""; document.getElementById("pesanTamu").value = "";
-
-            setTimeout(function() {
-                var noWA = "6281234567890"; 
-                var teksWA = "Halo Amar & Aulia!%0A%0A*Nama:* " + nama + "%0A*Kehadiran:* " + hadir + "%0A*Pesan:* " + pesan;
-                window.open("https://wa.me/" + noWA + "?text=" + teksWA, '_blank');
-            }, 600); 
-        }
-
-        var tanggalTujuan = new Date("Jun 29, 2026 09:00:00").getTime();
-        var hitungMundur = setInterval(function() {
-            var sekarang = new Date().getTime();
-            var selisih = tanggalTujuan - sekarang;
-
-            var hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
-            var jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
-            var detik = Math.floor((selisih % (1000 * 60)) / 1000);
-
-            document.getElementById("hari").innerHTML = hari < 10 ? "0" + hari : hari;
-            document.getElementById("jam").innerHTML = jam < 10 ? "0" + jam : jam;
-            document.getElementById("menit").innerHTML = menit < 10 ? "0" + menit : menit;
-            document.getElementById("detik").innerHTML = detik < 10 ? "0" + detik : detik;
-
-            if (selisih < 0) {
-                clearInterval(hitungMundur);
-                document.getElementById("hari").innerHTML = "00";
-                document.getElementById("jam").innerHTML = "00";
-                document.getElementById("menit").innerHTML = "00";
-                document.getElementById("detik").innerHTML = "00";
-            }
-        }, 1000);
-    </script>
 </body>
 </html>
