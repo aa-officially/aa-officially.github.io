@@ -43,7 +43,9 @@ body {
    1. COVER MAGIS 
    ========================================= */
 #cover-page {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+    position: fixed; top: 0; left: 0; width: 100%; 
+    height: 100vh; /* Fallback untuk browser lama */
+    height: 100dvh; /* PERBAIKAN 1: Memastikan layar HP tidak memotong konten bawah (Copyright) */
     background: linear-gradient(-45deg, #050505, #0f172a, #111827, #000000);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
@@ -176,7 +178,6 @@ body {
 
 .monogram-overlay {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--font-calligraphy);
-    /* RESPONSIVE FONT FIX */
     font-size: clamp(2.5rem, 12vw, 4rem); color: rgba(255, 255, 255, 0.9); text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.4);
     z-index: 5; pointer-events: none; animation: breathe 4s ease-in-out infinite; transition: opacity 0.5s ease;
 }
@@ -234,7 +235,6 @@ body {
 .pre-title { font-family: var(--font-sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 6px; color: #1a3626; margin-bottom: 10px; text-transform: uppercase; text-shadow: 1px 1px 0px rgba(255,255,255,0.9), 0 0 5px rgba(255,255,255,0.8); }
 .shimmer-text { 
     background: linear-gradient(to right, #0f291e 20%, #29543b 40%, #29543b 60%, #0f291e 80%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--font-calligraphy); 
-    /* RESPONSIVE FONT FIX */
     font-size: clamp(2.4rem, 11vw, 3.2rem); font-weight: 600; line-height: 1.1; margin: 0; text-align: center; filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.9)) drop-shadow(0 0 8px rgba(255,255,255,0.6)); animation: shine 4s linear infinite;
 }
 .elegant-date { font-family: var(--font-sans); font-size: 0.75rem; color: #1a3626; margin-top: 8px; letter-spacing: 5px; font-weight: 600; text-shadow: 1px 1px 0px rgba(255,255,255,0.9), 0 0 5px rgba(255,255,255,0.8); }
@@ -250,7 +250,7 @@ body {
 }
 
 /* =========================================
-   4. ANIMASI SAAT BUKU TERBUKA (PERBAIKAN GARIS)
+   4. ANIMASI SAAT BUKU TERBUKA
    ========================================= */
 .book-scene.is-open { animation: none; filter: none; transform: translateY(0) rotateX(5deg) rotateY(0deg); }
 .book-scene.is-open .wind-flutter { animation: none; }
@@ -274,9 +274,16 @@ body {
     100% { transform: translateZ(12px) rotateY(-175deg); z-index: 0; box-shadow: none; border-right: none; border-bottom: none; border-left: 2px solid #0f1c16; }
 }
 
+/* PERBAIKAN 2: Jika dilayar HP (lebar max 768px), buku bergeser ke tengah dan mengecil sedikit agar dua halaman full terlihat */
+@media screen and (max-width: 768px) {
+    .book-scene.is-open { 
+        transform: translateX(50%) rotateX(5deg) scale(0.55) !important; 
+    }
+}
+
 /* =========================================
    5. KONTEN & LAINNYA
    ========================================= */
-.watermark { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 9999999; white-space: nowrap; }
+.watermark { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 9999999; white-space: nowrap; }
 .wm-text-1 { font-family: var(--font-sans); font-size: 0.45rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; display: inline-block; vertical-align: middle; margin-right: 6px; }
 .wm-text-2 { font-family: var(--font-calligraphy); font-size: 1.4rem; color: #cbd5e1; letter-spacing: 1px; font-weight: 300; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); display: inline-block; vertical-align: middle; }
