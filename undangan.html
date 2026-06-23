@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
     <title>The Wedding of Aulia & Amar</title>
     <link rel="icon" type="image/png" href="icon.png">
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,700&family=Amiri:wght@400;700&family=Sacramento&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome & AOS Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
@@ -115,11 +114,13 @@
             filter: sepia(0.2) brightness(0.92) contrast(1.05); 
         }
 
-        /* --- HERO SECTION --- */
+        /* --- HERO SECTION --- (FIXED LAYOUT) */
         .hero-section {
-            position: relative; width: 100%; aspect-ratio: 4/5; max-height: 85vh;
+            position: relative; width: 100%;
+            min-height: 85vh; height: auto; 
             display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
             margin-bottom: 0px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; overflow: hidden;
+            padding-top: 100px;
             padding-bottom: 6vh; z-index: 2;
         }
         .hero-video { 
@@ -140,7 +141,9 @@
         .hero-names-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
         .hero-name { 
-            font-family: var(--font-signature); font-size: 5.2rem; line-height: 1.1;
+            font-family: var(--font-signature); 
+            font-size: clamp(3rem, 14vw, 5.2rem); 
+            line-height: 1.1;
             background: linear-gradient(135deg, #fff7ad 0%, #fde047 50%, #ca8a04 100%);
             -webkit-background-clip: text; 
             background-clip: text;
@@ -148,7 +151,7 @@
             filter: drop-shadow(0 4px 15px rgba(253, 224, 71, 0.35)); padding: 0 10px;
         }
         .hero-ampersand { 
-            font-family: var(--font-script); font-size: 2.2rem; margin: 15px 0;
+            font-family: var(--font-script); font-size: clamp(1.8rem, 6vw, 2.2rem); margin: 10px 0;
             color: #fff; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); font-style: italic; 
         }
         .hero-date { 
@@ -184,7 +187,7 @@
         @keyframes pulse-star { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px var(--accent-glow); } }
 
         /* --- GENERAL TYPOGRAPHY --- */
-        .section-title { font-family: var(--font-script); font-size: 2.8rem; color: #fff; margin-bottom: 5px; text-shadow: 0 0 15px rgba(255,255,255,0.2); line-height: 1.2; font-style: italic; }
+        .section-title { font-family: var(--font-script); font-size: clamp(2rem, 8vw, 2.8rem); color: #fff; margin-bottom: 5px; text-shadow: 0 0 15px rgba(255,255,255,0.2); line-height: 1.2; font-style: italic; }
         .section-subtitle { font-family: var(--font-sans); font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--accent-glow); margin-bottom: 25px; font-weight: 700; }
         .bismillah-text { font-family: var(--font-arabic); font-size: 1.6rem; margin-bottom: 15px; color: #d4af37; font-weight: 400; }
         .text-p { font-size: 0.85rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 15px; font-weight: 300; }
@@ -201,7 +204,7 @@
         }
         @keyframes morph { 0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } 100% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; } }
         .profile-img-box img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
-        .profile-name { font-family: var(--font-signature); font-size: 3.2rem; color: #fff; line-height: 1; }
+        .profile-name { font-family: var(--font-signature); font-size: clamp(2.2rem, 10vw, 3.2rem); color: #fff; line-height: 1; }
         .profile-parents { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-top: 5px; }
         .parent-name { font-weight: 600; color: #e2e8f0; }
 
@@ -211,7 +214,7 @@
             background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
             padding: 15px 5px; box-shadow: inset 0 2px 0 rgba(255,255,255,0.05), 0 8px 15px rgba(0,0,0,0.4);
         }
-        .c-num { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 700; color: #fff; }
+        .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: #fff; }
         .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow); margin-top: 5px; font-weight: 600; }
 
         /* --- AGENDA & MAPS --- */
@@ -219,7 +222,7 @@
             background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(0,0,0,0.4));
             border-left: 4px solid var(--accent-glow); border-radius: 0 16px 16px 0; padding: 20px; margin-bottom: 20px; text-align: left;
         }
-        .agenda-title { font-family: var(--font-signature); font-size: 2.2rem; color: var(--accent-gold); margin-bottom: 5px; }
+        .agenda-title { font-family: var(--font-signature); font-size: clamp(1.8rem, 8vw, 2.2rem); color: var(--accent-gold); margin-bottom: 5px; }
         .agenda-detail { font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
         .agenda-detail i { color: var(--accent-glow); width: 15px; }
         .venue-info { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; margin-top: 15px; }
@@ -258,7 +261,7 @@
         }
         .atm-card::after { content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 30px; background: url('https://img.icons8.com/color/48/sim-card-chip.png') center/contain no-repeat; opacity: 0.8; }
         .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 4px; }
-        .bank-rek { font-family: monospace; font-size: 1.35rem; font-weight: 700; letter-spacing: 2px; color: #fff; margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        .bank-rek { font-family: monospace; font-size: clamp(1.1rem, 6vw, 1.35rem); font-weight: 700; letter-spacing: 2px; color: #fff; margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         .bank-name { font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase; margin-bottom: 15px; }
         .btn-copy-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 10px; border-radius: 12px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 600; }
         .btn-copy-card:hover { background: #fff; color: #000; }
@@ -296,7 +299,7 @@
 
         /* --- FOOTER CLOSING --- */
         .footer-sec { text-align: center; padding: 60px 20px 30px 20px; position: relative; z-index: 2; }
-        .closing-text-en { font-family: var(--font-script); font-size: 1.8rem; color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
+        .closing-text-en { font-family: var(--font-script); font-size: clamp(1.4rem, 6vw, 1.8rem); color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
         .closing-arab-small { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--text-muted); margin-top: 30px; font-weight: 400; opacity: 0.8; letter-spacing: 1px; }
         
         .wa-footer-button {
@@ -312,8 +315,7 @@
 </head>
 <body>
 
-    <!-- VIDEO BACKGROUND LAYER -->
-    <video autoplay loop muted playsinline class="main-background-video">
+    <video autoplay loop muted playsinline class="main-background-video" preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
 
@@ -328,9 +330,8 @@
     <div class="mobile-wrapper">
         <canvas id="stars-canvas"></canvas>
         
-        <!-- SECTION 1: HERO -->
         <section class="hero-section">
-            <video autoplay loop muted playsinline class="hero-video">
+            <video autoplay loop muted playsinline class="hero-video" preload="auto">
                 <source src="section1.mp4" type="video/mp4">
             </video>
             <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
@@ -352,7 +353,6 @@
             </div>
         </section>
 
-        <!-- RUNNING TEXT GEN Z AESTHETIC -->
         <div class="marquee-container" data-aos="fade-up">
             <div class="marquee-content">
                 <div class="marquee-group">
@@ -382,16 +382,14 @@
             </div>
         </div>
 
-        <!-- SECTION 2: QURAAN VIDEO -->
         <div class="glass-card" style="padding: 15px;" data-aos="fade-up">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video">
+                <video autoplay loop muted playsinline class="theme-video" preload="auto">
                     <source src="quraan.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
 
-        <!-- SECTION 3: SANG MEMPELAI -->
         <div class="glass-card" data-aos="zoom-in">
             <div class="bismillah-text">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
             <p class="text-p" style="color:#fff; font-weight: 600; font-size: 0.95rem;">Assalamualaikum Warahmatullahi Wabarakatuh</p>
@@ -404,7 +402,7 @@
                     <p class="profile-parents">Putra dari<br><span class="parent-name">Bapak H. Mansur (Alm) & Ibu Hj. Yulianti</span></p>
                 </div>
 
-                <div style="font-family: var(--font-signature); font-size: 3.5rem; color: var(--accent-glow); z-index: 2;" data-aos="fade-up">&</div>
+                <div style="font-family: var(--font-signature); font-size: clamp(2.5rem, 12vw, 3.5rem); color: var(--accent-glow); z-index: 2;" data-aos="fade-up">&</div>
 
                 <div class="profile-card" data-aos="fade-left">
                     <div class="profile-img-box"><img src="female_section3.png" alt="Aulia"></div>
@@ -414,7 +412,6 @@
             </div>
         </div>
 
-        <!-- SECTION 4: COUNTDOWN -->
         <div class="glass-card" data-aos="flip-up">
             <h2 class="section-title">Save The Date</h2>
             <div class="section-subtitle">Menanti Hari Bahagia</div>
@@ -426,7 +423,6 @@
             </div>
         </div>
 
-        <!-- SECTION 5: AGENDA & MAPS -->
         <div class="glass-card" data-aos="fade-up">
             <h2 class="section-title">Agenda Acara</h2>
             <p class="text-p" style="margin-bottom: 25px; font-weight: 500; color: #fff;">Dengan memohon rahmat dan ridho Allah SWT, insyaAllah kami akan menyelenggarakan acara:</p>
@@ -457,16 +453,14 @@
             </a>
         </div>
 
-        <!-- SECTION 6: ISI VIDEO -->
         <div class="glass-card" style="padding: 15px;" data-aos="zoom-in">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video">
+                <video autoplay loop muted playsinline class="theme-video" preload="auto">
                     <source src="isi.mp4" type="video/mp4">
                 </video>
             </div>
         </div>
 
-        <!-- SECTION 7: WEDDING GIFT -->
         <div class="gift-wrapper-box" data-aos="fade-up">
             <h2 class="section-title">Wedding Gift</h2>
             <div class="section-subtitle">Tanda Kasih</div>
@@ -493,7 +487,6 @@
             </div>
         </div>
 
-        <!-- SECTION 8: UCAPAN & DOA -->
         <div class="glass-card" data-aos="fade-up">
             <h2 class="section-title">Ucapan & Doa</h2>
             <p class="text-p" style="margin-bottom: 25px;">Kehadiran dan doa restu Anda adalah kado terindah bagi kami.</p>
@@ -558,7 +551,6 @@
             </div>
         </div>
 
-        <!-- SECTION 9: FOOTER CLOSING -->
         <div class="footer-sec" data-aos="fade-in">
             <h3 class="closing-text-en">Thank you for being part of our journey.</h3>
             <p class="text-p" style="font-size: 0.95rem; color: #fff;">
@@ -575,17 +567,14 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         AOS.init({ duration: 1200, once: false, offset: 50 });
 
-        // --- SISTEM KEMBALI KE SAMPUL SAAT REFRESH ---
         const navEntries = performance.getEntriesByType("navigation");
         if (navEntries.length > 0 && navEntries[0].type === "reload") {
             window.location.href = "index.html" + window.location.search;
         }
-        // ----------------------------------------------
 
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
@@ -611,8 +600,6 @@
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
                 ctx.fillStyle = '#ffffff';
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = '#ffffff';
                 ctx.translate(this.x, this.y);
                 ctx.beginPath();
                 for (let i = 0; i < 4; i++) {
@@ -658,27 +645,26 @@
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggle');
 
-        // --- SISTEM MELANJUTKAN MUSIK DARI HALAMAN DEPAN ---
         window.addEventListener('DOMContentLoaded', () => {
             const savedTime = sessionStorage.getItem('savedMusicTime');
             const isPlaying = sessionStorage.getItem('isMusicPlaying');
 
-            // Setel waktu lagu sesuai dengan saat halaman sampul ditinggalkan
+            // Force play background video on mobile untuk berjaga-jaga
+            const bgVideo = document.querySelector('.main-background-video');
+            if(bgVideo && bgVideo.paused) { bgVideo.play().catch(e => console.log('Autoplay blocked')); }
+
             if (savedTime) {
                 audio.currentTime = parseFloat(savedTime);
             }
 
-            // Jika di halaman depan lagu menyala, otomatis lanjutkan di sini
             if (isPlaying === 'true') {
                 audio.play().then(() => {
                     musicBtn.classList.remove('paused');
                 }).catch(() => {
-                    // Penanganan jika keamanan browser memblokir pemutaran otomatis
                     musicBtn.classList.add('paused');
                 });
             }
         });
-        // --------------------------------------------------
 
         function toggleMusic() {
             if (audio.paused) {
@@ -719,7 +705,6 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
-        // --- FETCH AJAX GOOGLE SHEETS CONNECTION ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
         function kirimUcapan(e) {
@@ -732,16 +717,13 @@
             const gifUrl = document.getElementById('selectedGifUrl').value;
             const board = document.getElementById('papanPesan');
             
-            // Loading State pada Tombol
             const submitBtn = form.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
             submitBtn.disabled = true;
 
-            // Mengirim Data ke Google Sheets
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    // Tampilkan pesan baru di papan pesan jika berhasil
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble';
                     let gifHtml = gifUrl ? `<img src="${gifUrl}" class="chat-gif" alt="gif">` : '';
@@ -756,7 +738,6 @@
                     `;
                     board.insertBefore(bubble, board.firstChild);
                     
-                    // Reset Form
                     form.reset();
                     document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
                     document.getElementById('selectedGifUrl').value = '';
