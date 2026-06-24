@@ -65,10 +65,10 @@ createStars();
 createMeteors();
 
 // ---------------------------------------------------------
-// 3. EFEK INTERAKSI KURSOR (Jejak Bintang) - DIOPTIMASI UNTUK HP
+// 3. EFEK INTERAKSI KURSOR (Jejak Bintang)
 // ---------------------------------------------------------
 const coverPageElement = document.getElementById('cover-page');
-let lastTrailTime = 0; // Throttle timer untuk menghindari lag
+let lastTrailTime = 0;
 
 function createTrail(x, y) {
     if (!coverPageElement) return;
@@ -95,7 +95,6 @@ if (coverPageElement) {
         }
     });
 
-    // passive: true menstabilkan 60fps saat scrolling di HP
     coverPageElement.addEventListener('touchmove', e => {
         let now = Date.now();
         if (e.touches.length > 0 && now - lastTrailTime > 60 && Math.random() > 0.3) {
@@ -106,7 +105,7 @@ if (coverPageElement) {
 }
 
 // ---------------------------------------------------------
-// 4. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN
+// 4. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN (SEAMLESS)
 // ---------------------------------------------------------
 function openInvitation() {
     const bookScene = document.getElementById('book');
@@ -183,12 +182,47 @@ function openInvitation() {
         frameContainer.style.height = '100vh';
         
         setTimeout(() => {
-            if (audio) {
-                sessionStorage.setItem('savedMusicTime', audio.currentTime);
-                sessionStorage.setItem('isMusicPlaying', !audio.paused);
-            }
             const queryString = window.location.search; 
-            window.location.href = 'undangan.html' + queryString;
+            
+            // MENGAMBIL FILE UNDANGAN.HTML SECARA DIAM-DIAM AGAR MUSIK TIDAK MATI
+            fetch('undangan.html' + queryString)
+                .then(res => res.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+
+                    doc.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
+                        if (!document.head.innerHTML.includes(el.outerHTML)) {
+                            document.head.appendChild(el.cloneNode(true));
+                        }
+                    });
+
+                    // Lindungi elemen audio
+                    const audioEl = document.getElementById('bgMusic');
+                    
+                    document.body.innerHTML = '';
+                    if(audioEl) document.body.appendChild(audioEl);
+
+                    // Masukkan isi undangan
+                    Array.from(doc.body.childNodes).forEach(node => {
+                        if (node.id === 'bgMusic') return; 
+                        
+                        if (node.tagName === 'SCRIPT') {
+                            const newScript = document.createElement('script');
+                            if (node.src) newScript.src = node.src;
+                            else newScript.textContent = node.textContent;
+                            document.body.appendChild(newScript);
+                        } else {
+                            document.body.appendChild(node.cloneNode(true));
+                        }
+                    });
+
+                    window.history.pushState({}, '', 'undangan.html' + queryString);
+                })
+                .catch(() => {
+                    // Jika gagal, kembali ke metode normal
+                    window.location.href = 'undangan.html' + queryString;
+                });
         }, 3500);
 
     }, 3500); 

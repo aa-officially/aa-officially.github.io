@@ -116,7 +116,7 @@
         /* --- HERO SECTION --- (FIXED LAYOUT) */
         .hero-section {
             position: relative; width: 100%;
-            min-height: 85vh; height: auto; /* Mencegah layar terpotong di HP kecil */
+            min-height: 85vh; height: auto; 
             display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
             margin-bottom: 0px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; overflow: hidden;
             padding-top: 100px;
@@ -141,7 +141,6 @@
         
         .hero-name { 
             font-family: var(--font-signature); 
-            /* FIXED FONT RESPONSIVENESS */
             font-size: clamp(3rem, 14vw, 5.2rem); 
             line-height: 1.1;
             background: linear-gradient(135deg, #fff7ad 0%, #fde047 50%, #ca8a04 100%);
@@ -315,7 +314,8 @@
 </head>
 <body>
 
-    <video autoplay loop muted playsinline class="main-background-video" preload="none">
+    <!-- PERBAIKAN: Hapus preload agar background otomatis muncul di HP -->
+    <video autoplay loop muted playsinline class="main-background-video">
         <source src="background.mp4" type="video/mp4">
     </video>
 
@@ -346,8 +346,9 @@
                 <div class="hero-cal-wrap">
                     <span class="hero-cal-label">Simpan ke Kalender:</span>
                     <div class="hero-cal-buttons">
-                        <a href="#" class="btn-mini-cal"><i class="fa-brands fa-google"></i> Google</a>
-                        <a href="#" class="btn-mini-cal"><i class="fa-brands fa-apple"></i> Apple</a>
+                        <!-- PERBAIKAN: Fungsi link Kalender -->
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+Aulia+%26+Amar&dates=20260628T020000Z/20260628T060000Z&details=Acara+Pernikahan+Aulia+dan+Amar&location=Wisma+Donggala,+Palu" target="_blank" class="btn-mini-cal"><i class="fa-brands fa-google"></i> Google</a>
+                        <a href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:20260628T020000Z%0ADTEND:20260628T060000Z%0ASUMMARY:The%20Wedding%20of%20Aulia%20%26%20Amar%0ALOCATION:Wisma%20Donggala%2C%20Palu%0ADESCRIPTION:Acara%20Pernikahan%20Aulia%20dan%20Amar%0AEND:VEVENT%0AEND:VCALENDAR" download="wedding_aulia_amar.ics" class="btn-mini-cal"><i class="fa-brands fa-apple"></i> Apple</a>
                     </div>
                 </div>
             </div>
@@ -455,7 +456,7 @@
 
         <div class="glass-card" style="padding: 15px;" data-aos="zoom-in">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video" preload="none">
+                <video autoplay loop muted playsinline class="theme-video">
                     <source src="isi.mp4" type="video/mp4">
                 </video>
             </div>
@@ -571,13 +572,6 @@
     <script>
         AOS.init({ duration: 1200, once: false, offset: 50 });
 
-        // --- SISTEM KEMBALI KE SAMPUL SAAT REFRESH ---
-        const navEntries = performance.getEntriesByType("navigation");
-        if (navEntries.length > 0 && navEntries[0].type === "reload") {
-            window.location.href = "index.html" + window.location.search;
-        }
-        // ----------------------------------------------
-
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
         const wrapper = document.querySelector('.mobile-wrapper');
@@ -599,7 +593,6 @@
                 this.growing = Math.random() > 0.5;
             }
             draw() {
-                // FIXED: Efek blur bayangan telah dihapus agar FPS di HP Android & iOS tetap lancar
                 ctx.save();
                 ctx.globalAlpha = this.alpha;
                 ctx.fillStyle = '#ffffff';
@@ -642,29 +635,25 @@
 
         window.addEventListener('load', resizeCanvas);
         window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        animateStars();
+        
+        // PERBAIKAN: Jalankan animasi bintang secara langsung untuk sinkronisasi perpindahan halaman (AJAX)
+        setTimeout(() => {
+            resizeCanvas();
+            animateStars();
+        }, 100);
 
+        // --- SISTEM MELANJUTKAN MUSIK ---
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggle');
 
-        // --- SISTEM MELANJUTKAN MUSIK DARI HALAMAN DEPAN ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTime = sessionStorage.getItem('savedMusicTime');
-            const isPlaying = sessionStorage.getItem('isMusicPlaying');
-
-            if (savedTime) {
-                audio.currentTime = parseFloat(savedTime);
+        // Sinkronisasi ikon tombol karena musik tidak terputus dari halaman depan
+        if (audio && musicBtn) {
+            if (!audio.paused) {
+                musicBtn.classList.remove('paused');
+            } else {
+                musicBtn.classList.add('paused');
             }
-
-            if (isPlaying === 'true') {
-                audio.play().then(() => {
-                    musicBtn.classList.remove('paused');
-                }).catch(() => {
-                    musicBtn.classList.add('paused');
-                });
-            }
-        });
+        }
 
         function toggleMusic() {
             if (audio.paused) {
@@ -705,7 +694,6 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
-        // --- FETCH AJAX GOOGLE SHEETS CONNECTION ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
         function kirimUcapan(e) {
