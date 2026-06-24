@@ -7,7 +7,12 @@ if (guestName) {
 
 const invVideo = document.getElementById('invitationVideo');
 const bgVideo = document.querySelector('.cover-bg-video');
-if (invVideo) { invVideo.playbackRate = 0.75; }
+
+if (invVideo) { 
+    invVideo.playbackRate = 0.75; 
+}
+
+const coverPageElement = document.getElementById('cover-page');
 
 function openInvitation() {
     const bookScene = document.getElementById('book');
@@ -19,38 +24,42 @@ function openInvitation() {
     
     if (!bookScene || bookScene.classList.contains('is-open')) return;
 
+    // 1. TAHAP PERTAMA: Buka Buku
     bookScene.classList.add('is-open');
     bookScene.onclick = null; 
     
     if (guestBox) guestBox.style.opacity = '0';
     const frontContent = document.querySelector('.front-content');
     if (frontContent) frontContent.style.opacity = '0';
-    if (watermark) watermark.style.opacity = '0';
-
+    
+    // Matikan video background agar internet stabil untuk muat video berikutnya
     if (bgVideo) bgVideo.pause();
 
     if (invVideo) {
-        invVideo.play().catch(e => console.log("Autoplay ditangguhkan", e));
+        invVideo.play().catch(e => console.log("Autoplay dicegah browser", e));
     }
 
     if (audio) {
         let playPromise = audio.play();
         if (playPromise !== undefined) {
-            playPromise.catch(() => { document.addEventListener('click', () => audio.play(), { once: true }); });
+            playPromise.catch(() => {
+                document.addEventListener('click', () => audio.play(), { once: true });
+            });
         }
     }
 
     let isIframeLoaded = false;
-    let isSkipped = false;
-    let seq1, seq2;
+    let sequenceTimeout1, sequenceTimeout2;
 
     const loadIframeSPA = (e) => {
         if (e && e.type === 'touchstart') e.preventDefault(); 
         if(isIframeLoaded) return;
         isIframeLoaded = true;
 
-        clearTimeout(seq1);
-        clearTimeout(seq2);
+        clearTimeout(sequenceTimeout1);
+        clearTimeout(sequenceTimeout2);
+
+        // Hapus watermark sepenuhnya
         if (watermark) watermark.remove();
 
         let iframe = document.createElement('iframe');
@@ -65,30 +74,29 @@ function openInvitation() {
         iframe.style.border = 'none';
         iframe.style.zIndex = '9999998'; 
         iframe.style.opacity = '0';
-        iframe.style.transition = 'opacity 0.6s ease';
+        iframe.style.transition = 'opacity 1s ease';
         document.body.appendChild(iframe);
 
         iframe.onload = () => {
             iframe.style.opacity = '1';
             setTimeout(() => {
+                // Matikan & Kosongkan video lama agar RAM HP lega (Mencegah Lag)
                 if(invVideo) { invVideo.pause(); invVideo.removeAttribute('src'); invVideo.load(); }
                 if(bgVideo) { bgVideo.pause(); bgVideo.removeAttribute('src'); bgVideo.load(); }
+                
                 if(frameContainer) frameContainer.remove();
                 if (coverPage) coverPage.remove();
                 iframe.style.zIndex = '1'; 
-            }, 600);
+            }, 800);
         };
     };
 
     const skipAction = (e) => {
-        if (isSkipped) return;
-        isSkipped = true;
         loadIframeSPA(e);
     };
 
-    // Buku terbuka 1 detik, video di dalam buku berjalan 1 detik (Total 2 detik menuju Fullscreen)
-    seq1 = setTimeout(() => {
-        if (isSkipped) return;
+    // TAHAP KEDUA: Setelah buku terbuka (1 detik), diam dibuku (1 detik).
+    sequenceTimeout1 = setTimeout(() => {
         if (!frameContainer) return;
         
         document.body.appendChild(frameContainer);
@@ -96,16 +104,17 @@ function openInvitation() {
 
         const dateArabic = document.querySelector('.inside-date-arabic');
         if (dateArabic) dateArabic.style.display = 'none';
+
         if (coverPage) coverPage.style.display = 'none';
 
-        // Klik layar saat fullscreen langsung skip tanpa delay
+        // TAHAP KETIGA: Klik layar akan skip langsung
         frameContainer.style.cursor = 'pointer';
         frameContainer.addEventListener('click', skipAction);
         frameContainer.addEventListener('touchstart', skipAction, {passive: false});
 
-        // Video berjalan fullscreen selama 1 detik sebelum auto-load
-        seq2 = setTimeout(() => {
-            if(!isSkipped) loadIframeSPA();
+        // Video berjalan tanpa buku 1 detik, lalu auto-load
+        sequenceTimeout2 = setTimeout(() => {
+            if(!isIframeLoaded) loadIframeSPA();
         }, 1000); 
 
     }, 2000); 

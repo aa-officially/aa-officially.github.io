@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
+    
     <title>The Wedding of Aulia & Amar</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,700&family=Amiri:wght@400;700&family=Sacramento&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <style>
+        /* TEMA PREMIUM: MIDNIGHT ROYAL GOLD (Anti Lag) */
         :root {
-            --dark-bg: #030710;
-            --card-bg: #091322;
-            --accent-glow: #38bdf8;
-            --accent-gold: #fde047;
+            --dark-bg: #02060c; 
+            --card-gradient: linear-gradient(145deg, #0b1320 0%, #050a12 100%);
+            --accent-gold: #d4af37;
+            --accent-glow: #eab308;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
+            --border-elegant: rgba(212, 175, 55, 0.2);
+            
             --font-serif: 'Cinzel', serif;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
             --font-script: 'Playfair Display', serif;
@@ -31,93 +36,141 @@
         html { scroll-behavior: smooth; }
         
         body { 
-            /* Desain Background Premium Tanpa Filter Berat Bebas Lag */
-            background: radial-gradient(circle at top, #0c1a30 0%, var(--dark-bg) 70%);
+            background-color: var(--dark-bg); 
+            background-image: radial-gradient(circle at top right, #0a1120, transparent 40%), radial-gradient(circle at bottom left, #0a1120, transparent 40%);
             color: var(--text-main); font-family: var(--font-sans); overflow-x: hidden; 
-            -webkit-font-smoothing: antialiased; animation: smoothLoad 0.8s ease-out forwards;
+            -webkit-font-smoothing: antialiased;
+            animation: smoothLoad 1.2s ease-out forwards;
         }
-        @keyframes smoothLoad { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .mobile-wrapper { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; padding-bottom: 80px; }
+        @keyframes smoothLoad { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        .mobile-wrapper { 
+            width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; 
+            padding-bottom: 80px; overflow: hidden; transform: translateZ(0); 
+        }
 
         .music-btn {
             position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5); border: 1px solid var(--border-elegant);
             border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 1000;
-            cursor: pointer; color: #fff; animation: spin 5s linear infinite;
+            cursor: pointer; color: var(--accent-gold); animation: spin 5s linear infinite; box-shadow: 0 0 15px rgba(212,175,55,0.2);
         }
-        .music-btn.paused { animation-play-state: paused; color: var(--text-muted); }
+        .music-btn.paused { animation-play-state: paused; box-shadow: none; border-color: rgba(255,255,255,0.1); color: var(--text-muted); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
+        /* KARTU KACA OPTIMASI (Tanpa backdrop-filter blur yang bikin ngelag) */
         .glass-card {
-            background: var(--card-bg); border: 1px solid rgba(56, 189, 248, 0.15);
-            border-radius: 24px; padding: 35px 20px; margin: 0 20px 40px 20px; text-align: center;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.6); position: relative; z-index: 2;
+            background: var(--card-gradient);
+            border: 1px solid var(--border-elegant);
+            border-radius: 24px; padding: 40px 25px; margin: 0 20px 45px 20px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05); 
+            position: relative; z-index: 2; overflow: hidden; transform: translateZ(0);
         }
 
-        .theme-video-container { width: 100%; border-radius: 16px; overflow: hidden; background: #000; padding: 4px; border: 1px solid rgba(255,255,255,0.1); }
-        .theme-video { width: 100%; display: block; object-fit: cover; border-radius: 12px; }
+        .glass-card::before, .glass-card::after { content: ''; position: absolute; width: 20px; height: 20px; border: 2px solid var(--accent-gold); opacity: 0.5; pointer-events: none; }
+        .glass-card::before { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .glass-card::after { bottom: 15px; right: 15px; border-left: none; border-top: none; }
 
-        .hero-section { position: relative; width: 100%; min-height: 80vh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 5vh; z-index: 2; }
-        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.65; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
+        .theme-video-container { width: 100%; border-radius: 16px; overflow: hidden; background: #000; padding: 5px; border: 1px solid var(--border-elegant); }
+        .theme-video { width: 100%; display: block; object-fit: cover; border-radius: 12px; filter: brightness(0.9); }
+
+        .hero-section { position: relative; width: 100%; min-height: 85vh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 6vh; z-index: 2; border-bottom: 1px solid var(--border-elegant); }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.6; mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); }
         .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
         
-        .hero-pretitle { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; color: #fff; margin-bottom: 10px; }
-        .hero-name { font-family: var(--font-signature); font-size: clamp(3rem, 14vw, 5rem); line-height: 1.1; background: linear-gradient(135deg, #fff7ad, #fde047, #ca8a04); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-ampersand { font-family: var(--font-script); font-size: 1.8rem; margin: 8px 0; color: #fff; font-style: italic; }
-        .hero-date { font-family: var(--font-sans); font-size: 1rem; letter-spacing: 5px; margin-top: 12px; font-weight: 700; color: #fff; padding: 8px 22px; border-radius: 30px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
+        .hero-pretitle { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 15px; }
+        .hero-name { font-family: var(--font-signature); font-size: clamp(3rem, 14vw, 5.2rem); line-height: 1.1; background: linear-gradient(135deg, #fff, var(--accent-gold)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-ampersand { font-family: var(--font-script); font-size: clamp(1.8rem, 6vw, 2.2rem); margin: 10px 0; color: var(--accent-gold); font-style: italic; }
+        .hero-date { font-family: var(--font-sans); font-size: 1.05rem; letter-spacing: 6px; margin-top: 15px; font-weight: 700; color: #fff; padding: 10px 25px; border-radius: 30px; background: rgba(212,175,55,0.1); border: 1px solid var(--border-elegant); }
 
-        .marquee-container { width: 100%; overflow: hidden; background: rgba(56, 189, 248, 0.04); border-top: 1px solid rgba(56, 189, 248, 0.15); border-bottom: 1px solid rgba(56, 189, 248, 0.15); padding: 10px 0; margin-bottom: 40px; margin-top: 25px; white-space: nowrap; }
-        .marquee-content { display: inline-flex; align-items: center; animation: marquee 20s linear infinite; }
+        .btn-aesthetic { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: rgba(212,175,55,0.1); color: var(--accent-gold); padding: 16px 24px; border-radius: 12px; font-family: var(--font-sans); font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border: 1px solid var(--border-elegant); cursor: pointer; text-decoration: none; transition: 0.3s; }
+        .btn-aesthetic:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 20px rgba(212,175,55,0.4); }
+
+        .marquee-container { width: 100%; overflow: hidden; background: rgba(212,175,55,0.05); border-top: 1px solid var(--border-elegant); border-bottom: 1px solid var(--border-elegant); padding: 12px 0; margin-bottom: 45px; margin-top: 30px; white-space: nowrap; position: relative; }
+        .marquee-content { display: inline-flex; align-items: center; animation: marquee 20s linear infinite; padding-left: 30px; }
         .marquee-group { display: flex; align-items: center; gap: 30px; padding-right: 30px; }
-        .marquee-text-item { font-size: 0.8rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
-        .marquee-arabic { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--accent-gold); }
+        .marquee-text-item { font-size: 0.85rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .marquee-arabic { font-family: var(--font-arabic); font-size: 1.3rem; color: var(--accent-gold); }
+        .marquee-star { color: var(--accent-gold); font-size: 0.6rem; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .section-title { font-family: var(--font-script); font-size: clamp(2rem, 8vw, 2.6rem); color: #fff; margin-bottom: 4px; font-style: italic; }
-        .section-subtitle { font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent-glow); margin-bottom: 20px; font-weight: 700; }
-        .bismillah-text { font-family: var(--font-arabic); font-size: 1.5rem; margin-bottom: 12px; color: #d4af37; }
-        .text-p { font-size: 0.85rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px; }
+        .section-title { font-family: var(--font-script); font-size: clamp(2rem, 8vw, 2.8rem); color: var(--accent-gold); margin-bottom: 5px; line-height: 1.2; font-style: italic; }
+        .section-subtitle { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: #fff; margin-bottom: 25px; font-weight: 700; opacity: 0.8; }
+        .bismillah-text { font-family: var(--font-arabic); font-size: 1.6rem; margin-bottom: 15px; color: var(--accent-gold); }
+        .text-p { font-size: 0.85rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 15px; font-weight: 300; }
 
-        .couple-container { display: flex; flex-direction: column; gap: 35px; margin-top: 25px; }
-        .profile-img-box { width: 130px; height: 150px; margin: 0 auto 12px auto; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); }
-        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-name { font-family: var(--font-signature); font-size: clamp(2.2rem, 10vw, 3rem); color: #fff; }
-        .profile-parents { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+        .couple-container { display: flex; flex-direction: column; gap: 40px; margin-top: 30px; position: relative; }
+        .profile-img-box { width: 140px; height: 160px; margin: 0 auto 15px auto; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; overflow: hidden; border: 2px solid var(--accent-gold); padding: 4px; background: rgba(212,175,55,0.1); animation: morph 8s ease-in-out infinite alternate; }
+        @keyframes morph { 0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } 100% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; } }
+        .profile-img-box img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; filter: grayscale(20%) contrast(1.1); }
+        .profile-name { font-family: var(--font-signature); font-size: clamp(2.2rem, 10vw, 3.2rem); color: #fff; line-height: 1; }
+        .profile-parents { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
         .parent-name { font-weight: 600; color: #e2e8f0; }
 
-        .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 25px 0; }
-        .count-item { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 4px; }
-        .c-num { font-family: var(--font-serif); font-size: clamp(1.3rem, 6vw, 1.7rem); font-weight: 700; color: #fff; }
-        .c-label { display: block; font-size: 0.55rem; text-transform: uppercase; color: var(--accent-glow); margin-top: 4px; font-weight: 600; }
+        .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
+        .count-item { background: rgba(0,0,0,0.4); border: 1px solid var(--border-elegant); border-radius: 16px; padding: 15px 5px; }
+        .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: var(--accent-gold); }
+        .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-top: 5px; font-weight: 600; opacity: 0.8; }
 
-        .agenda-ticket { background: rgba(5, 10, 20, 0.5); border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid var(--accent-glow); border-radius: 14px; padding: 18px; margin-bottom: 18px; text-align: left; display: flex; align-items: center; gap: 15px; }
-        .agenda-icon-box { width: 45px; height: 45px; background: rgba(56, 189, 248, 0.08); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: var(--accent-glow); flex-shrink: 0; }
-        .agenda-title { font-family: var(--font-signature); font-size: 2rem; color: var(--accent-gold); margin-bottom: 4px; }
-        .agenda-detail { font-size: 0.8rem; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+        .agenda-ticket { background: rgba(0,0,0,0.5); border: 1px solid var(--border-elegant); border-left: 4px solid var(--accent-gold); border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; display: flex; align-items: center; gap: 20px; }
+        .agenda-icon-box { width: 55px; height: 55px; background: rgba(212,175,55,0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--accent-gold); border: 1px solid var(--border-elegant); flex-shrink: 0; }
+        .agenda-title { font-family: var(--font-signature); font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
+        .agenda-detail { font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+        
+        .venue-info { background: rgba(0,0,0,0.3); border: 1px solid var(--border-elegant); border-radius: 20px; padding: 25px 20px; margin-top: 30px; text-align: center; }
+        .venue-name { font-family: var(--font-serif); font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 12px; font-weight: 700; }
+        .venue-address { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
+        
+        /* PETA BISA DIGESER LANGSUNG */
+        .map-container { border-radius: 20px; overflow: hidden; border: 1px solid var(--accent-gold); margin: 25px 0; position: relative; padding-bottom: 70%; background: #111; z-index: 10; }
+        .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg) sepia(20%); pointer-events: auto !important; touch-action: auto !important; }
 
-        /* Google Maps Perbaikan Fungsi Scroll & Geser Secara Langsung */
-        .map-container { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); margin: 20px 0; position: relative; padding-bottom: 65%; background: #000; z-index: 10; }
-        .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg); pointer-events: auto !important; touch-action: auto !important; }
+        /* ATM CARD (BSI & ALADIN KEMBALI) */
+        .gift-wrapper-box { background: var(--card-gradient); border-radius: 24px; border: 1px solid var(--border-elegant); margin: 0 0 45px 0; padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        .atm-card { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid var(--accent-gold); border-radius: 20px; padding: 25px 20px; margin-top: 25px; text-align: left; position: relative; overflow: hidden; color: #fff; }
+        .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 4px; }
+        .bank-rek { font-family: monospace; font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; color: #fff; margin-bottom: 6px; }
+        .bank-name { font-size: 0.8rem; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 18px; font-weight: 600; }
+        .btn-copy-card { background: rgba(212,175,55,0.1); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 12px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 600; text-transform: uppercase; }
 
-        .btn-aesthetic { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: rgba(255,255,255,0.08); color: #fff; padding: 14px 20px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; }
+        /* FORM & CHAT (DIKEMBALIKAN 100%) */
+        .form-control { width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-elegant); border-radius: 12px; padding: 14px 16px; color: #fff; font-family: var(--font-sans); font-size: 0.85rem; margin-bottom: 15px; text-align: left; }
+        .form-control:focus { outline: none; border-color: var(--accent-gold); }
+        select.form-control { color: #cbd5e1; }
+        select.form-control option { background: var(--dark-bg); color: #fff; }
 
-        /* Wedding Gift Box */
-        .gift-wrapper-box { background-color: #060d1a; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.15); margin: 0 20px 40px 20px; padding: 35px 15px; text-align: center; }
-        .atm-card { background: linear-gradient(135deg, #0f1a2e 0%, #020710 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 22px 18px; margin-top: 20px; text-align: left; position: relative; overflow: hidden; }
-        .bank-logo { height: 24px; margin-bottom: 14px; display: block; background: #fff; padding: 2px 6px; border-radius: 4px; }
-        .bank-rek { font-family: monospace; font-size: 1.25rem; font-weight: 700; letter-spacing: 2px; color: #fff; margin-bottom: 4px; }
-        .bank-name { font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase; margin-bottom: 14px; }
-        .btn-copy-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; width: 100%; font-weight: 600; }
+        .gif-selector { text-align: left; margin-bottom: 20px; background: rgba(0,0,0,0.3); border: 1px solid var(--border-elegant); border-radius: 16px; padding: 15px; }
+        .gif-tabs { display: flex; justify-content: space-around; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .gif-tab { font-size: 1.4rem; padding: 8px 15px; border-radius: 12px; cursor: pointer; filter: grayscale(100%) opacity(0.5); }
+        .gif-tab.active { filter: grayscale(0%) opacity(1); background: rgba(212,175,55,0.2); }
+        .gif-viewport { display: none; grid-template-columns: repeat(4, 1fr); gap: 10px; justify-items: center; }
+        .gif-viewport.active { display: grid; }
+        .gif-viewport img { width: 50px; height: 50px; cursor: pointer; border-radius: 10px; padding: 3px; object-fit: contain; }
 
-        .form-control { width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 14px; color: #fff; font-size: 0.8rem; margin-bottom: 12px; }
-        .footer-sec { text-align: center; padding: 50px 20px 20px 20px; }
-        .closing-text-en { font-family: var(--font-script); font-size: 1.5rem; color: var(--accent-gold); margin-bottom: 12px; font-style: italic; }
-        .closing-arab-small { font-family: var(--font-arabic); font-size: 1.1rem; color: var(--text-muted); margin-top: 25px; }
-        .wa-footer-button { display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 50px; border-radius: 50%; margin: 15px auto; background: rgba(37, 211, 102, 0.15); border: 1px solid #25D366; text-decoration: none; color: #25D366; font-size: 1.6rem; }
+        .live-chat-container { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--border-elegant); border-radius: 20px; padding: 30px 20px 20px 20px; margin-top: 40px; position: relative; }
+        .live-chat-container::before { content: '🔴 Live Messages'; position: absolute; top: -14px; left: 20px; background: var(--dark-bg); color: var(--accent-gold); padding: 5px 15px; font-size: 0.7rem; font-weight: 700; border: 1px solid var(--accent-gold); border-radius: 12px; }
+        .chat-board { max-height: 450px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 8px;}
+        .chat-board::-webkit-scrollbar { width: 4px; }
+        .chat-board::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 10px; }
+
+        .chat-bubble { background: rgba(0,0,0,0.4); border: 1px solid var(--border-elegant); border-left: 3px solid var(--accent-gold); border-radius: 0 16px 16px 16px; padding: 15px; text-align: left; }
+        .chat-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .chat-name { font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); }
+        .chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: auto; font-family: monospace; }
+        .badge-hadir { font-size: 0.6rem; background: rgba(212,175,55,0.2); color: var(--accent-gold); padding: 4px 8px; border-radius: 20px; font-weight: 700; }
+        .badge-absen { font-size: 0.6rem; background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 4px 8px; border-radius: 20px; font-weight: 700; }
+        .chat-gif { max-width: 100%; height: auto; max-height: 200px; margin-top: 10px; border-radius: 8px; object-fit: contain; }
+
+        .footer-sec { text-align: center; padding: 60px 20px 30px 20px; }
+        .closing-text-en { font-family: var(--font-script); font-size: clamp(1.4rem, 6vw, 1.8rem); color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
+        .closing-arab-small { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--text-muted); margin-top: 30px; font-weight: 400; opacity: 0.8; }
+        .wa-footer-button { display: inline-flex; justify-content: center; align-items: center; width: 55px; height: 55px; border-radius: 50%; margin: 20px auto; background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; text-decoration: none; color: #25D366; font-size: 1.8rem; }
     </style>
 </head>
 <body>
+
+    <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
     <div class="music-btn" id="musicToggle" onclick="toggleMusic()"><i class="fa-solid fa-music"></i></div>
 
     <div class="mobile-wrapper">
@@ -125,14 +178,17 @@
             <video autoplay loop muted playsinline class="hero-video" preload="auto">
                 <source src="section1.mp4" type="video/mp4">
             </video>
-            <div class="hero-content" data-aos="zoom-out">
+            <div class="hero-content" data-aos="zoom-out" data-aos-duration="1000">
                 <div class="hero-pretitle">The Wedding Of</div>
                 <div class="hero-name">Aulia</div>
                 <div class="hero-ampersand">&</div>
                 <div class="hero-name">Amar</div>
                 <div class="hero-date">28 . 06 . 2026</div>
-                <div style="margin-top: 20px;">
-                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Aulia+%26+Amar&dates=20260628T020000Z/20260628T050000Z&location=Wisma+Donggala,+Palu" target="_blank" class="btn-aesthetic" style="width: auto;"><i class="fa-regular fa-calendar-plus"></i> Ingatkan Saya</a>
+                
+                <div style="margin-top: 25px;">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Aulia+%26+Amar&dates=20260628T020000Z/20260628T050000Z&details=Acara+pernikahan+Aulia+dan+Amar&location=Wisma+Donggala,+Palu" target="_blank" class="btn-aesthetic" style="width: auto;">
+                        <i class="fa-regular fa-calendar-plus"></i> Ingatkan Saya
+                    </a>
                 </div>
             </div>
         </section>
@@ -141,38 +197,52 @@
             <div class="marquee-content">
                 <div class="marquee-group">
                     <span class="marquee-arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
+                    <i class="fa-solid fa-star marquee-star"></i>
                     <span class="marquee-text-item">Amar & Aulia</span>
+                    <i class="fa-solid fa-star marquee-star"></i>
+                    <span class="marquee-arabic">بَارَكَ اللهُ فِيْكُم</span>
+                    <i class="fa-solid fa-star marquee-star"></i>
                     <span class="marquee-text-item">Happy Wedding</span>
                 </div>
                 <div class="marquee-group">
                     <span class="marquee-arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
+                    <i class="fa-solid fa-star marquee-star"></i>
                     <span class="marquee-text-item">Amar & Aulia</span>
+                    <i class="fa-solid fa-star marquee-star"></i>
+                    <span class="marquee-arabic">بَارَكَ اللهُ فِيْكُم</span>
+                    <i class="fa-solid fa-star marquee-star"></i>
                     <span class="marquee-text-item">Happy Wedding</span>
                 </div>
             </div>
         </div>
 
-        <div class="glass-card" style="padding: 15px;" data-aos="fade-up">
+        <div class="glass-card" style="padding: 10px;" data-aos="fade-up">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video" preload="none"><source src="quraan.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline class="theme-video" preload="none">
+                    <source src="quraan.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
 
         <div class="glass-card" data-aos="zoom-in">
             <div class="bismillah-text">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-            <p class="text-p" style="color:#fff; font-weight: 600;">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+            <p class="text-p" style="color:var(--accent-gold); font-weight: 600;">Assalamualaikum Warahmatullahi Wabarakatuh</p>
             <p class="text-p">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk berkenan menghadiri acara pernikahan kami:</p>
             
             <div class="couple-container">
-                <div class="profile-img-box"><img src="male_section3.png" alt="Amar"></div>
-                <h2 class="profile-name">Amar</h2>
-                <p class="profile-parents">Putra dari<br><span class="parent-name">Bapak H. Mansur (Alm) & Ibu Hj. Yulianti</span></p>
+                <div>
+                    <div class="profile-img-box"><img src="male_section3.png" alt="Amar"></div>
+                    <h2 class="profile-name">Amar</h2>
+                    <p class="profile-parents">Putra dari<br><span class="parent-name">Bapak H. Mansur (Alm) & Ibu Hj. Yulianti</span></p>
+                </div>
 
-                <div style="font-family: var(--font-signature); font-size: 2.8rem; color: var(--accent-glow); margin: 10px 0;">&</div>
+                <div style="font-family: var(--font-signature); font-size: 3.5rem; color: var(--accent-gold);">&</div>
 
-                <div class="profile-img-box"><img src="female_section3.png" alt="Aulia"></div>
-                <h2 class="profile-name">Aulia Ninda A.</h2>
-                <p class="profile-parents">Putri dari<br><span class="parent-name">Bapak Rusmanto & Ibu Harlina</span></p>
+                <div>
+                    <div class="profile-img-box"><img src="female_section3.png" alt="Aulia"></div>
+                    <h2 class="profile-name">Aulia Ninda A.</h2>
+                    <p class="profile-parents">Putri dari<br><span class="parent-name">Bapak Rusmanto & Ibu Harlina</span></p>
+                </div>
             </div>
         </div>
 
@@ -189,109 +259,275 @@
 
         <div class="glass-card" data-aos="fade-up">
             <h2 class="section-title">Agenda Acara</h2>
+            <p class="text-p" style="margin-bottom: 25px; color: #fff;">Dengan memohon rahmat Allah SWT, insyaAllah kami menyelenggarakan:</p>
             
             <div class="agenda-ticket">
                 <div class="agenda-icon-box"><i class="fa-solid fa-ring"></i></div>
-                <div class="agenda-content">
+                <div>
                     <div class="agenda-title">Akad Nikah</div>
-                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> Minggu, 28 Juni 2026</div>
-                    <div class="agenda-detail"><i class="fa-solid fa-clock"></i> 10.00 WITA - Selesai</div>
+                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day" style="color:var(--accent-gold)"></i> Minggu, 28 Juni 2026</div>
+                    <div class="agenda-detail"><i class="fa-solid fa-clock" style="color:var(--accent-gold)"></i> 10.00 WITA - Selesai</div>
                 </div>
             </div>
 
             <div class="agenda-ticket">
                 <div class="agenda-icon-box"><i class="fa-solid fa-champagne-glasses"></i></div>
-                <div class="agenda-content">
+                <div>
                     <div class="agenda-title">Resepsi</div>
-                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> Minggu, 28 Juni 2026</div>
-                    <div class="agenda-detail"><i class="fa-solid fa-clock"></i> 11.00 WITA - Selesai</div>
+                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day" style="color:var(--accent-gold)"></i> Minggu, 28 Juni 2026</div>
+                    <div class="agenda-detail"><i class="fa-solid fa-clock" style="color:var(--accent-gold)"></i> 11.00 WITA - Selesai</div>
                 </div>
             </div>
 
+            <div class="venue-info">
+                <div class="venue-name">Wisma Donggala</div>
+                <div class="venue-address">
+                    <i class="fa-solid fa-map-pin" style="color:var(--accent-gold); margin-right:5px;"></i> 
+                    Jl. Diponegoro No.6, Lere, Kec. Palu Barat, Kota Palu
+                </div>
+            </div>
+
+            <!-- GOOGLE MAPS AKTIF (Bisa digeser) -->
             <div class="map-container" data-aos="fade-up">
-                <iframe src="https://maps.app.goo.gl/VABu83iDPcuZFDQd7" loading="lazy" allowfullscreen></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.310049201831!2d119.85304407421375!3d-0.8931221990928503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8beffe139c2fc9%3A0x6b14d2e82b75a1c2!2sWisma%20Donggala!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" loading="lazy" allowfullscreen></iframe>
             </div>
             
             <a href="https://maps.app.goo.gl/VABu83iDPcuZFDQd7" target="_blank" class="btn-aesthetic">
-                <i class="fa-solid fa-map-location-dot"></i> Buka Google Maps
+                <i class="fa-solid fa-map-location-dot"></i> Buka Peta
             </a>
         </div>
 
-        <div class="glass-card" style="padding: 15px;" data-aos="zoom-in">
+        <div class="glass-card" style="padding: 10px;" data-aos="zoom-in">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video" preload="none"><source src="isi.mp4" type="video/mp4"></video>
+                <video autoplay loop muted playsinline class="theme-video" preload="none">
+                    <source src="isi.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
 
+        <!-- WEDDING GIFT DIKEMBALIKAN PENUH -->
         <div class="gift-wrapper-box" data-aos="fade-up">
             <h2 class="section-title">Wedding Gift</h2>
             <div class="section-subtitle">e-gift</div>
-            <p class="text-p" style="color:#94a3b8;">Bagi keluarga dan sahabat yang ingin mengirimkan kado digital:</p>
+            <p class="text-p" style="color: #fff; margin-bottom: 20px;">
+                Bagi keluarga dan sahabat yang ingin memberikan kado pernikahan, dapat melalui layanan berikut:
+            </p>
             
-            <div class="atm-card">
-                <img src="bsi.png" alt="BSI" class="bank-logo">
+            <div class="atm-card" data-aos="slide-up">
+                <img src="bsi.png" alt="BSI" class="bank-logo" loading="lazy">
                 <div class="bank-rek">7292 5603 24</div>
                 <div class="bank-name">A.N Aulia Ninda Agustianti</div>
                 <button class="btn-copy-card" onclick="copyToClipboard('7292560324', 'BSI')">Salin Rekening</button>
             </div>
 
-            <div class="atm-card">
-                <img src="aladin.png" alt="Aladin" class="bank-logo">
+            <div class="atm-card" data-aos="slide-up">
+                <img src="aladin.png" alt="Aladin" class="bank-logo" loading="lazy">
                 <div class="bank-rek">5084 5880 043</div>
                 <div class="bank-name">A.N Amar Mansur</div>
                 <button class="btn-copy-card" onclick="copyToClipboard('50845880043', 'Bank Aladin')">Salin Rekening</button>
             </div>
         </div>
 
+        <!-- FORMULIR DAN LIVE CHAT DIKEMBALIKAN PENUH -->
+        <div class="glass-card" data-aos="fade-up">
+            <h2 class="section-title">Ucapan & Doa</h2>
+            <p class="text-p" style="margin-bottom: 25px;">Tinggalkan pesan dan doa Anda di bawah ini.</p>
+            
+            <form id="rsvpForm" onsubmit="kirimUcapan(event)">
+                <input type="text" id="namaTamu" name="nama" class="form-control" placeholder="Nama Anda..." required>
+                <select id="konfirmasiHadir" name="kehadiran" class="form-control" required>
+                    <option value="" disabled selected>Kehadiran...</option>
+                    <option value="Hadir">Insya Allah Hadir</option>
+                    <option value="Tidak Hadir">Maaf, Tidak Hadir</option>
+                </select>
+
+                <div id="pesanTamuFake" contenteditable="true" class="form-control" style="min-height: 100px; cursor: text; white-space: pre-wrap; overflow-y: auto; display: block;"></div>
+                <textarea id="pesanTamu" name="pesan" style="display:none;"></textarea>
+                
+                <div class="gif-selector">
+                    <div class="gif-tabs">
+                        <span class="gif-tab active" onclick="switchGifTab(this, 'love')">❤️</span>
+                        <span class="gif-tab" onclick="switchGifTab(this, 'party')">🎉</span>
+                        <span class="gif-tab" onclick="switchGifTab(this, 'pray')">🙏</span>
+                    </div>
+                    
+                    <div id="panel-love" class="gif-viewport active">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f970/512.gif" alt="❤️" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.gif" alt="💖" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/512.gif" alt="😍" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2764_fe0f/512.gif" alt="❤️" onclick="selectGif(this)">
+                    </div>
+                    <div id="panel-party" class="gif-viewport">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif" alt="🎉" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f942/512.gif" alt="🥂" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f38a/512.gif" alt="🎊" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f3c6/512.gif" alt="🏆" onclick="selectGif(this)">
+                    </div>
+                    <div id="panel-pray" class="gif-viewport">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64f/512.gif" alt="🙏" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.gif" alt="✨" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.gif" alt="🌟" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/512.gif" alt="👍" onclick="selectGif(this)">
+                    </div>
+                    
+                    <input type="hidden" id="selectedGifUrl" name="gif" value="">
+                </div>
+
+                <button type="submit" class="btn-aesthetic"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan</button>
+            </form>
+
+            <div class="live-chat-container" data-aos="fade-up">
+                <div class="chat-board" id="papanPesan"></div>
+            </div>
+        </div>
+
         <div class="footer-sec" data-aos="fade-in">
             <h3 class="closing-text-en">Thank you for being part of our journey.</h3>
             <div class="closing-arab-small">وَالسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ</div>
-            <a href="https://wa.me/6281298921587" target="_blank" class="wa-footer-button"><i class="fa-brands fa-whatsapp"></i></a>
+            
+            <a href="https://wa.me/6281298921587" target="_blank" class="wa-footer-button">
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+            <!-- Tanpa tulisan c design by amar di sini -->
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, once: true });
+        AOS.init({ duration: 800, once: true, offset: 50 });
 
-        const isSPA = new URLSearchParams(window.location.search).get('spa') === '1';
+        const urlParamsSPA = new URLSearchParams(window.location.search);
+        const isSPA = urlParamsSPA.get('spa') === '1';
+
+        const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggle');
 
         function toggleMusic() {
             if (isSPA) {
                 window.parent.postMessage('toggleMusic', '*');
                 musicBtn.classList.toggle('paused');
+                return;
+            }
+            if (audio.paused) {
+                audio.play(); musicBtn.classList.remove('paused');
+            } else {
+                audio.pause(); musicBtn.classList.add('paused');
             }
         }
 
-        const countDownDate = new Date("Jun 28, 2026 10:00:00").getTime();
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
-            if (distance > 0) {
-                document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-                document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-                document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-                document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
-            }
-        }, 1000);
-
+        // Fungsi Copy
         function copyToClipboard(nomor, bank) {
             navigator.clipboard.writeText(nomor).then(() => { alert(`Nomor rekening ${bank} berhasil disalin!`); });
         }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            if (isSPA) { musicBtn.classList.remove('paused'); }
+        // Fungsi GIF
+        function switchGifTab(elem, tabName) {
+            document.querySelectorAll('.gif-tab').forEach(t => t.classList.remove('active'));
+            elem.classList.add('active');
+            document.querySelectorAll('.gif-viewport').forEach(v => v.classList.remove('active'));
+            document.getElementById('panel-' + tabName).classList.add('active');
+        }
+        
+        function selectGif(img) {
+            document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
+            img.style.border = '2px solid #d4af37';
+            document.getElementById('selectedGifUrl').value = img.src;
+        }
+
+        // API Spreadsheet
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
+
+        function loadUcapan() {
+            const board = document.getElementById('papanPesan');
+            board.innerHTML = '<p style="text-align:center; color:var(--accent-gold); font-size:0.85rem;"><i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan...</p>';
+
+            fetch(scriptURL + '?action=read&t=' + new Date().getTime())
+                .then(response => response.json())
+                .then(data => {
+                    board.innerHTML = ''; 
+                    let items = data.data ? data.data : (Array.isArray(data) ? data : []);
+                    if(items && items.length > 0) {
+                        items.reverse(); 
+                        items.forEach(item => {
+                            if (!item.nama) return; 
+                            const bubble = document.createElement('div');
+                            bubble.className = 'chat-bubble';
+                            let timeString = item.waktu || '';
+
+                            let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="Lampiran">` : '';
+                            let isAbsen = item.kehadiran && item.kehadiran.toLowerCase().includes('tidak');
+                            let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
+                            let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
+                            
+                            bubble.innerHTML = `
+                                <div class="chat-header">
+                                    <span class="chat-name">${item.nama}</span>
+                                    <span class="${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${item.kehadiran || 'Hadir'}</span>
+                                    <span class="chat-time">${timeString}</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; margin-top: 5px;">"${item.pesan}"</p>
+                                ${gifHtml}
+                            `;
+                            board.appendChild(bubble);
+                        });
+                    } else {
+                        board.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Belum ada ucapan.</p>';
+                    }
+                })
+                .catch(error => {
+                    board.innerHTML = '<p style="text-align:center; color:#f43f5e;">Gagal memuat pesan.</p>';
+                });
+        }
+
+        function kirimUcapan(e) {
+            e.preventDefault();
+            const fakeInput = document.getElementById('pesanTamuFake');
+            const textContent = fakeInput.innerText.trim();
+            document.getElementById('pesanTamu').value = textContent;
             
-            // Lazy load & mematikan video di luar jangkauan layar agar HP tidak lag/patah-patah
+            const form = e.target;
+            const name = document.getElementById('namaTamu').value;
+            const status = document.getElementById('konfirmasiHadir').value;
+            if(textContent === "") { alert("Harap tulis pesan terlebih dahulu!"); return; }
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim...';
+            submitBtn.disabled = true;
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    loadUcapan();
+                    form.reset();
+                    fakeInput.innerText = ''; 
+                    document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
+                    document.getElementById('selectedGifUrl').value = '';
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                })
+                .catch(error => {
+                    alert('Gagal mengirim pesan.');
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
+                });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!isSPA) {
+                const isPlaying = sessionStorage.getItem('isMusicPlaying');
+                if (isPlaying === 'true') { audio.play().then(() => musicBtn.classList.remove('paused')); }
+            } else {
+                if (audio) audio.remove();
+                musicBtn.classList.remove('paused'); 
+            }
+            loadUcapan();
+
+            // Lazy Load Videos (Cegah GPU Overload di GitHub)
             let videos = document.querySelectorAll("video");
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) { 
-                        entry.target.play().catch(() => {}); 
-                    } else { 
-                        entry.target.pause(); 
-                    }
+                    if (entry.isIntersecting) { entry.target.play().catch(e => {}); } 
+                    else { entry.target.pause(); }
                 });
             }, { threshold: 0.1 }); 
             videos.forEach(video => observer.observe(video));
