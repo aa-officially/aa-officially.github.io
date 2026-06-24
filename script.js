@@ -4,9 +4,7 @@
  * =========================================================
  */
 
-// ---------------------------------------------------------
 // 1. MENANGKAP PARAMETER URL (Nama Tamu)
-// ---------------------------------------------------------
 const urlParams = new URLSearchParams(window.location.search);
 const guestName = urlParams.get('to');
 if (guestName) {
@@ -20,9 +18,7 @@ if (invVideo) {
     invVideo.playbackRate = 0.75; 
 }
 
-// ---------------------------------------------------------
 // 2. EFEK INTERAKSI KURSOR (Jejak Bintang Hover)
-// ---------------------------------------------------------
 const coverPageElement = document.getElementById('cover-page');
 let lastTrailTime = 0; 
 
@@ -60,9 +56,7 @@ if (coverPageElement) {
     }, { passive: true });
 }
 
-// ---------------------------------------------------------
-// 3. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN (SPA IFRAME)
-// ---------------------------------------------------------
+// 3. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN
 function openInvitation() {
     const bookScene = document.getElementById('book');
     const coverPage = document.getElementById('cover-page');
@@ -87,6 +81,7 @@ function openInvitation() {
         }
     }
 
+    // Tunggu 1.2 detik sampai animasi cover buku selesai terbuka penuh
     setTimeout(() => {
         const frameContainer = document.querySelector('.inside-video-frame');
         const pagesBlock = document.querySelector('.pages-block');
@@ -107,7 +102,6 @@ function openInvitation() {
             pagesBlock.style.background = 'transparent';
         }
 
-        // PERBAIKAN: .inside-date-arabic DIHAPUS DARI DAFTAR AGAR TIDAK MENGHILANG
         document.querySelectorAll('.page, .hardcover-front, .hardcover-back, .book-spine, .monogram-overlay').forEach(p => {
             if(p) p.style.display = 'none';
         });
@@ -135,14 +129,10 @@ function openInvitation() {
             invVideo.style.borderRadius = '0';
         }
 
-        // PERBAIKAN: Atur teks tanggal arab ke atas sedikit agar tetap aman di mode full video
+        // PERBAIKAN: Hilangkan text arabic saat mulai full video (tanpa keterangan)
         const dateArabic = document.querySelector('.inside-date-arabic');
-        if (dateArabic) {
-            dateArabic.style.bottom = '75px'; 
-            dateArabic.style.zIndex = '9999999';
-        }
+        if (dateArabic) dateArabic.style.display = 'none';
 
-        // PERBAIKAN: Pindahkan watermark ke body dengan z-index absolut agar terus menempel
         const watermark = document.querySelector('.watermark');
         if (watermark) {
             document.body.appendChild(watermark);
@@ -152,17 +142,23 @@ function openInvitation() {
 
         void frameContainer.offsetWidth; 
         
+        // Transisi ke Full Screen
         frameContainer.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
         frameContainer.style.top = '0px';
         frameContainer.style.left = '0px';
         frameContainer.style.width = '100vw';
         frameContainer.style.height = window.innerHeight + 'px'; 
         
-        // METODE SPA: Memuat isi undangan via Iframe agar Music Index.html tidak terpotong sama sekali
-        setTimeout(() => {
+        let isIframeLoaded = false;
+
+        // FUNGSI LOAD UNDANGAN
+        const loadIframeSPA = () => {
+            if(isIframeLoaded) return;
+            isIframeLoaded = true;
+
             const iframe = document.createElement('iframe');
             const params = new URLSearchParams(window.location.search);
-            params.set('spa', '1'); // Penanda mode tanpa jeda
+            params.set('spa', '1');
             
             iframe.src = 'undangan.html?' + params.toString();
             iframe.style.position = 'fixed';
@@ -171,7 +167,7 @@ function openInvitation() {
             iframe.style.width = '100vw';
             iframe.style.height = '100vh';
             iframe.style.border = 'none';
-            iframe.style.zIndex = '9999998'; // Di bawah layer video agar fade-in mulus
+            iframe.style.zIndex = '9999998'; 
             iframe.style.opacity = '0';
             iframe.style.transition = 'opacity 1.2s ease';
             document.body.appendChild(iframe);
@@ -179,29 +175,32 @@ function openInvitation() {
             iframe.onload = () => {
                 iframe.style.opacity = '1';
                 
-                // Menghilangkan elemen transisi (Tanggal, Watermark, & Frame Video) secara berlahan
                 setTimeout(() => {
                     frameContainer.style.opacity = '0';
                     if (coverPage) coverPage.style.opacity = '0';
                     if (watermark) watermark.style.opacity = '0';
-                    if (dateArabic) dateArabic.style.opacity = '0';
                     
                     setTimeout(() => {
                         frameContainer.remove();
                         if (coverPage) coverPage.remove();
                         if (watermark) watermark.remove();
-                        if (dateArabic) dateArabic.remove();
-                        
-                        iframe.style.zIndex = '1'; // Reset z-index agar web bisa diklik
+                        iframe.style.zIndex = '1'; 
                     }, 1200);
                 }, 800);
             };
-        }, 2000); 
+        };
 
-    }, 3500); 
+        // FITUR SKIP: Jika diklik, langsung load Iframe seketika!
+        frameContainer.addEventListener('click', loadIframeSPA);
+        if(invVideo) invVideo.addEventListener('click', loadIframeSPA);
+
+        // Auto Load setelah 2 Detik (2000ms) full video diputar
+        setTimeout(loadIframeSPA, 2000);
+
+    }, 1200); // Tunggu animasi buku selesai (1.2 detik)
 }
 
-// Komunikasi kontrol musik dari Undangan.html ke Index.html
+// Komunikasi kontrol musik
 window.addEventListener('message', (event) => {
     if (event.data === 'toggleMusic') {
         const audio = document.getElementById('bgMusic');

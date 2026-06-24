@@ -7,10 +7,9 @@
     
     <title>The Wedding of Aulia & Amar</title>
     
-    <!-- REVISI 1: Preload Source agar tidak lambat saat pertama load -->
+    <link rel="preload" as="image" href="cover.png" fetchpriority="high">
     <link rel="preload" as="video" href="background.mp4">
     <link rel="preload" as="video" href="part3.mp4">
-    <link rel="preload" as="image" href="cover.png">
     <link rel="preload" as="image" href="part2.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,7 +54,7 @@
             <div class="page page-1"></div>
             
             <div class="hardcover-front wind-flutter">
-                <img src="cover.png" alt="Sampul" class="cover-img">
+                <img src="cover.png" alt="Sampul" class="cover-img" fetchpriority="high" decoding="sync">
                 <div class="front-content">
                     <p class="pre-title">THE WEDDING OF</p>
                     <h1 class="shimmer-text">Aulia<br>&<br>Amar</h1>

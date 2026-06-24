@@ -8,6 +8,11 @@
     <title>The Wedding of Aulia & Amar</title>
     <link rel="icon" type="image/png" href="icon.png">
     
+    <link rel="preload" as="video" href="background.mp4">
+    <link rel="preload" as="video" href="section1.mp4">
+    <link rel="preload" as="image" href="male_section3.png">
+    <link rel="preload" as="image" href="female_section3.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,700&family=Amiri:wght@400;700&family=Sacramento&display=swap" rel="stylesheet">
@@ -16,7 +21,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <style>
-        /* --- GEN Z AESTHETIC PALETTE & VARIABLES --- */
         :root {
             --dark-bg: #030712;
             --glass-bg: rgba(255, 255, 255, 0.03);
@@ -48,7 +52,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- BACKGROUND VIDEO CONTAINER --- */
         .main-background-video {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; 
             object-fit: cover; z-index: -2; opacity: 0.25; pointer-events: none;
@@ -61,12 +64,11 @@
         .light-1 { width: 320px; height: 320px; background: #0284c7; top: 10%; left: -5%; }
         .light-2 { width: 380px; height: 380px; background: #b45309; bottom: 10%; right: -10%; opacity: 0.1; }
 
-        /* --- WRAPPER UTAMA --- */
         .mobile-wrapper { 
             width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; 
             padding-bottom: 80px; background: rgba(3, 7, 18, 0.75); backdrop-filter: blur(8px); 
             -webkit-backdrop-filter: blur(8px); overflow: hidden; 
-            transform: translateZ(0); /* Anti-lag GPU */
+            transform: translateZ(0); 
         }
 
         @media (min-width: 768px) {
@@ -78,13 +80,11 @@
             }
         }
 
-        /* --- CANVAS STARS ABSOLUTE --- */
         #stars-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             z-index: 1; pointer-events: none;
         }
 
-        /* --- MUSIC PLAYER --- */
         .music-btn {
             position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
             background: rgba(255,255,255,0.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25);
@@ -95,15 +95,14 @@
         .music-btn.paused { animation-play-state: paused; box-shadow: none; border-color: rgba(255,255,255,0.1); color: var(--text-muted); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* --- CARD STYLE SYSTEM --- */
         .glass-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); /* Diturunkan ke 8px agar tidak berat di HP */
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--glass-border);
             border-radius: 30px; padding: 40px 25px; margin: 0 20px 45px 20px; text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1); 
             position: relative; z-index: 2; overflow: hidden;
-            transform: translateZ(0); will-change: transform, opacity; /* Anti-lag rendering */
+            transform: translateZ(0); will-change: transform, opacity; 
         }
 
         .glass-card::before, .glass-card::after {
@@ -112,7 +111,6 @@
         .glass-card::before { top: 15px; left: 15px; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
         .glass-card::after { bottom: 15px; right: 15px; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
 
-        /* --- VIDEO BLENDING SYSTEM ELEGANT FRAME --- */
         .theme-video-container {
             width: 100%; border-radius: 20px; overflow: hidden; 
             background: rgba(255, 255, 255, 0.05);
@@ -124,7 +122,6 @@
             filter: sepia(0.2) brightness(0.92) contrast(1.05); 
         }
 
-        /* --- HERO SECTION --- (FIXED LAYOUT) */
         .hero-section {
             position: relative; width: 100%;
             min-height: 85vh; height: auto; 
@@ -180,7 +177,6 @@
         }
         .btn-mini-cal:hover { background: #fff; color: var(--dark-bg); border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
-        /* --- GEN Z RUNNING TEXT (MARQUEE) --- */
         .marquee-container {
             width: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.02);
             border-top: 1px solid rgba(56, 189, 248, 0.2); border-bottom: 1px solid rgba(56, 189, 248, 0.2);
@@ -195,13 +191,11 @@
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes pulse-star { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.2); text-shadow: 0 0 10px var(--accent-glow); } }
 
-        /* --- GENERAL TYPOGRAPHY --- */
         .section-title { font-family: var(--font-script); font-size: clamp(2rem, 8vw, 2.8rem); color: #fff; margin-bottom: 5px; text-shadow: 0 0 15px rgba(255,255,255,0.2); line-height: 1.2; font-style: italic; }
         .section-subtitle { font-family: var(--font-sans); font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--accent-glow); margin-bottom: 25px; font-weight: 700; }
         .bismillah-text { font-family: var(--font-arabic); font-size: 1.6rem; margin-bottom: 15px; color: #d4af37; font-weight: 400; }
         .text-p { font-size: 0.85rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 15px; font-weight: 300; }
 
-        /* --- SANG MEMPELAI --- */
         .couple-container { display: flex; flex-direction: column; gap: 40px; margin-top: 30px; position: relative; }
         .couple-container::before { content: ''; position: absolute; top: 15%; bottom: 15%; left: 50%; width: 1px; background: linear-gradient(to bottom, transparent, var(--accent-glow), transparent); transform: translateX(-50%); opacity: 0.3; }
         .profile-card { position: relative; z-index: 2; }
@@ -217,7 +211,6 @@
         .profile-parents { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-top: 5px; }
         .parent-name { font-weight: 600; color: #e2e8f0; }
 
-        /* --- COUNTDOWN --- */
         .genz-countdown-title {
             font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 6px;
             text-transform: uppercase; margin-bottom: 25px; font-weight: 800;
@@ -234,7 +227,6 @@
         .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: #fff; }
         .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow); margin-top: 5px; font-weight: 600; }
 
-        /* --- AGENDA & MAPS --- */
         .agenda-ticket {
             background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.6));
             border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--accent-glow);
@@ -268,7 +260,6 @@
         .venue-name { font-family: var(--font-serif); font-size: 1.6rem; color: #fff; margin-bottom: 12px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.3); letter-spacing: 1px; }
         .venue-address { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
         
-        /* REVISI PETA SCROLLABLE */
         .map-container {
             border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); margin: 25px 0; position: relative; padding-bottom: 70%;
             box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15); transition: 0.3s ease; background: #111;
@@ -285,7 +276,6 @@
         }
         .btn-aesthetic:hover { background: #fff; color: var(--dark-bg); box-shadow: 0 0 20px rgba(255,255,255,0.3); border-color: #fff; transform: translateY(-2px); }
 
-        /* --- WEDDING GIFT & ATM CARDS STYLING --- */
         .gift-wrapper-box {
             position: relative; width: 100%; border-radius: 24px; overflow: hidden;
             background-color: #0b111a; border: 1px solid var(--glass-border); 
@@ -335,7 +325,6 @@
         .btn-copy-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         .btn-copy-card:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
-        /* --- SYSTEM STYLING UNTUK UCAPAN & DOA (HP FRIENDLY GIF) --- */
         .form-control {
             width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px; padding: 14px 16px; color: #fff; font-family: var(--font-sans);
@@ -356,7 +345,6 @@
         .gif-viewport img { width: 50px; height: 50px; cursor: pointer; transition: 0.2s; border-radius: 10px; padding: 3px; object-fit: contain; -webkit-tap-highlight-color: transparent; }
         .gif-viewport img:active, .gif-viewport img:hover { transform: scale(1.15); }
         
-        /* --- TAMPILAN LIVE CHAT BARU YANG KEREN --- */
         .live-chat-container {
             background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px;
             padding: 30px 20px 20px 20px; margin-top: 40px; position: relative;
@@ -387,9 +375,8 @@
         .chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: auto; font-family: monospace; }
         .badge-hadir { font-size: 0.6rem; background: rgba(56, 189, 248, 0.15); color: var(--accent-glow); padding: 4px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; }
         .badge-absen { font-size: 0.6rem; background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 4px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; }
-        .chat-gif { max-width: 50px; height: auto; margin-top: 10px; display: block; border-radius: 8px; }
+        .chat-gif { max-width: 100%; height: auto; max-height: 200px; margin-top: 10px; display: block; border-radius: 8px; object-fit: contain; } /* Diubah agak lebar untuk foto */
 
-        /* --- FOOTER CLOSING --- */
         .footer-sec { text-align: center; padding: 60px 20px 30px 20px; position: relative; z-index: 2; }
         .closing-text-en { font-family: var(--font-script); font-size: clamp(1.4rem, 6vw, 1.8rem); color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
         .closing-arab-small { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--text-muted); margin-top: 30px; font-weight: 400; opacity: 0.8; letter-spacing: 1px; }
@@ -423,7 +410,7 @@
         <canvas id="stars-canvas"></canvas>
         
         <section class="hero-section">
-            <video autoplay loop muted playsinline class="hero-video">
+            <video autoplay loop muted playsinline class="hero-video" preload="auto">
                 <source src="section1.mp4" type="video/mp4">
             </video>
             <div class="hero-content" data-aos="zoom-out" data-aos-duration="1200">
@@ -475,7 +462,7 @@
 
         <div class="glass-card" style="padding: 15px;" data-aos="fade-up">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video">
+                <video autoplay loop muted playsinline class="theme-video" preload="none">
                     <source src="quraan.mp4" type="video/mp4">
                 </video>
             </div>
@@ -545,9 +532,8 @@
                 </div>
             </div>
 
-            <!-- REVISI PETA SCROLLABLE -->
             <div class="map-container" data-aos="fade-up">
-                <iframe src="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
+                <iframe src="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
             </div>
             
             <a href="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu" target="_blank" class="btn-aesthetic">
@@ -572,7 +558,7 @@
             
             <div class="atm-card bsi-card" data-aos="slide-up">
                 <div class="bank-content">
-                    <img src="bsi.png" alt="BSI" class="bank-logo">
+                    <img src="bsi.png" alt="BSI" class="bank-logo" loading="lazy">
                     <div class="bank-rek">7292 5603 24</div>
                     <div class="bank-name">A.N Aulia Ninda Agustianti</div>
                     <button class="btn-copy-card" onclick="copyToClipboard('7292560324', 'BSI')">Salin Rekening</button>
@@ -581,7 +567,7 @@
 
             <div class="atm-card aladin-card" data-aos="slide-up">
                 <div class="bank-content">
-                    <img src="aladin.png" alt="Aladin" class="bank-logo">
+                    <img src="aladin.png" alt="Aladin" class="bank-logo" loading="lazy">
                     <div class="bank-rek">5084 5880 043</div>
                     <div class="bank-name">A.N Amar Mansur</div>
                     <button class="btn-copy-card" onclick="copyToClipboard('50845880043', 'Bank Aladin')">Salin Rekening</button>
@@ -600,7 +586,16 @@
                     <option value="Hadir">Insya Allah Hadir</option>
                     <option value="Tidak Hadir">Maaf, Tidak Hadir</option>
                 </select>
-                <textarea id="pesanTamu" name="pesan" class="form-control" rows="4" placeholder="Tulis harapan & doa... (Bisa pilih GIF Android)" required></textarea>
+                
+                <div class="upload-container" style="margin-bottom: 15px; text-align: left;">
+                    <label for="fileUpload" class="btn-aesthetic" style="padding: 10px 15px; font-size: 0.75rem; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: var(--accent-glow); display: inline-flex; width: auto; margin-bottom: 5px;">
+                        <i class="fa-solid fa-camera"></i> Tambah Foto / GIF
+                    </label>
+                    <input type="file" id="fileUpload" accept="image/*" style="display: none;">
+                    <span id="fileNameDisplay" style="font-size: 0.75rem; color: #10b981; font-weight: bold; margin-left: 10px;"></span>
+                </div>
+
+                <textarea id="pesanTamu" name="pesan" class="form-control" rows="4" placeholder="Tulis harapan & doa..." required></textarea>
                 
                 <div class="gif-selector">
                     <div class="gif-tabs">
@@ -667,7 +662,6 @@
     <script>
         AOS.init({ duration: 900, once: true, offset: 50 });
 
-        // PENGECEKAN SPA MODE & PERLINDUNGAN RELOAD IFRAME
         const urlParamsSPA = new URLSearchParams(window.location.search);
         const isSPA = urlParamsSPA.get('spa') === '1';
 
@@ -703,7 +697,6 @@
                 this.growing = Math.random() > 0.5;
             }
             draw() {
-                // OPTIMASI ANTI-LAG: Menghapus rotasi canvas yang bikin patah-patah di HP
                 ctx.globalAlpha = this.alpha;
                 ctx.fillStyle = '#ffffff';
                 ctx.beginPath();
@@ -747,10 +740,8 @@
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggle');
 
-        // LOGIKA KONTROL MUSIK UNTUK MENDUKUNG SPA IFRAME
         function toggleMusic() {
             if (isSPA) {
-                // Perintah ke index.html untuk pause/play
                 window.parent.postMessage('toggleMusic', '*');
                 musicBtn.classList.toggle('paused');
                 return;
@@ -792,43 +783,94 @@
             document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
             img.style.border = '2px solid #38bdf8';
             document.getElementById('selectedGifUrl').value = img.src;
+            document.getElementById('fileNameDisplay').innerText = ''; // Reset uploader label
         }
 
         // URL GOOGLE SCRIPT ANDA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
-        // REVISI GIF: Anti Hang & Pengecekan Size Aman
+        // REVISI FITUR UNGGAH FILE FOTO DAN GIF (Anti-Hang Auto Compress)
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const el = document.getElementById('pesanTamu');
+            const originalPlaceholder = el.placeholder;
+            const displaySpan = document.getElementById('fileNameDisplay');
+            
+            // Proses GIF Tanpa dikompres (batas 2.5MB agar tidak error script)
+            if (file.type === 'image/gif') {
+                if(file.size > 2500000) {
+                    alert("Maaf, ukuran GIF terlalu besar (Maks 2.5MB). Silakan pilih GIF lain yang lebih kecil.");
+                    this.value = ''; return;
+                }
+                el.placeholder = "⏳ Memproses file GIF...";
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('selectedGifUrl').value = event.target.result;
+                    document.querySelectorAll('.gif-viewport img').forEach(img => img.style.border = 'none');
+                    displaySpan.innerText = "✓ File GIF Dilampirkan";
+                    el.placeholder = originalPlaceholder;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Kompres Foto Standar (JPG/PNG) dari Kamera HP yang sangat besar
+                el.placeholder = "⏳ Mengompres Foto Anda...";
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 500; // Dikompres jadi resolusi kecil dan ringan
+                        let scaleSize = 1;
+                        if (img.width > MAX_WIDTH) { scaleSize = MAX_WIDTH / img.width; }
+                        
+                        canvas.width = img.width * scaleSize;
+                        canvas.height = img.height * scaleSize;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        
+                        // Konversi ke format web JPEG ukuran rendah
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.65); 
+                        document.getElementById('selectedGifUrl').value = dataUrl;
+                        document.querySelectorAll('.gif-viewport img').forEach(img => img.style.border = 'none');
+                        displaySpan.innerText = "✓ Foto Dilampirkan";
+                        el.placeholder = originalPlaceholder;
+                    }
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Pertahankan dukungan Paste (Tempel) dari Keyboard
         document.getElementById('pesanTamu').addEventListener('paste', function(e) {
             const items = (e.clipboardData || window.clipboardData).items;
             for (let i = 0; i < items.length; i++) {
                 if (items[i].type.indexOf('image') !== -1) {
                     e.preventDefault(); 
                     const blob = items[i].getAsFile();
-                    
-                    // Batasi maksimal 1MB. Lebih dari itu Browser HP akan hang saat convert Base64
-                    if(blob.size > 1000000) { 
-                        alert("Maaf, ukuran GIF dari keyboard terlalu besar. Harap gunakan GIF bawaan yang ada di bawah form.");
+                    if(blob.size > 1500000) { 
+                        alert("Maaf, file paste ini terlalu besar. Coba unggah pakai tombol 'Tambah Foto' agar dikompres otomatis.");
                         return;
                     }
-                    
                     const el = document.getElementById('pesanTamu');
                     const originalPlaceholder = el.placeholder;
-                    el.placeholder = "⏳ Sedang memproses GIF...";
-                    
+                    el.placeholder = "⏳ Memproses gambar dari clipboard...";
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         document.getElementById('selectedGifUrl').value = event.target.result;
                         document.querySelectorAll('.gif-viewport img').forEach(img => img.style.border = 'none');
-                        
-                        el.placeholder = "✅ GIF Keyboard terpasang! Lanjut ketik pesan...";
-                        setTimeout(() => { el.placeholder = originalPlaceholder; }, 3500);
+                        document.getElementById('fileNameDisplay').innerText = "✓ Gambar ditempelkan";
+                        el.placeholder = originalPlaceholder;
                     };
                     reader.readAsDataURL(blob);
                 }
             }
         });
 
-        // FUNGSI LOAD UCAPAN (Live View dari Google Spreadsheet)
+        // FUNGSI LOAD UCAPAN
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
             board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.85rem; padding: 20px;"><i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan ke server...</p>';
@@ -861,7 +903,7 @@
                                 }
                             }
 
-                            let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="gif">` : '';
+                            let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="Lampiran">` : '';
                             
                             let isAbsen = item.kehadiran && item.kehadiran.toLowerCase().includes('tidak');
                             let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
@@ -912,7 +954,7 @@
                     let now = new Date();
                     let timeString = now.toLocaleDateString('id-ID', {day: 'numeric', month: 'short'}) + ' ' + now.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
                     
-                    let gifHtml = gifUrl ? `<img src="${gifUrl}" class="chat-gif" alt="gif">` : '';
+                    let gifHtml = gifUrl ? `<img src="${gifUrl}" class="chat-gif" alt="Lampiran">` : '';
                     let isAbsen = status.toLowerCase().includes('tidak');
                     let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
                     let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
@@ -934,6 +976,7 @@
                     form.reset();
                     document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
                     document.getElementById('selectedGifUrl').value = '';
+                    document.getElementById('fileNameDisplay').innerText = ''; // Reset tulisan lampiran
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
                 })
