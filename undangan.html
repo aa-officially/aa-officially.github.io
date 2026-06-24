@@ -356,6 +356,7 @@
         <source src="background.mp4" type="video/mp4">
     </video>
 
+    <!-- Audio dibiarkan ada sebagai fallback, tapi akan diotomatisasi oleh SPA Index -->
     <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
     <div class="music-btn" id="musicToggle" onclick="toggleMusic()">
         <i class="fa-solid fa-music"></i>
@@ -603,9 +604,19 @@
     <script>
         AOS.init({ duration: 900, once: true, offset: 50 });
 
+        // PENGECEKAN SPA MODE & PERLINDUNGAN RELOAD IFRAME
+        const urlParamsSPA = new URLSearchParams(window.location.search);
+        const isSPA = urlParamsSPA.get('spa') === '1';
+
         const navEntries = performance.getEntriesByType("navigation");
         if (navEntries.length > 0 && navEntries[0].type === "reload") {
-            window.location.href = "index.html" + window.location.search;
+            if (isSPA && window.parent !== window) {
+                let parentParams = new URLSearchParams(window.location.search);
+                parentParams.delete('spa');
+                window.parent.location.href = "index.html?" + parentParams.toString();
+            } else {
+                window.location.href = "index.html" + window.location.search;
+            }
         }
 
         const canvas = document.getElementById('stars-canvas');
@@ -677,7 +688,15 @@
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggle');
 
+        // LOGIKA KONTROL MUSIK UNTUK MENDUKUNG SPA IFRAME
         function toggleMusic() {
+            if (isSPA) {
+                // Perintah ke index.html untuk pause/play
+                window.parent.postMessage('toggleMusic', '*');
+                musicBtn.classList.toggle('paused');
+                return;
+            }
+            
             if (audio.paused) {
                 audio.play();
                 musicBtn.classList.remove('paused');
@@ -734,7 +753,7 @@
                     let items = data.data ? data.data : (Array.isArray(data) ? data : []);
                     
                     if(items && items.length > 0) {
-                        items.reverse(); // Balik urutan agar terbaru di atas
+                        items.reverse(); 
                         
                         items.forEach(item => {
                             if (!item.nama) return; 
@@ -742,7 +761,6 @@
                             const bubble = document.createElement('div');
                             bubble.className = 'chat-bubble';
                             
-                            // Format Waktu Pengiriman
                             let timeString = '';
                             if (item.waktu) {
                                 let d = new Date(item.waktu);
@@ -755,7 +773,6 @@
 
                             let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="gif">` : '';
                             
-                            // Logika indikator warna badge kehadiran
                             let isAbsen = item.kehadiran && item.kehadiran.toLowerCase().includes('tidak');
                             let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
                             let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
@@ -799,7 +816,6 @@
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
-                    // Update tampilan lokal segera tanpa menunggu reload
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble';
                     
@@ -840,22 +856,26 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedTime = sessionStorage.getItem('savedMusicTime');
-            const isPlaying = sessionStorage.getItem('isMusicPlaying');
+            if (!isSPA) {
+                // Eksekusi normal apabila dijalankan secara terpisah (bukan dalam SPA)
+                const savedTime = sessionStorage.getItem('savedMusicTime');
+                const isPlaying = sessionStorage.getItem('isMusicPlaying');
 
-            if (savedTime) {
-                audio.currentTime = parseFloat(savedTime);
+                if (savedTime) { audio.currentTime = parseFloat(savedTime); }
+
+                if (isPlaying === 'true') {
+                    audio.play().then(() => {
+                        musicBtn.classList.remove('paused');
+                    }).catch(() => {
+                        musicBtn.classList.add('paused');
+                    });
+                }
+            } else {
+                // Di mode iframe/SPA, kita hapus audio ini karena musik terus diputar oleh index.html
+                if (audio) audio.remove();
+                musicBtn.classList.remove('paused'); 
             }
 
-            if (isPlaying === 'true') {
-                audio.play().then(() => {
-                    musicBtn.classList.remove('paused');
-                }).catch(() => {
-                    musicBtn.classList.add('paused');
-                });
-            }
-
-            // Jalankan fungsi load data komentar
             loadUcapan();
         });
     </script>
