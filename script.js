@@ -20,11 +20,10 @@ function openInvitation() {
     const audio = document.getElementById('bgMusic');
     const guestBox = document.getElementById('guestBox');
     const frameContainer = document.querySelector('.inside-video-frame');
-    const watermark = document.querySelector('.watermark');
+    const watermark = document.querySelector('.copyright-footer-index');
     
     if (!bookScene || bookScene.classList.contains('is-open')) return;
 
-    // 1. TAHAP PERTAMA: Buka Buku
     bookScene.classList.add('is-open');
     bookScene.onclick = null; 
     
@@ -32,7 +31,6 @@ function openInvitation() {
     const frontContent = document.querySelector('.front-content');
     if (frontContent) frontContent.style.opacity = '0';
     
-    // Matikan video background agar internet stabil untuk muat video berikutnya
     if (bgVideo) bgVideo.pause();
 
     if (invVideo) {
@@ -59,7 +57,6 @@ function openInvitation() {
         clearTimeout(sequenceTimeout1);
         clearTimeout(sequenceTimeout2);
 
-        // Hapus watermark sepenuhnya
         if (watermark) watermark.remove();
 
         let iframe = document.createElement('iframe');
@@ -80,10 +77,8 @@ function openInvitation() {
         iframe.onload = () => {
             iframe.style.opacity = '1';
             setTimeout(() => {
-                // Matikan & Kosongkan video lama agar RAM HP lega (Mencegah Lag)
                 if(invVideo) { invVideo.pause(); invVideo.removeAttribute('src'); invVideo.load(); }
                 if(bgVideo) { bgVideo.pause(); bgVideo.removeAttribute('src'); bgVideo.load(); }
-                
                 if(frameContainer) frameContainer.remove();
                 if (coverPage) coverPage.remove();
                 iframe.style.zIndex = '1'; 
@@ -95,7 +90,7 @@ function openInvitation() {
         loadIframeSPA(e);
     };
 
-    // TAHAP KEDUA: Setelah buku terbuka (1 detik), diam dibuku (1 detik).
+    // Buku Terbuka 1 detik
     sequenceTimeout1 = setTimeout(() => {
         if (!frameContainer) return;
         
@@ -104,15 +99,13 @@ function openInvitation() {
 
         const dateArabic = document.querySelector('.inside-date-arabic');
         if (dateArabic) dateArabic.style.display = 'none';
-
         if (coverPage) coverPage.style.display = 'none';
 
-        // TAHAP KETIGA: Klik layar akan skip langsung
+        // 1 Detik Video Berjalan. Langsung di-skip jika di klik/sentuh layarnya.
         frameContainer.style.cursor = 'pointer';
         frameContainer.addEventListener('click', skipAction);
         frameContainer.addEventListener('touchstart', skipAction, {passive: false});
 
-        // Video berjalan tanpa buku 1 detik, lalu auto-load
         sequenceTimeout2 = setTimeout(() => {
             if(!isIframeLoaded) loadIframeSPA();
         }, 1000); 

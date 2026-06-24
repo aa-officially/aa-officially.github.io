@@ -15,12 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     
     <style>
-        /* TEMA PREMIUM: MIDNIGHT ROYAL GOLD (Anti Lag) */
+        /* TEMA PREMIUM: MIDNIGHT ROYAL GOLD */
         :root {
             --dark-bg: #02060c; 
             --card-gradient: linear-gradient(145deg, #0b1320 0%, #050a12 100%);
             --accent-gold: #d4af37;
-            --accent-glow: #eab308;
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --border-elegant: rgba(212, 175, 55, 0.2);
@@ -59,15 +58,12 @@
         .music-btn.paused { animation-play-state: paused; box-shadow: none; border-color: rgba(255,255,255,0.1); color: var(--text-muted); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* KARTU KACA OPTIMASI (Tanpa backdrop-filter blur yang bikin ngelag) */
         .glass-card {
-            background: var(--card-gradient);
-            border: 1px solid var(--border-elegant);
+            background: var(--card-gradient); border: 1px solid var(--border-elegant);
             border-radius: 24px; padding: 40px 25px; margin: 0 20px 45px 20px; text-align: center;
             box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.05); 
             position: relative; z-index: 2; overflow: hidden; transform: translateZ(0);
         }
-
         .glass-card::before, .glass-card::after { content: ''; position: absolute; width: 20px; height: 20px; border: 2px solid var(--accent-gold); opacity: 0.5; pointer-events: none; }
         .glass-card::before { top: 15px; left: 15px; border-right: none; border-bottom: none; }
         .glass-card::after { bottom: 15px; right: 15px; border-left: none; border-top: none; }
@@ -108,8 +104,10 @@
         .profile-parents { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
         .parent-name { font-weight: 600; color: #e2e8f0; }
 
+        /* EFEK COUNTDOWN */
         .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
-        .count-item { background: rgba(0,0,0,0.4); border: 1px solid var(--border-elegant); border-radius: 16px; padding: 15px 5px; }
+        .count-item { background: rgba(0,0,0,0.4); border: 1px solid var(--border-elegant); border-radius: 16px; padding: 15px 5px; animation: float-pulse 3s ease-in-out infinite alternate; }
+        @keyframes float-pulse { 0% { box-shadow: 0 0 5px rgba(212, 175, 55, 0.1); transform: translateY(0); } 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); transform: translateY(-3px); } }
         .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: var(--accent-gold); }
         .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: #fff; margin-top: 5px; font-weight: 600; opacity: 0.8; }
 
@@ -122,19 +120,21 @@
         .venue-name { font-family: var(--font-serif); font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 12px; font-weight: 700; }
         .venue-address { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
         
-        /* PETA BISA DIGESER LANGSUNG */
         .map-container { border-radius: 20px; overflow: hidden; border: 1px solid var(--accent-gold); margin: 25px 0; position: relative; padding-bottom: 70%; background: #111; z-index: 10; }
         .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg) sepia(20%); pointer-events: auto !important; touch-action: auto !important; }
 
-        /* ATM CARD (BSI & ALADIN KEMBALI) */
-        .gift-wrapper-box { background: var(--card-gradient); border-radius: 24px; border: 1px solid var(--border-elegant); margin: 0 0 45px 0; padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-        .atm-card { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid rgba(255,255,255,0.1); border-top: 1px solid var(--accent-gold); border-radius: 20px; padding: 25px 20px; margin-top: 25px; text-align: left; position: relative; overflow: hidden; color: #fff; }
+        /* WEDDING GIFT DENGAN GIFT.PNG + EFEK KARTU */
+        .gift-wrapper-box { position: relative; background: url('gift.png') center/cover no-repeat; border-radius: 24px; border: 1px solid var(--border-elegant); margin: 0 0 45px 0; padding: 40px 20px; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.6); z-index: 1; }
+        .gift-wrapper-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(6, 13, 26, 0.88); border-radius: 24px; z-index: -1; }
+        
+        .atm-card { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid rgba(255,255,255,0.15); border-top: 1px solid var(--accent-gold); border-radius: 20px; padding: 25px 20px; margin-top: 25px; text-align: left; position: relative; overflow: hidden; color: #fff; transition: transform 0.4s ease, box-shadow 0.4s ease; cursor: default; }
+        .atm-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.3); }
         .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 4px; }
         .bank-rek { font-family: monospace; font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; color: #fff; margin-bottom: 6px; }
         .bank-name { font-size: 0.8rem; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 18px; font-weight: 600; }
         .btn-copy-card { background: rgba(212,175,55,0.1); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 12px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 600; text-transform: uppercase; }
+        .btn-copy-card:hover { background: var(--accent-gold); color: #000; box-shadow: 0 0 15px rgba(212,175,55,0.5); }
 
-        /* FORM & CHAT (DIKEMBALIKAN 100%) */
         .form-control { width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-elegant); border-radius: 12px; padding: 14px 16px; color: #fff; font-family: var(--font-sans); font-size: 0.85rem; margin-bottom: 15px; text-align: left; }
         .form-control:focus { outline: none; border-color: var(--accent-gold); }
         select.form-control { color: #cbd5e1; }
@@ -148,24 +148,39 @@
         .gif-viewport.active { display: grid; }
         .gif-viewport img { width: 50px; height: 50px; cursor: pointer; border-radius: 10px; padding: 3px; object-fit: contain; }
 
+        /* LIVE CHAT GEN Z STYLE */
         .live-chat-container { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--border-elegant); border-radius: 20px; padding: 30px 20px 20px 20px; margin-top: 40px; position: relative; }
         .live-chat-container::before { content: '🔴 Live Messages'; position: absolute; top: -14px; left: 20px; background: var(--dark-bg); color: var(--accent-gold); padding: 5px 15px; font-size: 0.7rem; font-weight: 700; border: 1px solid var(--accent-gold); border-radius: 12px; }
-        .chat-board { max-height: 450px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 8px;}
+        .chat-board { max-height: 450px; overflow-y: auto; display: flex; flex-direction: column; padding-right: 5px;}
         .chat-board::-webkit-scrollbar { width: 4px; }
         .chat-board::-webkit-scrollbar-thumb { background: var(--accent-gold); border-radius: 10px; }
 
-        .chat-bubble { background: rgba(0,0,0,0.4); border: 1px solid var(--border-elegant); border-left: 3px solid var(--accent-gold); border-radius: 0 16px 16px 16px; padding: 15px; text-align: left; }
-        .chat-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .chat-item { display: flex; gap: 12px; margin-bottom: 15px; align-items: flex-start; }
+        .chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-gold), #fff); color: #000; display: flex; justify-content: center; align-items: center; font-weight: bold; font-family: var(--font-sans); flex-shrink: 0; box-shadow: 0 4px 10px rgba(212,175,55,0.3); }
+        .chat-content-box { background: rgba(0,0,0,0.4); border: 1px solid var(--border-elegant); border-radius: 4px 16px 16px 16px; padding: 12px 15px; flex-grow: 1; text-align: left; }
+        
+        .chat-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
         .chat-name { font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); }
-        .chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: auto; font-family: monospace; }
-        .badge-hadir { font-size: 0.6rem; background: rgba(212,175,55,0.2); color: var(--accent-gold); padding: 4px 8px; border-radius: 20px; font-weight: 700; }
-        .badge-absen { font-size: 0.6rem; background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 4px 8px; border-radius: 20px; font-weight: 700; }
-        .chat-gif { max-width: 100%; height: auto; max-height: 200px; margin-top: 10px; border-radius: 8px; object-fit: contain; }
+        .chat-time { font-size: 0.6rem; color: rgba(255,255,255,0.5); margin-left: auto; }
+        .badge-hadir { font-size: 0.55rem; background: rgba(212,175,55,0.2); color: var(--accent-gold); padding: 3px 8px; border-radius: 20px; font-weight: 700; }
+        .badge-absen { font-size: 0.55rem; background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 3px 8px; border-radius: 20px; font-weight: 700; }
+        .chat-msg { font-size: 0.85rem; color: #e2e8f0; line-height: 1.5; margin-top: 4px; }
+        .chat-gif { max-width: 100%; height: auto; max-height: 180px; margin-top: 10px; border-radius: 8px; object-fit: contain; }
 
-        .footer-sec { text-align: center; padding: 60px 20px 30px 20px; }
-        .closing-text-en { font-family: var(--font-script); font-size: clamp(1.4rem, 6vw, 1.8rem); color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
+        /* FOOTER & HADIS */
+        .footer-sec { text-align: center; padding: 60px 20px 40px 20px; }
+        .closing-text-en { font-family: var(--font-script); font-size: clamp(1.4rem, 6vw, 1.8rem); color: var(--accent-gold); margin-bottom: 25px; font-style: italic; }
+        
+        .hadith-box { padding: 0 15px; margin-bottom: 25px; }
+        .hadith-box p { font-size: 0.8rem; line-height: 1.8; color: #cbd5e1; font-style: italic; font-weight: 300; }
+        .hadith-box span { display: block; margin-top: 10px; font-size: 0.75rem; color: var(--accent-gold); font-weight: 600; }
+        
         .closing-arab-small { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--text-muted); margin-top: 30px; font-weight: 400; opacity: 0.8; }
-        .wa-footer-button { display: inline-flex; justify-content: center; align-items: center; width: 55px; height: 55px; border-radius: 50%; margin: 20px auto; background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; text-decoration: none; color: #25D366; font-size: 1.8rem; }
+        .wa-footer-button { display: inline-flex; justify-content: center; align-items: center; width: 55px; height: 55px; border-radius: 50%; margin: 20px auto; background: rgba(37, 211, 102, 0.1); border: 1px solid #25D366; text-decoration: none; color: #25D366; font-size: 1.8rem; transition: 0.3s; }
+        .wa-footer-button:hover { background: #25D366; color: #fff; transform: scale(1.1); box-shadow: 0 0 15px rgba(37, 211, 102, 0.5); }
+
+        .copyright-footer { margin-top: 35px; font-size: 0.6rem; letter-spacing: 3px; color: rgba(255,255,255,0.4); text-transform: uppercase; animation: pulse-glow 3s infinite alternate; }
+        @keyframes pulse-glow { 0% { text-shadow: 0 0 5px transparent; color: rgba(255,255,255,0.4); } 100% { text-shadow: 0 0 10px var(--accent-gold); color: var(--accent-gold); } }
     </style>
 </head>
 <body>
@@ -259,7 +274,7 @@
 
         <div class="glass-card" data-aos="fade-up">
             <h2 class="section-title">Agenda Acara</h2>
-            <p class="text-p" style="margin-bottom: 25px; color: #fff;">Dengan memohon rahmat Allah SWT, insyaAllah kami menyelenggarakan:</p>
+            <p class="text-p" style="margin-bottom: 25px; color: #fff;">Dengan memohon rahmat dan ridho Allah Subhanahu Wa Ta'ala, insyaAllah kami akan menyelenggarakan rangkaian acara pernikahan pada:</p>
             
             <div class="agenda-ticket">
                 <div class="agenda-icon-box"><i class="fa-solid fa-ring"></i></div>
@@ -287,7 +302,6 @@
                 </div>
             </div>
 
-            <!-- GOOGLE MAPS AKTIF (Bisa digeser) -->
             <div class="map-container" data-aos="fade-up">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.310049201831!2d119.85304407421375!3d-0.8931221990928503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8beffe139c2fc9%3A0x6b14d2e82b75a1c2!2sWisma%20Donggala!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" loading="lazy" allowfullscreen></iframe>
             </div>
@@ -305,12 +319,11 @@
             </div>
         </div>
 
-        <!-- WEDDING GIFT DIKEMBALIKAN PENUH -->
         <div class="gift-wrapper-box" data-aos="fade-up">
             <h2 class="section-title">Wedding Gift</h2>
             <div class="section-subtitle">e-gift</div>
             <p class="text-p" style="color: #fff; margin-bottom: 20px;">
-                Bagi keluarga dan sahabat yang ingin memberikan kado pernikahan, dapat melalui layanan berikut:
+                Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih, Anda dapat memberikan kado secara digital melalui tautan di bawah ini:
             </p>
             
             <div class="atm-card" data-aos="slide-up">
@@ -328,7 +341,6 @@
             </div>
         </div>
 
-        <!-- FORMULIR DAN LIVE CHAT DIKEMBALIKAN PENUH -->
         <div class="glass-card" data-aos="fade-up">
             <h2 class="section-title">Ucapan & Doa</h2>
             <p class="text-p" style="margin-bottom: 25px;">Tinggalkan pesan dan doa Anda di bawah ini.</p>
@@ -383,12 +395,23 @@
 
         <div class="footer-sec" data-aos="fade-in">
             <h3 class="closing-text-en">Thank you for being part of our journey.</h3>
+
+            <div class="hadith-box">
+                <p>"Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."</p>
+                <span>(QS. Ar-Rum: 21)</span>
+            </div>
+
+            <p class="text-p" style="margin-top:20px; font-size:0.8rem; color:#cbd5e1;">Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu kepada kedua mempelai. Terima kasih.</p>
+
             <div class="closing-arab-small">وَالسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ</div>
             
             <a href="https://wa.me/6281298921587" target="_blank" class="wa-footer-button">
                 <i class="fa-brands fa-whatsapp"></i>
             </a>
-            <!-- Tanpa tulisan c design by amar di sini -->
+
+            <div class="copyright-footer">
+                © 2026 DESIGN BY MUHAMMAD AMAR
+            </div>
         </div>
     </div>
 
@@ -415,12 +438,12 @@
             }
         }
 
-        // Fungsi Copy
+        // FUNGSI COPY
         function copyToClipboard(nomor, bank) {
             navigator.clipboard.writeText(nomor).then(() => { alert(`Nomor rekening ${bank} berhasil disalin!`); });
         }
 
-        // Fungsi GIF
+        // FUNGSI GIF
         function switchGifTab(elem, tabName) {
             document.querySelectorAll('.gif-tab').forEach(t => t.classList.remove('active'));
             elem.classList.add('active');
@@ -434,8 +457,16 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
-        // API Spreadsheet
+        // SPREADSHEET API
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
+
+        // Konversi waktu UTC Server menjadi Waktu Lokal HP Pengguna
+        function formatWaktuLokal(waktuServer) {
+            if (!waktuServer) return '';
+            let d = new Date(waktuServer);
+            if (isNaN(d)) return waktuServer;
+            return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' - ' + d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+        }
 
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
@@ -450,25 +481,30 @@
                         items.reverse(); 
                         items.forEach(item => {
                             if (!item.nama) return; 
-                            const bubble = document.createElement('div');
-                            bubble.className = 'chat-bubble';
-                            let timeString = item.waktu || '';
+                            const chatItem = document.createElement('div');
+                            chatItem.className = 'chat-item';
+                            
+                            let inisial = item.nama.charAt(0).toUpperCase();
+                            let timeString = formatWaktuLokal(item.waktu);
 
                             let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="Lampiran">` : '';
                             let isAbsen = item.kehadiran && item.kehadiran.toLowerCase().includes('tidak');
                             let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
                             let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
                             
-                            bubble.innerHTML = `
-                                <div class="chat-header">
-                                    <span class="chat-name">${item.nama}</span>
-                                    <span class="${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${item.kehadiran || 'Hadir'}</span>
-                                    <span class="chat-time">${timeString}</span>
+                            chatItem.innerHTML = `
+                                <div class="chat-avatar">${inisial}</div>
+                                <div class="chat-content-box">
+                                    <div class="chat-header">
+                                        <span class="chat-name">${item.nama}</span>
+                                        <span class="${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${item.kehadiran || 'Hadir'}</span>
+                                        <span class="chat-time">${timeString}</span>
+                                    </div>
+                                    <p class="chat-msg">"${item.pesan}"</p>
+                                    ${gifHtml}
                                 </div>
-                                <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; margin-top: 5px;">"${item.pesan}"</p>
-                                ${gifHtml}
                             `;
-                            board.appendChild(bubble);
+                            board.appendChild(chatItem);
                         });
                     } else {
                         board.innerHTML = '<p style="text-align:center; color:var(--text-muted);">Belum ada ucapan.</p>';
@@ -520,9 +556,22 @@
                 if (audio) audio.remove();
                 musicBtn.classList.remove('paused'); 
             }
+            
+            // FUNGSI COUNTDOWN DIJALANKAN DISINI AGAR AMAN
+            const countDownDate = new Date("Jun 28, 2026 10:00:00").getTime();
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                if (distance > 0) {
+                    document.getElementById("days").innerText = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                    document.getElementById("hours").innerText = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                    document.getElementById("minutes").innerText = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                    document.getElementById("seconds").innerText = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+                }
+            }, 1000);
+
             loadUcapan();
 
-            // Lazy Load Videos (Cegah GPU Overload di GitHub)
             let videos = document.querySelectorAll("video");
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
