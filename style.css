@@ -247,7 +247,7 @@ body {
 .map-container iframe { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; 
     filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); 
-    pointer-events: auto !important; 
+    touch-action: auto; 
 }
 
 /* =========================================
@@ -267,4 +267,29 @@ body {
 @media screen and (max-width: 320px) {
     .book-scene { transform: scale(0.75); }
     .book-scene.is-open { transform: translateX(67px) scale(0.48) rotateX(5deg) rotateY(0deg) !important; }
+}
+/* --- TRANSISI FULLSCREEN VIDEO (Perbaikan Performa) --- */
+.inside-video-frame.fullscreen-mode {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 999999 !important;
+    background-color: #050505 !important;
+    border-radius: 0px !important;
+    transition: all 0.5s ease-in-out !important;
+    transform: none !important;
+}
+
+.inside-video-frame.fullscreen-mode video {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0px !important;
 }
