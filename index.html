@@ -8,8 +8,6 @@
     <title>The Wedding of Aulia & Amar</title>
     
     <link rel="preload" as="image" href="cover.png" fetchpriority="high">
-    <link rel="preload" as="video" href="background.mp4">
-    <link rel="preload" as="video" href="part3.mp4">
     <link rel="preload" as="image" href="part2.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +20,7 @@
     <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
 
     <div id="cover-page">
-        <video autoplay loop muted playsinline webkit-playsinline class="cover-bg-video">
+        <video autoplay loop muted playsinline webkit-playsinline class="cover-bg-video" poster="cover.png" preload="metadata">
             <source src="background.mp4" type="video/mp4">
         </video>
 
@@ -37,7 +35,7 @@
             
             <div class="pages-block">
                 <div class="inside-video-frame">
-                    <video id="invitationVideo" autoplay loop muted playsinline>
+                    <video id="invitationVideo" autoplay loop muted playsinline preload="metadata">
                         <source src="part3.mp4" type="video/mp4">
                     </video>
                     <div class="inside-date-arabic" dir="ltr">٢٨ ✦ ٠٦ ✦ ٢٦</div>

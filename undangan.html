@@ -8,8 +8,6 @@
     <title>The Wedding of Aulia & Amar</title>
     <link rel="icon" type="image/png" href="icon.png">
     
-    <link rel="preload" as="video" href="background.mp4">
-    <link rel="preload" as="video" href="section1.mp4">
     <link rel="preload" as="image" href="male_section3.png">
     <link rel="preload" as="image" href="female_section3.png">
 
@@ -253,7 +251,7 @@
 </head>
 <body>
 
-    <video autoplay loop muted playsinline webkit-playsinline class="main-background-video" preload="auto">
+    <video autoplay loop muted playsinline webkit-playsinline class="main-background-video" preload="metadata">
         <source src="background.mp4" type="video/mp4">
     </video>
 
@@ -269,7 +267,7 @@
         <canvas id="stars-canvas"></canvas>
         
         <section class="hero-section">
-            <video autoplay loop muted playsinline class="hero-video" preload="auto">
+            <video autoplay loop muted playsinline class="hero-video" preload="metadata">
                 <source src="section1.mp4" type="video/mp4">
             </video>
             <div class="hero-content" data-aos="zoom-out" data-aos-duration="1200">
@@ -823,14 +821,13 @@
             }
             loadUcapan();
 
-            // --- SKRIP PENYELAMAT RAM HP (SENSOR MATA) ---
             let videos = document.querySelectorAll("video");
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.play().catch(e => console.log("Autoplay dicegah browser", e));
                     } else {
-                        entry.target.pause(); // Mematikan video yang tidak dilihat
+                        entry.target.pause(); 
                     }
                 });
             }, { threshold: 0.1 }); 
@@ -838,7 +835,6 @@
             videos.forEach(video => {
                 observer.observe(video);
             });
-            // ----------------------------------------------
         });
     </script>
 </body>

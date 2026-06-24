@@ -1,7 +1,7 @@
 /**
  * =========================================================
  * SCRIPT UNTUK HALAMAN SAMPUL (index.html)
- * REVISI: Animasi 1 detik & Performa HP (Anti Patah-Patah)
+ * REVISI: Performa Load Super Cepat & Background Prefetching
  * =========================================================
  */
 
@@ -13,29 +13,24 @@ if (guestName) {
     if (guestNameEl) guestNameEl.innerText = guestName;
 }
 
-// Pengaturan kecepatan putar video
 const invVideo = document.getElementById('invitationVideo');
 if (invVideo) { 
     invVideo.playbackRate = 0.75; 
 }
 
-// 2. EFEK INTERAKSI KURSOR (Jejak Bintang Hover)
 const coverPageElement = document.getElementById('cover-page');
 let lastTrailTime = 0; 
 
 function createTrail(x, y) {
     if (!coverPageElement) return;
-
     const particle = document.createElement('div');
     particle.className = 'trail-particle';
-    
     let size = Math.random() * 4 + 4;
     particle.style.width = `${size}px`;
     particle.style.height = `${size}px`;
     particle.style.left = `${x}px`;
     particle.style.top = `${y}px`;
     coverPageElement.appendChild(particle);
-    
     setTimeout(() => { particle.remove(); }, 800);
 }
 
@@ -57,7 +52,30 @@ if (coverPageElement) {
     }, { passive: true });
 }
 
-// 3. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN
+// -------------------------------------------------------------
+// TRIK PRE-FETCH: Mengunduh halaman undangan diam-diam 
+// setelah cover (index.html) selesai dimuat.
+// -------------------------------------------------------------
+let preloadedIframe = null;
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        preloadedIframe = document.createElement('iframe');
+        const params = new URLSearchParams(window.location.search);
+        params.set('spa', '1');
+        preloadedIframe.src = 'undangan.html?' + params.toString();
+        preloadedIframe.style.position = 'fixed';
+        preloadedIframe.style.top = '0';
+        preloadedIframe.style.left = '0';
+        preloadedIframe.style.width = '100vw';
+        preloadedIframe.style.height = '100vh';
+        preloadedIframe.style.border = 'none';
+        preloadedIframe.style.zIndex = '-9999'; // Sembunyikan di belakang
+        preloadedIframe.style.opacity = '0';
+        preloadedIframe.style.pointerEvents = 'none'; // Jangan ganggu user
+        document.body.appendChild(preloadedIframe);
+    }, 2000); // Mulai loading undangan 2 detik setelah buka web
+});
+
 function openInvitation() {
     const bookScene = document.getElementById('book');
     const coverPage = document.getElementById('cover-page');
@@ -65,7 +83,6 @@ function openInvitation() {
     const guestBox = document.getElementById('guestBox');
     const frameContainer = document.querySelector('.inside-video-frame');
     
-    // Cegah double klik
     if (!bookScene || bookScene.classList.contains('is-open')) return;
 
     bookScene.classList.add('is-open');
@@ -75,7 +92,6 @@ function openInvitation() {
     const frontContent = document.querySelector('.front-content');
     if (frontContent) { frontContent.style.opacity = '0'; }
 
-    // Paksa video putar
     if (invVideo) {
         invVideo.play().catch(e => console.log("Autoplay dicegah browser", e));
     }
@@ -89,44 +105,58 @@ function openInvitation() {
         }
     }
 
-    // Variabel dan Fungsi untuk memuat undangan
     let isIframeLoaded = false;
     const loadIframeSPA = (e) => {
         if (e && e.type === 'touchstart') e.preventDefault(); 
         if(isIframeLoaded) return;
         isIframeLoaded = true;
 
-        const iframe = document.createElement('iframe');
-        const params = new URLSearchParams(window.location.search);
-        params.set('spa', '1');
-        
-        iframe.src = 'undangan.html?' + params.toString();
-        iframe.style.position = 'fixed';
-        iframe.style.top = '0';
-        iframe.style.left = '0';
-        iframe.style.width = '100vw';
-        iframe.style.height = '100vh';
-        iframe.style.border = 'none';
-        iframe.style.zIndex = '9999998'; 
-        iframe.style.opacity = '0';
-        iframe.style.transition = 'opacity 1.2s ease';
-        document.body.appendChild(iframe);
+        let iframe;
+        // Gunakan iframe yang sudah didownload diam-diam (instan tanpa lemot)
+        if (preloadedIframe) {
+            iframe = preloadedIframe;
+            iframe.style.zIndex = '9999998'; 
+            iframe.style.pointerEvents = 'auto';
+            iframe.style.transition = 'opacity 1.2s ease';
+            
+            setTimeout(() => { iframe.style.opacity = '1'; }, 50);
+            executeTransitionCleaning(iframe, coverPage, frameContainer);
+        } else {
+            // Fallback jika iframe belum selesai di-download
+            iframe = document.createElement('iframe');
+            const params = new URLSearchParams(window.location.search);
+            params.set('spa', '1');
+            iframe.src = 'undangan.html?' + params.toString();
+            iframe.style.position = 'fixed';
+            iframe.style.top = '0';
+            iframe.style.left = '0';
+            iframe.style.width = '100vw';
+            iframe.style.height = '100vh';
+            iframe.style.border = 'none';
+            iframe.style.zIndex = '9999998'; 
+            iframe.style.opacity = '0';
+            iframe.style.transition = 'opacity 1.2s ease';
+            document.body.appendChild(iframe);
 
-        iframe.onload = () => {
-            iframe.style.opacity = '1';
+            iframe.onload = () => {
+                iframe.style.opacity = '1';
+                executeTransitionCleaning(iframe, coverPage, frameContainer);
+            };
+        }
+    };
+
+    function executeTransitionCleaning(iframe, coverPage, frameContainer) {
+        setTimeout(() => {
+            if(frameContainer) frameContainer.style.opacity = '0';
+            if (coverPage) coverPage.style.opacity = '0';
             
             setTimeout(() => {
-                if(frameContainer) frameContainer.style.opacity = '0';
-                if (coverPage) coverPage.style.opacity = '0';
-                
-                setTimeout(() => {
-                    if(frameContainer) frameContainer.remove();
-                    if (coverPage) coverPage.remove();
-                    iframe.style.zIndex = '1'; 
-                }, 1200);
-            }, 500); // Dipercepat agar memori HP segera terbebas
-        };
-    };
+                if(frameContainer) frameContainer.remove();
+                if (coverPage) coverPage.remove();
+                iframe.style.zIndex = '1'; 
+            }, 1200);
+        }, 500);
+    }
 
     if (frameContainer) {
         frameContainer.style.cursor = 'pointer';
@@ -134,17 +164,11 @@ function openInvitation() {
         frameContainer.addEventListener('touchstart', loadIframeSPA, {passive: false});
     }
 
-    // TAHAP 1: Tunggu 1 DETIK sampai animasi cover buku selesai (sesuai revisi CSS)
     setTimeout(() => {
         if(isIframeLoaded) return; 
-
         if (!frameContainer) return;
         
-        // REVISI ANTI PATAH-PATAH: 
-        // Hapus perhitungan bounding client rect dan set interval transisi CSS.
-        // Langsung jadikan iframe full screen dengan opacity untuk GPU yang lebih ringan.
         document.body.appendChild(frameContainer);
-        
         frameContainer.style.position = 'fixed';
         frameContainer.style.margin = '0';
         frameContainer.style.padding = '0';
@@ -176,20 +200,15 @@ function openInvitation() {
             watermark.style.zIndex = '9999999';
         }
 
-        // Matikan efek 3D buku untuk melegakan memori HP
-        if (coverPage) {
-            coverPage.style.display = 'none'; 
-        }
+        if (coverPage) { coverPage.style.display = 'none'; }
 
-        // TAHAP 2: Auto Load Undangan
         setTimeout(() => {
             if(!isIframeLoaded) loadIframeSPA();
         }, 300);
 
-    }, 1000); // <-- JEDA 1 DETIK MENUNGGU BUKU TERBUKA
+    }, 1000); 
 }
 
-// Komunikasi kontrol musik
 window.addEventListener('message', (event) => {
     if (event.data === 'toggleMusic') {
         const audio = document.getElementById('bgMusic');
