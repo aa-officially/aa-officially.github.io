@@ -164,7 +164,9 @@ function openInvitation() {
             if(p) p.style.display = 'none';
         });
         
-        // PERBAIKAN FULLSCREEN: Menghapus batas melengkung dan memastikan video terentang penuh
+        // PERBAIKAN FULLSCREEN: Pindahkan container ke body agar tidak terpotong (sepotong)
+        document.body.appendChild(frameContainer);
+        
         frameContainer.style.position = 'fixed';
         frameContainer.style.margin = '0';
         frameContainer.style.padding = '0';

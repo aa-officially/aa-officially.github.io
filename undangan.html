@@ -330,7 +330,8 @@
 </head>
 <body>
 
-    <video autoplay loop muted playsinline class="main-background-video" preload="auto">
+    <!-- PERBAIKAN: Menambahkan webkit-playsinline agar optimal di iOS / Browser HP -->
+    <video autoplay loop muted playsinline webkit-playsinline class="main-background-video" preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
 
@@ -554,7 +555,8 @@
             </form>
 
             <div class="chat-board" id="papanPesan">
-                </div>
+                <!-- Komentar akan di-load di sini -->
+            </div>
         </div>
 
         <div class="footer-sec" data-aos="fade-in">
@@ -692,16 +694,29 @@
 
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
+        // PERBAIKAN: Penanganan Cache Browser & Antisipasi Struktur Data JSON
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
-            board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Memuat doa & ucapan...</p>';
+            board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;"><i class="fa-solid fa-spinner fa-spin"></i> Memuat doa & ucapan...</p>';
 
-            fetch(scriptURL)
+            // Tambahkan parameter waktu (?t=...) agar browser tidak meload cache lama
+            const fetchUrl = scriptURL + '?action=read&t=' + new Date().getTime();
+
+            fetch(fetchUrl)
                 .then(response => response.json())
                 .then(data => {
                     board.innerHTML = ''; 
-                    if(data && data.length > 0) {
-                        data.forEach(item => {
+                    
+                    // Antisipasi format data yang dikirim Google Apps Script
+                    let items = data.data ? data.data : (Array.isArray(data) ? data : []);
+                    
+                    if(items && items.length > 0) {
+                        // Memastikan urutan komentar memunculkan yang terbaru di atas
+                        items.reverse(); 
+                        
+                        items.forEach(item => {
+                            if (!item.nama) return; // Lewati baris kosong
+                            
                             const bubble = document.createElement('div');
                             bubble.className = 'chat-bubble';
                             let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="gif">` : '';
@@ -709,7 +724,7 @@
                             bubble.innerHTML = `
                                 <div class="chat-header">
                                     <span class="chat-name">${item.nama}</span>
-                                    <span class="badge-hadir"><i class="fa-solid fa-check"></i> ${item.kehadiran}</span>
+                                    <span class="badge-hadir"><i class="fa-solid fa-check"></i> ${item.kehadiran || 'Hadir'}</span>
                                 </div>
                                 <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"${item.pesan}"</p>
                                 ${gifHtml}
@@ -722,7 +737,7 @@
                 })
                 .catch(error => {
                     console.error('Gagal memuat ucapan:', error);
-                    board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Jadilah yang pertama memberikan ucapan!</p>';
+                    board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Pesan belum bisa dimuat, pastikan koneksi internet Anda stabil.</p>';
                 });
         }
 
