@@ -4,6 +4,9 @@
  * =========================================================
  */
 
+// ---------------------------------------------------------
+// 1. MENANGKAP PARAMETER URL (Nama Tamu)
+// ---------------------------------------------------------
 const urlParams = new URLSearchParams(window.location.search);
 const guestName = urlParams.get('to');
 if (guestName) {
@@ -11,11 +14,15 @@ if (guestName) {
     if (guestNameEl) guestNameEl.innerText = guestName;
 }
 
+// Pengaturan kecepatan putar video
 const invVideo = document.getElementById('invitationVideo');
 if (invVideo) { 
     invVideo.playbackRate = 0.75; 
 }
 
+// ---------------------------------------------------------
+// 2. EFEK VISUAL (Bintang & Meteor)
+// ---------------------------------------------------------
 function createStars() {
     const container = document.getElementById('stars-container');
     if (!container) return; 
@@ -57,8 +64,11 @@ function createMeteors() {
 createStars();
 createMeteors();
 
+// ---------------------------------------------------------
+// 3. EFEK INTERAKSI KURSOR (Jejak Bintang) - DIOPTIMASI UNTUK HP
+// ---------------------------------------------------------
 const coverPageElement = document.getElementById('cover-page');
-let lastTrailTime = 0;
+let lastTrailTime = 0; // Throttle timer untuk menghindari lag
 
 function createTrail(x, y) {
     if (!coverPageElement) return;
@@ -85,6 +95,7 @@ if (coverPageElement) {
         }
     });
 
+    // passive: true menstabilkan 60fps saat scrolling di HP
     coverPageElement.addEventListener('touchmove', e => {
         let now = Date.now();
         if (e.touches.length > 0 && now - lastTrailTime > 60 && Math.random() > 0.3) {
@@ -94,6 +105,9 @@ if (coverPageElement) {
     }, { passive: true });
 }
 
+// ---------------------------------------------------------
+// 4. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN
+// ---------------------------------------------------------
 function openInvitation() {
     const bookScene = document.getElementById('book');
     const coverPage = document.getElementById('cover-page');
@@ -159,68 +173,25 @@ function openInvitation() {
         frameContainer.style.zIndex = '999999';
         frameContainer.style.backgroundColor = '#050505';
         
-        if (invVideo) invVideo.style.objectFit = 'contain';
+        /* PERBAIKAN: Cegah video terpotong di HP */
+        if (invVideo) {
+            invVideo.style.objectFit = window.innerWidth < 480 ? 'contain' : 'cover'; 
+        }
         void frameContainer.offsetWidth; 
         
         frameContainer.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
         frameContainer.style.top = '0px';
         frameContainer.style.left = '0px';
         frameContainer.style.width = '100vw';
-        frameContainer.style.height = '100vh';
+        frameContainer.style.height = '100dvh'; /* PERBAIKAN: Gunakan dvh */
         
         setTimeout(() => {
+            if (audio) {
+                sessionStorage.setItem('savedMusicTime', audio.currentTime);
+                sessionStorage.setItem('isMusicPlaying', !audio.paused);
+            }
             const queryString = window.location.search; 
-            
-            fetch('undangan.html' + queryString)
-                .then(res => res.text())
-                .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-
-                    doc.querySelectorAll('link[rel="stylesheet"], style').forEach(el => {
-                        if (!document.head.innerHTML.includes(el.outerHTML)) {
-                            document.head.appendChild(el.cloneNode(true));
-                        }
-                    });
-
-                    // PERBAIKAN: Penanganan audio yang lebih aman
-                    const existingAudio = document.getElementById('bgMusic');
-                    let isPlaying = false;
-                    let currentTime = 0;
-
-                    if (existingAudio) {
-                        isPlaying = !existingAudio.paused;
-                        currentTime = existingAudio.currentTime;
-                    }
-
-                    document.body.innerHTML = '';
-                    
-                    if(existingAudio) {
-                        document.body.appendChild(existingAudio);
-                        if (isPlaying) {
-                            existingAudio.currentTime = currentTime;
-                            existingAudio.play().catch(e => console.log('Audio autoplay prevented'));
-                        }
-                    }
-
-                    Array.from(doc.body.childNodes).forEach(node => {
-                        if (node.id === 'bgMusic') return; 
-                        
-                        if (node.tagName === 'SCRIPT') {
-                            const newScript = document.createElement('script');
-                            if (node.src) newScript.src = node.src;
-                            else newScript.textContent = node.textContent;
-                            document.body.appendChild(newScript);
-                        } else {
-                            document.body.appendChild(node.cloneNode(true));
-                        }
-                    });
-
-                    window.history.pushState({}, '', 'undangan.html' + queryString);
-                })
-                .catch(() => {
-                    window.location.href = 'undangan.html' + queryString;
-                });
+            window.location.href = 'undangan.html' + queryString;
         }, 3500);
 
     }, 3500); 

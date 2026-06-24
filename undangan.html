@@ -8,7 +8,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600&family=Playfair+Display:ital,wght@1,700&family=Amiri:wght@400;700&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,700&family=Amiri:wght@400;700&family=Sacramento&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
@@ -42,7 +42,7 @@
 
         /* --- BACKGROUND VIDEO CONTAINER --- */
         .main-background-video {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; /* PERBAIKAN: Gunakan dvh agar tidak tertutup bar HP */
             object-fit: cover; z-index: -2; opacity: 0.25; pointer-events: none;
         }
 
@@ -116,7 +116,7 @@
         /* --- HERO SECTION --- (FIXED LAYOUT) */
         .hero-section {
             position: relative; width: 100%;
-            min-height: 85vh; height: auto; 
+            min-height: 85vh; height: auto; /* Mencegah layar terpotong di HP kecil */
             display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
             margin-bottom: 0px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; overflow: hidden;
             padding-top: 100px;
@@ -162,12 +162,10 @@
 
         .hero-cal-wrap { display: flex; flex-direction: column; gap: 12px; justify-content: center; align-items: center; margin-top: 25px; }
         .hero-cal-label { font-size: 0.75rem; color: #cbd5e1; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-        .hero-cal-buttons { display: flex; gap: 10px; }
         .btn-mini-cal {
             display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.3); padding: 10px 18px; border-radius: 20px;
             color: #fff; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: 0.3s;
-            cursor: pointer; /* Memastikan kursor tangan muncul */
         }
         .btn-mini-cal:hover { background: #fff; color: var(--dark-bg); border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
@@ -315,8 +313,8 @@
 </head>
 <body>
 
-    <!-- PERBAIKAN: Menambahkan poster untuk fallback jika video diblokir autoplay di HP -->
-    <video autoplay loop muted playsinline class="main-background-video" poster="bg_poster.jpg">
+    <!-- PERBAIKAN: preload="auto" agar video tampil di HP -->
+    <video autoplay loop muted playsinline class="main-background-video" preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
 
@@ -346,12 +344,10 @@
                 
                 <div class="hero-cal-wrap">
                     <span class="hero-cal-label">Simpan ke Kalender:</span>
-                    <div class="hero-cal-buttons">
-                        <!-- PERBAIKAN: Fungsi link Kalender Google -->
-                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=The+Wedding+of+Aulia+%26+Amar&dates=20260628T020000Z/20260628T060000Z&details=Acara+Pernikahan+Aulia+dan+Amar&location=Wisma+Donggala,+Palu" target="_blank" class="btn-mini-cal"><i class="fa-brands fa-google"></i> Google</a>
-                        <!-- PERBAIKAN: Fungsi link Kalender Apple menggunakan onclick -->
-                        <button onclick="downloadICS()" class="btn-mini-cal"><i class="fa-brands fa-apple"></i> Apple</button>
-                    </div>
+                    <!-- PERBAIKAN: Tombol Calendar Tunggal -->
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Aulia+%26+Amar&dates=20260628T020000Z/20260628T050000Z&details=Acara+pernikahan+Aulia+dan+Amar&location=Wisma+Donggala,+Palu" target="_blank" class="btn-aesthetic" style="width: auto;">
+                        <i class="fa-regular fa-calendar-plus"></i> Ingatkan Saya
+                    </a>
                 </div>
             </div>
         </section>
@@ -400,7 +396,7 @@
             
             <div class="couple-container">
                 <div class="profile-card" data-aos="fade-right">
-                    <div class="profile-img-box"><img src="male_section3.png" alt="Amar" loading="lazy"></div>
+                    <div class="profile-img-box"><img src="male_section3.png" alt="Amar"></div>
                     <h2 class="profile-name">Amar</h2>
                     <p class="profile-parents">Putra dari<br><span class="parent-name">Bapak H. Mansur (Alm) & Ibu Hj. Yulianti</span></p>
                 </div>
@@ -408,7 +404,7 @@
                 <div style="font-family: var(--font-signature); font-size: clamp(2.5rem, 12vw, 3.5rem); color: var(--accent-glow); z-index: 2;" data-aos="fade-up">&</div>
 
                 <div class="profile-card" data-aos="fade-left">
-                    <div class="profile-img-box"><img src="female_section3.png" alt="Aulia" loading="lazy"></div>
+                    <div class="profile-img-box"><img src="female_section3.png" alt="Aulia"></div>
                     <h2 class="profile-name">Aulia Ninda A.</h2>
                     <p class="profile-parents">Putri dari<br><span class="parent-name">Bapak Rusmanto & Ibu Harlina</span></p>
                 </div>
@@ -447,18 +443,19 @@
                 <div class="venue-address">(Jl. Diponegoro No.6, Lere, Kec. Palu Bar., Kota Palu, Sulawesi Tengah)</div>
             </div>
 
+            <!-- PERBAIKAN: Embed & Link Google Maps diperbaiki -->
             <div class="map-container">
-                <iframe src="https://maps.google.com/maps?q=Wisma+Donggala,Palu&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.3100492018316!2d119.839814!3d-0.890000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8bedf000000001%3A0x0!2sWisma%20Donggala!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" allowfullscreen="" loading="lazy"></iframe>
             </div>
             
-            <a href="https://maps.app.goo.gl/example" target="_blank" class="btn-aesthetic">
+            <a href="https://maps.app.goo.gl/search/Wisma+Donggala+Palu" target="_blank" class="btn-aesthetic">
                 <i class="fa-solid fa-map-location-dot"></i> Buka Google Maps
             </a>
         </div>
 
         <div class="glass-card" style="padding: 15px;" data-aos="zoom-in">
             <div class="theme-video-container">
-                <video autoplay loop muted playsinline class="theme-video">
+                <video autoplay loop muted playsinline class="theme-video" preload="none">
                     <source src="isi.mp4" type="video/mp4">
                 </video>
             </div>
@@ -473,7 +470,7 @@
             
             <div class="atm-card" data-aos="slide-up">
                 <div class="bank-content">
-                    <img src="bsi.png" alt="BSI" class="bank-logo" loading="lazy">
+                    <img src="bsi.png" alt="BSI" class="bank-logo">
                     <div class="bank-rek">7292 5603 24</div>
                     <div class="bank-name">A.N Aulia Ninda Agustianti</div>
                     <button class="btn-copy-card" onclick="copyToClipboard('7292560324', 'BSI')">Salin Rekening</button>
@@ -482,7 +479,7 @@
 
             <div class="atm-card" data-aos="slide-up">
                 <div class="bank-content">
-                    <img src="aladin.png" alt="Aladin" class="bank-logo" loading="lazy">
+                    <img src="aladin.png" alt="Aladin" class="bank-logo">
                     <div class="bank-rek">5084 5880 043</div>
                     <div class="bank-name">A.N Amar Mansur</div>
                     <button class="btn-copy-card" onclick="copyToClipboard('50845880043', 'Bank Aladin')">Salin Rekening</button>
@@ -512,28 +509,28 @@
                     </div>
                     
                     <div id="panel-love" class="gif-viewport active">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f970/512.gif" loading="lazy" alt="❤️" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.gif" loading="lazy" alt="💖" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/512.gif" loading="lazy" alt="😍" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2764_fe0f/512.gif" loading="lazy" alt="❤️" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f970/512.gif" alt="❤️" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f496/512.gif" alt="💖" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60d/512.gif" alt="😍" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2764_fe0f/512.gif" alt="❤️" onclick="selectGif(this)">
                     </div>
                     <div id="panel-party" class="gif-viewport">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif" loading="lazy" alt="🎉" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f942/512.gif" loading="lazy" alt="🥂" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f38a/512.gif" loading="lazy" alt="🎊" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f3c6/512.gif" loading="lazy" alt="🏆" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif" alt="🎉" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f942/512.gif" alt="🥂" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f38a/512.gif" alt="🎊" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f3c6/512.gif" alt="🏆" onclick="selectGif(this)">
                     </div>
                     <div id="panel-happy" class="gif-viewport">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60a/512.gif" loading="lazy" alt="😊" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f923/512.gif" loading="lazy" alt="🤣" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f601/512.gif" loading="lazy" alt="😁" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f604/512.gif" loading="lazy" alt="😄" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f60a/512.gif" alt="😊" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f923/512.gif" alt="🤣" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f601/512.gif" alt="😁" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f604/512.gif" alt="😄" onclick="selectGif(this)">
                     </div>
                     <div id="panel-pray" class="gif-viewport">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64f/512.gif" loading="lazy" alt="🙏" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.gif" loading="lazy" alt="✨" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.gif" loading="lazy" alt="🌟" onclick="selectGif(this)">
-                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/512.gif" loading="lazy" alt="👍" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64f/512.gif" alt="🙏" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2728/512.gif" alt="✨" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.gif" alt="🌟" onclick="selectGif(this)">
+                        <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f44d/512.gif" alt="👍" onclick="selectGif(this)">
                     </div>
                     
                     <input type="hidden" id="selectedGifUrl" name="gif" value="">
@@ -543,14 +540,7 @@
             </form>
 
             <div class="chat-board" id="papanPesan">
-                <div class="chat-bubble">
-                    <div class="chat-header">
-                        <span class="chat-name">Sahabat Dekat</span>
-                        <span class="badge-hadir"><i class="fa-solid fa-check"></i> Hadir</span>
-                    </div>
-                    <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"Selamat menempuh hidup baru ya Aulia dan Amar! Bahagia selalu sampai kakek nenek."</p>
-                    <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f389/512.gif" class="chat-gif" alt="gif">
-                </div>
+                <!-- Komentar dari Google Sheet akan muncul di sini -->
             </div>
         </div>
 
@@ -573,6 +563,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
         AOS.init({ duration: 1200, once: false, offset: 50 });
+
+        // --- SISTEM KEMBALI KE SAMPUL SAAT REFRESH ---
+        const navEntries = performance.getEntriesByType("navigation");
+        if (navEntries.length > 0 && navEntries[0].type === "reload") {
+            window.location.href = "index.html" + window.location.search;
+        }
 
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
@@ -637,23 +633,11 @@
 
         window.addEventListener('load', resizeCanvas);
         window.addEventListener('resize', resizeCanvas);
-        
-        setTimeout(() => {
-            resizeCanvas();
-            animateStars();
-        }, 100);
+        resizeCanvas();
+        animateStars();
 
-        // --- SISTEM MELANJUTKAN MUSIK ---
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicToggle');
-
-        if (audio && musicBtn) {
-            if (!audio.paused) {
-                musicBtn.classList.remove('paused');
-            } else {
-                musicBtn.classList.add('paused');
-            }
-        }
 
         function toggleMusic() {
             if (audio.paused) {
@@ -694,19 +678,45 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
-        // PERBAIKAN: Fungsi Download File ICS Apple Calendar
-        function downloadICS() {
-            const icsData = "BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nDTSTART:20260628T020000Z\nDTEND:20260628T060000Z\nSUMMARY:The Wedding of Aulia & Amar\nLOCATION:Wisma Donggala, Palu\nDESCRIPTION:Acara Pernikahan Aulia dan Amar\nEND:VEVENT\nEND:VCALENDAR";
-            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.setAttribute('download', 'wedding_aulia_amar.ics');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
+        // --- GOOGLE SHEETS CONNECTION ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
+
+        // FUNGSI MENGAMBIL DATA KOMENTAR LAMA (TIDAK HILANG)
+        function loadUcapan() {
+            const board = document.getElementById('papanPesan');
+            board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Memuat doa & ucapan...</p>';
+
+            fetch(scriptURL)
+                .then(response => response.json())
+                .then(data => {
+                    board.innerHTML = ''; // Bersihkan loading
+                    
+                    // Jika data ada
+                    if(data && data.length > 0) {
+                        data.forEach(item => {
+                            const bubble = document.createElement('div');
+                            bubble.className = 'chat-bubble';
+                            let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="gif">` : '';
+                            
+                            bubble.innerHTML = `
+                                <div class="chat-header">
+                                    <span class="chat-name">${item.nama}</span>
+                                    <span class="badge-hadir"><i class="fa-solid fa-check"></i> ${item.kehadiran}</span>
+                                </div>
+                                <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"${item.pesan}"</p>
+                                ${gifHtml}
+                            `;
+                            board.appendChild(bubble);
+                        });
+                    } else {
+                        board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Jadilah yang pertama memberikan ucapan!</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Gagal memuat ucapan:', error);
+                    board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Jadilah yang pertama memberikan ucapan!</p>';
+                });
+        }
 
         function kirimUcapan(e) {
             e.preventDefault();
@@ -737,6 +747,10 @@
                         <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"${msg}"</p>
                         ${gifHtml}
                     `;
+                    // Hapus pesan kosong jika ada
+                    const emptyMsg = board.querySelector('p');
+                    if(emptyMsg) emptyMsg.remove();
+
                     board.insertBefore(bubble, board.firstChild);
                     
                     form.reset();
@@ -752,6 +766,27 @@
                     console.error('Error!', error.message);
                 });
         }
+
+        // --- INIT SAAT HALAMAN DIMUAT ---
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTime = sessionStorage.getItem('savedMusicTime');
+            const isPlaying = sessionStorage.getItem('isMusicPlaying');
+
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+
+            if (isPlaying === 'true') {
+                audio.play().then(() => {
+                    musicBtn.classList.remove('paused');
+                }).catch(() => {
+                    musicBtn.classList.add('paused');
+                });
+            }
+
+            // PERBAIKAN: Muat ucapan lama dari database agar tidak hilang
+            loadUcapan();
+        });
     </script>
 </body>
 </html>
