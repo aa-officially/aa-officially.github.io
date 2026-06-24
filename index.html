@@ -7,6 +7,12 @@
     
     <title>The Wedding of Aulia & Amar</title>
     
+    <!-- REVISI 1: Preload Source agar tidak lambat saat pertama load -->
+    <link rel="preload" as="video" href="background.mp4">
+    <link rel="preload" as="video" href="part3.mp4">
+    <link rel="preload" as="image" href="cover.png">
+    <link rel="preload" as="image" href="part2.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&family=Amiri&display=block" rel="stylesheet">
@@ -17,7 +23,6 @@
     <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
 
     <div id="cover-page">
-        <!-- BACKGROUND VIDEO PENGGANTI BINTANG & BULAN -->
         <video autoplay loop muted playsinline webkit-playsinline class="cover-bg-video">
             <source src="background.mp4" type="video/mp4">
         </video>

@@ -232,7 +232,7 @@
         .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: #fff; }
         .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow); margin-top: 5px; font-weight: 600; }
 
-        /* --- AGENDA & MAPS BARU --- */
+        /* --- AGENDA & MAPS BARU (REVISI 4) --- */
         .agenda-ticket {
             background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.6));
             border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--accent-glow);
@@ -266,12 +266,14 @@
         .venue-name { font-family: var(--font-serif); font-size: 1.6rem; color: #fff; margin-bottom: 12px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.3); letter-spacing: 1px; }
         .venue-address { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
         
+        /* REVISI 4: Modifikasi properti Map Container dan pointer-events */
         .map-container {
             border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); margin: 25px 0; position: relative; padding-bottom: 70%;
             box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15); transition: 0.3s ease; background: #111;
+            display: block; cursor: pointer;
         }
         .map-container:hover { border-color: rgba(56, 189, 248, 0.5); }
-        .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); pointer-events: auto; }
+        .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); pointer-events: none; }
 
         .btn-aesthetic {
             display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
@@ -518,7 +520,8 @@
                 <div class="agenda-icon-box"><i class="fa-solid fa-ring"></i></div>
                 <div class="agenda-content">
                     <div class="agenda-title">Akad Nikah</div>
-                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> 28 Juni 2026</div>
+                    <!-- REVISI 3: Tambah hari Minggu -->
+                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> Minggu, 28 Juni 2026</div>
                     <div class="agenda-detail"><i class="fa-solid fa-clock"></i> 10.00 WITA - Selesai</div>
                 </div>
             </div>
@@ -527,7 +530,8 @@
                 <div class="agenda-icon-box" style="color: var(--accent-gold); border-color: rgba(253, 224, 71, 0.3); background: rgba(253, 224, 71, 0.1);"><i class="fa-solid fa-champagne-glasses"></i></div>
                 <div class="agenda-content">
                     <div class="agenda-title" style="color: var(--accent-glow);">Resepsi</div>
-                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> 28 Juni 2026</div>
+                    <!-- REVISI 3: Tambah hari Minggu -->
+                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> Minggu, 28 Juni 2026</div>
                     <div class="agenda-detail"><i class="fa-solid fa-clock"></i> 11.00 WITA - Selesai</div>
                 </div>
             </div>
@@ -541,9 +545,12 @@
                 </div>
             </div>
 
-            <div class="map-container" data-aos="fade-up">
+            <!-- REVISI 4: Peta diubah menjadi Link Tembus agar bisa ditekan 1 jari tanpa hambatan zoom Maps -->
+            <a href="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu" target="_blank" class="map-container" data-aos="fade-up">
                 <iframe src="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen></iframe>
-            </div>
+                <!-- Layer Transparan Anti-Dua-Jari -->
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5;"></div>
+            </a>
             
             <a href="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu" target="_blank" class="btn-aesthetic">
                 <i class="fa-solid fa-map-location-dot"></i> Buka Google Maps
@@ -560,7 +567,8 @@
 
         <div class="gift-wrapper-box" data-aos="fade-up">
             <h2 class="section-title">Wedding Gift</h2>
-            <div class="section-subtitle">Tanda Kasih</div>
+            <!-- REVISI 2: Tanda Kasih -> e-gift -->
+            <div class="section-subtitle">e-gift</div>
             <p class="text-p" style="color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,0.8); font-weight: 400; margin-bottom: 30px;">
                 Dengan hormat, bagi Anda yang ingin memberikan tanda kasih kepada kami, dapat melalui rekening di bawah ini:
             </p>
@@ -595,7 +603,8 @@
                     <option value="Hadir">Insya Allah Hadir</option>
                     <option value="Tidak Hadir">Maaf, Tidak Hadir</option>
                 </select>
-                <textarea id="pesanTamu" name="pesan" class="form-control" rows="4" placeholder="Tulis harapan & doa..." required></textarea>
+                <!-- REVISI 5: Tambahan placeholder agar tidak bingung -->
+                <textarea id="pesanTamu" name="pesan" class="form-control" rows="4" placeholder="Tulis harapan & doa... (Bisa pilih GIF Android)" required></textarea>
                 
                 <div class="gif-selector">
                     <div class="gif-tabs">
@@ -796,6 +805,37 @@
         // URL GOOGLE SCRIPT ANDA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
+        // REVISI 5: MENCEGAH ERROR "APLIKASI TIDAK MENDUKUNG GAMBAR" & SUPPORT GIF DARI KEYBOARD
+        document.getElementById('pesanTamu').addEventListener('paste', function(e) {
+            const items = (e.clipboardData || window.clipboardData).items;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    e.preventDefault(); // Matikan fitur standar browser agar tidak error
+                    const blob = items[i].getAsFile();
+                    
+                    // Limit maksimal 2.5MB agar saat klik "Kirim" tidak terjadi freeze / lemot
+                    if(blob.size > 2500000) { 
+                        alert("Ukuran GIF dari keyboard terlalu besar. Harap gunakan GIF bawaan web yang ada di bawah ya.");
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        // Secara otomatis pindahkan Base64 ke parameter form rahasia (hidden input)
+                        document.getElementById('selectedGifUrl').value = event.target.result;
+                        document.querySelectorAll('.gif-viewport img').forEach(img => img.style.border = 'none');
+                        
+                        // Berikan info visual ke user
+                        const el = document.getElementById('pesanTamu');
+                        const originalPlaceholder = el.placeholder;
+                        el.placeholder = "✅ GIF Keyboard berhasil terpasang! Lanjut mengetik...";
+                        setTimeout(() => { el.placeholder = originalPlaceholder; }, 4000);
+                    };
+                    reader.readAsDataURL(blob);
+                }
+            }
+        });
+
         // FUNGSI LOAD UCAPAN (Live View dari Google Spreadsheet)
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
@@ -915,7 +955,6 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             if (!isSPA) {
-                // Eksekusi normal apabila dijalankan secara terpisah (bukan dalam SPA)
                 const savedTime = sessionStorage.getItem('savedMusicTime');
                 const isPlaying = sessionStorage.getItem('isMusicPlaying');
 
@@ -929,7 +968,6 @@
                     });
                 }
             } else {
-                // Di mode iframe/SPA, kita hapus audio ini karena musik terus diputar oleh index.html
                 if (audio) audio.remove();
                 musicBtn.classList.remove('paused'); 
             }
