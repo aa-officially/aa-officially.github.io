@@ -179,7 +179,6 @@
         .venue-name { font-family: var(--font-serif); font-size: 1.6rem; color: #fff; margin-bottom: 12px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.3); letter-spacing: 1px; }
         .venue-address { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
         
-        /* PETA GOOGLE MAPS YANG BISA DIGESER */
         .map-container {
             border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); margin: 25px 0; position: relative; padding-bottom: 70%;
             box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15); transition: 0.3s ease; background: #111; z-index: 10;
@@ -651,7 +650,6 @@
             }, 4000);
         }
 
-        // MENANGKAP GIF DARI KEYBOARD ANDROID (Event Paste standard)
         document.getElementById('pesanTamuFake').addEventListener('paste', function(e) {
             const items = (e.clipboardData || window.clipboardData).items;
             for (let i = 0; i < items.length; i++) {
@@ -671,16 +669,12 @@
             }
         });
 
-        // MENANGKAP GIF DARI KEYBOARD (Jika HP menyisipkan elemen IMG secara native)
         document.getElementById('pesanTamuFake').addEventListener('input', function(e) {
             const imgs = this.querySelectorAll('img');
             if(imgs.length > 0) {
-                // Ambil gambar terakhir yang disisipkan
                 const imgUrl = imgs[imgs.length - 1].src;
                 document.getElementById('selectedGifUrl').value = imgUrl;
                 document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
-                
-                // Bersihkan tag <img> dari dalam div teks agar rapi
                 imgs.forEach(img => img.remove());
                 notifikasiGifBerhasil();
             }
@@ -741,7 +735,6 @@
             e.preventDefault();
             
             const fakeInput = document.getElementById('pesanTamuFake');
-            // Jika masih ada gambar yang tertinggal karena alasan apapun, keluarkan dulu
             const imgs = fakeInput.querySelectorAll('img');
             let nativelyInsertedGifUrl = null;
             if(imgs.length > 0) {
@@ -759,7 +752,6 @@
             
             if(msg === "") { alert("Harap tulis pesan terlebih dahulu!"); return; }
 
-            // Prioritaskan GIF asli yang ditangkap langsung saat send (kalau ada)
             if(nativelyInsertedGifUrl) {
                 document.getElementById('selectedGifUrl').value = nativelyInsertedGifUrl;
             }
@@ -830,6 +822,23 @@
                 musicBtn.classList.remove('paused'); 
             }
             loadUcapan();
+
+            // --- SKRIP PENYELAMAT RAM HP (SENSOR MATA) ---
+            let videos = document.querySelectorAll("video");
+            let observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.play().catch(e => console.log("Autoplay dicegah browser", e));
+                    } else {
+                        entry.target.pause(); // Mematikan video yang tidak dilihat
+                    }
+                });
+            }, { threshold: 0.1 }); 
+
+            videos.forEach(video => {
+                observer.observe(video);
+            });
+            // ----------------------------------------------
         });
     </script>
 </body>
