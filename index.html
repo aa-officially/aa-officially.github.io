@@ -8,21 +8,18 @@
     <title>The Wedding of Aulia & Amar</title>
     
     <link rel="preload" as="image" href="cover.png" fetchpriority="high">
-    <link rel="preload" as="image" href="part2.png">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Alex+Brush&family=Amiri&display=block" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
 
     <div id="cover-page">
         <video autoplay loop muted playsinline webkit-playsinline class="cover-bg-video" preload="auto">
-    <source src="background.mp4" type="video/mp4">
-</video>
+            <source src="background.mp4" type="video/mp4">
+        </video>
 
         <div class="external-guest-box" id="guestBox">
             <p>Kepada Yth.</p>
@@ -35,7 +32,7 @@
             
             <div class="pages-block">
                 <div class="inside-video-frame">
-                    <video id="invitationVideo" autoplay loop muted playsinline preload="metadata">
+                    <video id="invitationVideo" autoplay loop muted playsinline preload="auto">
                         <source src="part3.mp4" type="video/mp4">
                     </video>
                     <div class="inside-date-arabic" dir="ltr">٢٨ ✦ ٠٦ ✦ ٢٦</div>
@@ -44,9 +41,7 @@
 
             <div class="page page-3">
                 <div class="page-front"></div>
-                <div class="page-back">
-                    <img src="part2.png" alt="Bagian Kiri">
-                </div>
+                <div class="page-back"><img src="part2.png" alt="Bagian Kiri"></div>
             </div>
             <div class="page page-2"></div>
             <div class="page page-1"></div>
@@ -67,7 +62,6 @@
             <span class="wm-text-2">Muhammad Amar</span>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

@@ -13,38 +13,6 @@ if (invVideo) {
 }
 
 const coverPageElement = document.getElementById('cover-page');
-let lastTrailTime = 0; 
-
-function createTrail(x, y) {
-    if (!coverPageElement) return;
-    const particle = document.createElement('div');
-    particle.className = 'trail-particle';
-    let size = Math.random() * 4 + 4;
-    particle.style.width = `${size}px`;
-    particle.style.height = `${size}px`;
-    particle.style.left = `${x}px`;
-    particle.style.top = `${y}px`;
-    coverPageElement.appendChild(particle);
-    setTimeout(() => { particle.remove(); }, 800);
-}
-
-if (coverPageElement) {
-    coverPageElement.addEventListener('mousemove', e => {
-        let now = Date.now();
-        if (now - lastTrailTime > 40 && Math.random() > 0.4) {
-            createTrail(e.clientX, e.clientY);
-            lastTrailTime = now;
-        }
-    });
-
-    coverPageElement.addEventListener('touchmove', e => {
-        let now = Date.now();
-        if (e.touches.length > 0 && now - lastTrailTime > 60 && Math.random() > 0.3) {
-            createTrail(e.touches[0].clientX, e.touches[0].clientY);
-            lastTrailTime = now;
-        }
-    }, { passive: true });
-}
 
 function openInvitation() {
     const bookScene = document.getElementById('book');
@@ -56,16 +24,16 @@ function openInvitation() {
     
     if (!bookScene || bookScene.classList.contains('is-open')) return;
 
-    // 1. TAHAP PERTAMA: Buka Buku (Animasi CSS berdurasi 1 detik)
+    // TAHAP 1: Buka Buku (1 detik)
     bookScene.classList.add('is-open');
     bookScene.onclick = null; 
     
     if (guestBox) guestBox.style.opacity = '0';
     const frontContent = document.querySelector('.front-content');
     if (frontContent) frontContent.style.opacity = '0';
+    if (watermark) watermark.style.opacity = '0';
 
-    // Jeda video background agar tidak lag saat transisi
-    if (bgVideo) bgVideo.pause();
+    if (bgVideo) bgVideo.pause(); // Hentikan video belakang agar tidak lag
 
     if (invVideo) {
         invVideo.play().catch(e => console.log("Autoplay dicegah browser", e));
@@ -74,13 +42,12 @@ function openInvitation() {
     if (audio) {
         let playPromise = audio.play();
         if (playPromise !== undefined) {
-            playPromise.catch(() => {
-                document.addEventListener('click', () => audio.play(), { once: true });
-            });
+            playPromise.catch(() => { document.addEventListener('click', () => audio.play(), { once: true }); });
         }
     }
 
     let isIframeLoaded = false;
+    let isSkipped = false;
     let sequenceTimeout1, sequenceTimeout2;
 
     const loadIframeSPA = (e) => {
@@ -91,8 +58,7 @@ function openInvitation() {
         clearTimeout(sequenceTimeout1);
         clearTimeout(sequenceTimeout2);
 
-        // Hilangkan watermark secara permanen di tahap ini
-        if (watermark) watermark.style.display = 'none';
+        if (watermark) watermark.remove(); // Hapus permanen watermark
 
         let iframe = document.createElement('iframe');
         const params = new URLSearchParams(window.location.search);
@@ -106,61 +72,48 @@ function openInvitation() {
         iframe.style.border = 'none';
         iframe.style.zIndex = '9999998'; 
         iframe.style.opacity = '0';
-        iframe.style.transition = 'opacity 1.2s ease';
+        iframe.style.transition = 'opacity 0.8s ease';
         document.body.appendChild(iframe);
 
         iframe.onload = () => {
             iframe.style.opacity = '1';
             setTimeout(() => {
-                if(frameContainer) frameContainer.style.opacity = '0';
-                if (coverPage) coverPage.style.opacity = '0';
+                // Matikan video untuk hemat RAM
+                if(invVideo) { invVideo.pause(); invVideo.removeAttribute('src'); invVideo.load(); }
+                if(bgVideo) { bgVideo.pause(); bgVideo.removeAttribute('src'); bgVideo.load(); }
                 
-                setTimeout(() => {
-                    // --- PERBAIKAN RAM SUPER KETAT ---
-                    // Matikan video sepenuhnya ke akar untuk melegakan RAM HP
-                    if(invVideo) { 
-                        invVideo.pause(); 
-                        invVideo.removeAttribute('src'); 
-                        invVideo.load(); 
-                    }
-                    if(bgVideo) { 
-                        bgVideo.pause(); 
-                        bgVideo.removeAttribute('src'); 
-                        bgVideo.load(); 
-                    }
-                    // ---------------------------------
-
-                    if(frameContainer) frameContainer.remove();
-                    if (coverPage) coverPage.remove();
-                    iframe.style.zIndex = '1'; 
-                }, 1200);
-            }, 500);
+                if(frameContainer) frameContainer.remove();
+                if (coverPage) coverPage.remove();
+                iframe.style.zIndex = '1'; 
+            }, 800);
         };
     };
 
     const skipAction = (e) => {
+        if (isSkipped) return;
+        isSkipped = true;
         loadIframeSPA(e);
     };
 
-    // TAHAP KEDUA: Buka buku (1 detik) + Diam di buku (1 detik) = Total 2 detik
+    // TAHAP 2: Setelah buku terbuka (1 dtk), diam dibuku (1 dtk). Total = 2 dtk.
     sequenceTimeout1 = setTimeout(() => {
-        if (!frameContainer) return;
+        if (isSkipped) return;
         
+        if (!frameContainer) return;
         document.body.appendChild(frameContainer);
         frameContainer.classList.add('fullscreen-mode');
 
         const dateArabic = document.querySelector('.inside-date-arabic');
         if (dateArabic) dateArabic.style.display = 'none';
-
         if (coverPage) coverPage.style.display = 'none';
 
+        // TAHAP 3: Klik langsung skip, atau tunggu 1 detik berjalan fullscreen
         frameContainer.style.cursor = 'pointer';
         frameContainer.addEventListener('click', skipAction);
         frameContainer.addEventListener('touchstart', skipAction, {passive: false});
 
-        // TAHAP KETIGA: Setelah video berjalan tanpa buku 1 detik, load undangan
         sequenceTimeout2 = setTimeout(() => {
-            if(!isIframeLoaded) loadIframeSPA();
+            if(!isSkipped) loadIframeSPA();
         }, 1000); 
 
     }, 2000); 
