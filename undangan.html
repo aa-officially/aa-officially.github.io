@@ -58,9 +58,7 @@
             background-color: var(--dark-bg);
         }
 
-        .ambient-light {
-            position: fixed; border-radius: 50%; filter: blur(140px); z-index: -1; opacity: 0.15; pointer-events: none;
-        }
+        .ambient-light { position: fixed; border-radius: 50%; filter: blur(140px); z-index: -1; opacity: 0.15; pointer-events: none; }
         .light-1 { width: 320px; height: 320px; background: #0284c7; top: 10%; left: -5%; }
         .light-2 { width: 380px; height: 380px; background: #b45309; bottom: 10%; right: -10%; opacity: 0.1; }
 
@@ -72,18 +70,10 @@
         }
 
         @media (min-width: 768px) {
-            .mobile-wrapper {
-                margin: 30px auto;
-                border-radius: 35px;
-                border: 1px solid rgba(255,255,255,0.1);
-                box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(56, 189, 248, 0.15);
-            }
+            .mobile-wrapper { margin: 30px auto; border-radius: 35px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(56, 189, 248, 0.15); }
         }
 
-        #stars-canvas {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; pointer-events: none;
-        }
+        #stars-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
         .music-btn {
             position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
@@ -97,38 +87,27 @@
 
         .glass-card {
             background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid var(--glass-border);
             border-radius: 30px; padding: 40px 25px; margin: 0 20px 45px 20px; text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.1); 
-            position: relative; z-index: 2; overflow: hidden;
-            transform: translateZ(0); will-change: transform, opacity; 
+            position: relative; z-index: 2; overflow: hidden; transform: translateZ(0); will-change: transform, opacity; 
         }
 
-        .glass-card::before, .glass-card::after {
-            content: ''; position: absolute; width: 20px; height: 20px; border: 2px solid rgba(253, 224, 71, 0.3); pointer-events: none;
-        }
+        .glass-card::before, .glass-card::after { content: ''; position: absolute; width: 20px; height: 20px; border: 2px solid rgba(253, 224, 71, 0.3); pointer-events: none; }
         .glass-card::before { top: 15px; left: 15px; border-right: none; border-bottom: none; border-top-left-radius: 8px; }
         .glass-card::after { bottom: 15px; right: 15px; border-left: none; border-top: none; border-bottom-right-radius: 8px; }
 
         .theme-video-container {
-            width: 100%; border-radius: 20px; overflow: hidden; 
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px; border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(255,255,255,0.1);
+            width: 100%; border-radius: 20px; overflow: hidden; background: rgba(255, 255, 255, 0.05);
+            padding: 8px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 0 15px rgba(255,255,255,0.1);
         }
-        .theme-video { 
-            width: 100%; display: block; object-fit: cover; border-radius: 14px; 
-            filter: sepia(0.2) brightness(0.92) contrast(1.05); 
-        }
+        .theme-video { width: 100%; display: block; object-fit: cover; border-radius: 14px; filter: sepia(0.2) brightness(0.92) contrast(1.05); }
 
         .hero-section {
-            position: relative; width: 100%;
-            min-height: 85vh; height: auto; 
+            position: relative; width: 100%; min-height: 85vh; height: auto; 
             display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
             margin-bottom: 0px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; overflow: hidden;
-            padding-top: 100px;
-            padding-bottom: 6vh; z-index: 2;
+            padding-top: 100px; padding-bottom: 6vh; z-index: 2;
         }
         .hero-video { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; 
@@ -136,53 +115,24 @@
             mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%);
         }
-        .hero-content { 
-            position: relative; z-index: 2; width: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-        }
-        .hero-pretitle { 
-            font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 5px; 
-            text-transform: uppercase; color: #fff; margin-bottom: 15px; font-weight: 500;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
+        .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .hero-pretitle { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; color: #fff; margin-bottom: 15px; font-weight: 500; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .hero-names-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         
         .hero-name { 
-            font-family: var(--font-signature); 
-            font-size: clamp(3rem, 14vw, 5.2rem); 
-            line-height: 1.1;
-            background: linear-gradient(135deg, #fff7ad 0%, #fde047 50%, #ca8a04 100%);
-            -webkit-background-clip: text; 
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 15px rgba(253, 224, 71, 0.35)); padding: 0 10px;
+            font-family: var(--font-signature); font-size: clamp(3rem, 14vw, 5.2rem); line-height: 1.1;
+            background: linear-gradient(135deg, #fff7ad 0%, #fde047 50%, #ca8a04 100%); -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; filter: drop-shadow(0 4px 15px rgba(253, 224, 71, 0.35)); padding: 0 10px;
         }
-        .hero-ampersand { 
-            font-family: var(--font-script); font-size: clamp(1.8rem, 6vw, 2.2rem); margin: 10px 0;
-            color: #fff; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); font-style: italic; 
-        }
-        .hero-date { 
-            font-family: var(--font-sans); font-size: 1.05rem; letter-spacing: 6px; 
-            margin-top: 15px; font-weight: 700; color: #fff; padding: 10px 25px; border-radius: 30px; 
-            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
+        .hero-ampersand { font-family: var(--font-script); font-size: clamp(1.8rem, 6vw, 2.2rem); margin: 10px 0; color: #fff; text-shadow: 0 0 15px rgba(255, 255, 255, 0.6); font-style: italic; }
+        .hero-date { font-family: var(--font-sans); font-size: 1.05rem; letter-spacing: 6px; margin-top: 15px; font-weight: 700; color: #fff; padding: 10px 25px; border-radius: 30px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
         .hero-cal-wrap { display: flex; flex-direction: column; gap: 12px; justify-content: center; align-items: center; margin-top: 25px; }
         .hero-cal-label { font-size: 0.75rem; color: #cbd5e1; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
-        .btn-mini-cal {
-            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.3); padding: 10px 18px; border-radius: 20px;
-            color: #fff; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: 0.3s;
-        }
+        .btn-mini-cal { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.3); padding: 10px 18px; border-radius: 20px; color: #fff; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: 0.3s; }
         .btn-mini-cal:hover { background: #fff; color: var(--dark-bg); border-color: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
-        .marquee-container {
-            width: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.02);
-            border-top: 1px solid rgba(56, 189, 248, 0.2); border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 12px 0; margin-bottom: 45px; margin-top: 30px; white-space: nowrap; position: relative; z-index: 3;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
-        }
+        .marquee-container { width: 100%; overflow: hidden; background: rgba(255, 255, 255, 0.02); border-top: 1px solid rgba(56, 189, 248, 0.2); border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding: 12px 0; margin-bottom: 45px; margin-top: 30px; white-space: nowrap; position: relative; z-index: 3; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); }
         .marquee-content { display: inline-flex; align-items: center; animation: marquee 20s linear infinite; padding-left: 30px; }
         .marquee-group { display: flex; align-items: center; gap: 30px; padding-right: 30px; }
         .marquee-text-item { font-family: var(--font-sans); font-size: 0.85rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
@@ -199,189 +149,91 @@
         .couple-container { display: flex; flex-direction: column; gap: 40px; margin-top: 30px; position: relative; }
         .couple-container::before { content: ''; position: absolute; top: 15%; bottom: 15%; left: 50%; width: 1px; background: linear-gradient(to bottom, transparent, var(--accent-glow), transparent); transform: translateX(-50%); opacity: 0.3; }
         .profile-card { position: relative; z-index: 2; }
-        .profile-img-box {
-            width: 140px; height: 160px; margin: 0 auto 15px auto; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            overflow: hidden; border: 2px solid rgba(255,255,255,0.4); padding: 5px;
-            background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(253,224,71,0.05));
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); animation: morph 8s ease-in-out infinite alternate;
-        }
+        .profile-img-box { width: 140px; height: 160px; margin: 0 auto 15px auto; border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; overflow: hidden; border: 2px solid rgba(255,255,255,0.4); padding: 5px; background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(253,224,71,0.05)); box-shadow: 0 10px 25px rgba(0,0,0,0.5); animation: morph 8s ease-in-out infinite alternate; }
         @keyframes morph { 0% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; } 50% { border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%; } 100% { border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%; } }
         .profile-img-box img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
         .profile-name { font-family: var(--font-signature); font-size: clamp(2.2rem, 10vw, 3.2rem); color: #fff; line-height: 1; }
         .profile-parents { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-top: 5px; }
         .parent-name { font-weight: 600; color: #e2e8f0; }
 
-        .genz-countdown-title {
-            font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 6px;
-            text-transform: uppercase; margin-bottom: 25px; font-weight: 800;
-            background: linear-gradient(to right, #38bdf8, #fde047, #38bdf8);
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            background-size: 200% auto; animation: shineText 3s linear infinite;
-        }
+        .genz-countdown-title { font-family: var(--font-sans); font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 25px; font-weight: 800; background: linear-gradient(to right, #38bdf8, #fde047, #38bdf8); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% auto; animation: shineText 3s linear infinite; }
         @keyframes shineText { to { background-position: 200% center; } }
         .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
-        .count-item {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
-            padding: 15px 5px; box-shadow: inset 0 2px 0 rgba(255,255,255,0.05), 0 8px 15px rgba(0,0,0,0.4);
-        }
+        .count-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 15px 5px; box-shadow: inset 0 2px 0 rgba(255,255,255,0.05), 0 8px 15px rgba(0,0,0,0.4); }
         .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: #fff; }
         .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow); margin-top: 5px; font-weight: 600; }
 
-        .agenda-ticket {
-            background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.6));
-            border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--accent-glow);
-            border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left;
-            display: flex; align-items: center; gap: 20px; transition: 0.4s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4); cursor: default;
-        }
+        .agenda-ticket { background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(0,0,0,0.6)); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--accent-glow); border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; display: flex; align-items: center; gap: 20px; transition: 0.4s; box-shadow: 0 10px 20px rgba(0,0,0,0.4); cursor: default; }
         .agenda-ticket:hover { transform: translateY(-5px); border-left-color: var(--accent-gold); box-shadow: 0 15px 25px rgba(0,0,0,0.6), 0 0 15px rgba(56,189,248,0.2); }
-        .agenda-icon-box {
-            width: 55px; height: 55px; background: rgba(56, 189, 248, 0.1); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center; font-size: 1.5rem;
-            color: var(--accent-glow); box-shadow: 0 0 15px rgba(56,189,248,0.2); flex-shrink: 0;
-            border: 1px solid rgba(56, 189, 248, 0.3); animation: pulseAgenda 2s infinite alternate;
-        }
+        .agenda-icon-box { width: 55px; height: 55px; background: rgba(56, 189, 248, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--accent-glow); box-shadow: 0 0 15px rgba(56,189,248,0.2); flex-shrink: 0; border: 1px solid rgba(56, 189, 248, 0.3); animation: pulseAgenda 2s infinite alternate; }
         @keyframes pulseAgenda { 0% { transform: scale(0.95); box-shadow: 0 0 10px rgba(56,189,248,0.1); } 100% { transform: scale(1.05); box-shadow: 0 0 25px rgba(56,189,248,0.4); } }
         .agenda-content { flex-grow: 1; }
         .agenda-title { font-family: var(--font-signature); font-size: clamp(2.2rem, 8vw, 2.5rem); color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
         .agenda-detail { font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
         .agenda-detail i { color: var(--accent-glow); width: 15px; }
         
-        .venue-info {
-            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-radius: 20px; padding: 25px 20px; margin-top: 30px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(56,189,248,0.1);
-            position: relative; overflow: hidden;
-        }
+        .venue-info { background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 20px; padding: 25px 20px; margin-top: 30px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(56,189,248,0.1); position: relative; overflow: hidden; }
         .venue-icon-wrapper { font-size: 2rem; color: var(--accent-gold); margin-bottom: 12px; }
         .pulse-icon { animation: pulseIcon 2.5s infinite; }
         @keyframes pulseIcon { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.8; } 100% { transform: scale(1); opacity: 1; } }
         .venue-name { font-family: var(--font-serif); font-size: 1.6rem; color: #fff; margin-bottom: 12px; font-weight: 700; text-shadow: 0 0 10px rgba(255,255,255,0.3); letter-spacing: 1px; }
         .venue-address { font-size: 0.85rem; color: #cbd5e1; line-height: 1.6; }
         
-        /* REVISI MAPS: Disesuaikan agar bisa digeser-geser langsung di website */
+        /* PETA GOOGLE MAPS YANG BISA DIGESER */
         .map-container {
             border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); margin: 25px 0; position: relative; padding-bottom: 70%;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15); transition: 0.3s ease; background: #111;
-            display: block; /* Menghilangkan cursor klik agar tidak membingungkan gestur HP */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15); transition: 0.3s ease; background: #111; z-index: 10;
         }
         .map-container:hover { border-color: rgba(56, 189, 248, 0.5); }
         .map-container iframe { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; 
             filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); 
-            pointer-events: auto; /* HARUS auto agar peta merespon geseran jari/kursor */
+            pointer-events: auto !important; 
         }
 
-        .btn-aesthetic {
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%;
-            background: rgba(255,255,255,0.06); color: #fff; padding: 16px 24px; border-radius: 12px;
-            font-family: var(--font-sans); font-weight: 600; font-size: 0.8rem; letter-spacing: 1px;
-            border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; transition: 0.4s;
-        }
+        .btn-aesthetic { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: rgba(255,255,255,0.06); color: #fff; padding: 16px 24px; border-radius: 12px; font-family: var(--font-sans); font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; transition: 0.4s; }
         .btn-aesthetic:hover { background: #fff; color: var(--dark-bg); box-shadow: 0 0 20px rgba(255,255,255,0.3); border-color: #fff; transform: translateY(-2px); }
 
-        .gift-wrapper-box {
-            position: relative; width: 100%; border-radius: 24px; overflow: hidden;
-            background-color: #0b111a; border: 1px solid var(--glass-border); 
-            margin: 0 0 45px 0; padding: 45px 20px 150px 20px; 
-            text-align: center; z-index: 2; box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
-        .gift-wrapper-box::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('gift.png') center bottom / cover no-repeat;
-            z-index: 0; pointer-events: none; opacity: 1;
-        }
+        .gift-wrapper-box { position: relative; width: 100%; border-radius: 24px; overflow: hidden; background-color: #0b111a; border: 1px solid var(--glass-border); margin: 0 0 45px 0; padding: 45px 20px 150px 20px; text-align: center; z-index: 2; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        .gift-wrapper-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('gift.png') center bottom / cover no-repeat; z-index: 0; pointer-events: none; opacity: 1; }
         .gift-wrapper-box > * { position: relative; z-index: 2; }
         
-        .atm-card {
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 25px 20px; margin-top: 25px; text-align: left;
-            position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.6); color: #fff;
-        }
-        .atm-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(to bottom right, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%);
-            transform: rotate(30deg); pointer-events: none; z-index: 1;
-        }
-        .atm-card::after {
-            content: ''; position: absolute; top: 25px; right: 25px; width: 45px; height: 35px;
-            background: url('https://img.icons8.com/color/48/sim-card-chip.png') center/contain no-repeat; opacity: 0.9; z-index: 2;
-        }
+        .atm-card { backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 25px 20px; margin-top: 25px; text-align: left; position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.6); color: #fff; }
+        .atm-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(to bottom right, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%); transform: rotate(30deg); pointer-events: none; z-index: 1; }
+        .atm-card::after { content: ''; position: absolute; top: 25px; right: 25px; width: 45px; height: 35px; background: url('https://img.icons8.com/color/48/sim-card-chip.png') center/contain no-repeat; opacity: 0.9; z-index: 2; }
         .bank-content { position: relative; z-index: 3; }
         
-        .bsi-card {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%);
-            background-image: linear-gradient(135deg, #0f172a, #0d9488); border-top: 1px solid rgba(20, 184, 166, 0.5);
-        }
-        .aladin-card {
-            background: linear-gradient(135deg, #312e81 0%, #4c1d95 50%, #1e1b4b 100%);
-            background-image: linear-gradient(135deg, #4c1d95, #be185d); border-top: 1px solid rgba(244, 114, 182, 0.5);
-        }
+        .bsi-card { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%); border-top: 1px solid rgba(20, 184, 166, 0.5); }
+        .aladin-card { background: linear-gradient(135deg, #312e81 0%, #4c1d95 50%, #1e1b4b 100%); border-top: 1px solid rgba(244, 114, 182, 0.5); }
 
         .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 4px; }
-        
-        .bank-rek { 
-            font-family: monospace; font-size: clamp(1.2rem, 7vw, 1.45rem); font-weight: 700; letter-spacing: 3px; 
-            color: #ffffff !important; text-decoration: none !important; margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
-        }
-        
+        .bank-rek { font-family: monospace; font-size: clamp(1.2rem, 7vw, 1.45rem); font-weight: 700; letter-spacing: 3px; color: #ffffff !important; text-decoration: none !important; margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
         .bank-name { font-size: 0.8rem; color: #cbd5e1; text-transform: uppercase; margin-bottom: 18px; font-weight: 500; letter-spacing: 1px; }
         .btn-copy-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
         .btn-copy-card:hover { background: #fff; color: #000; box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 
-        .form-control {
-            width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px; padding: 14px 16px; color: #fff; font-family: var(--font-sans);
-            font-size: 0.85rem; margin-bottom: 15px; transition: all 0.3s; text-align: left;
-        }
+        .form-control { width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px 16px; color: #fff; font-family: var(--font-sans); font-size: 0.85rem; margin-bottom: 15px; transition: all 0.3s; text-align: left; }
         .form-control:focus { outline: none; border-color: var(--accent-glow); background: rgba(255, 255, 255, 0.06); }
         select.form-control { cursor: pointer; color: #cbd5e1; }
         select.form-control option { background: var(--dark-bg); color: #fff; }
-        
-        /* CSS KHUSUS UNTUK MEMUNCULKAN PLACEHOLDER PADA ELEMEN YANG BISA DIKETIK (CONTENTEDITABLE) */
-        [contenteditable=true]:empty:before {
-            content: attr(placeholder);
-            pointer-events: none;
-            color: #94a3b8;
-            display: block;
-        }
 
         .gif-selector { text-align: left; margin-bottom: 20px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 15px; }
         .gif-tabs { display: flex; justify-content: space-around; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
-        
         .gif-tab { font-size: 1.4rem; padding: 8px 15px; border-radius: 12px; cursor: pointer; transition: 0.3s; filter: grayscale(100%) opacity(0.5); -webkit-tap-highlight-color: transparent; }
         .gif-tab.active { filter: grayscale(0%) opacity(1); background: rgba(255,255,255,0.1); box-shadow: 0 5px 15px rgba(0,0,0,0.3); transform: scale(1.1); }
-        
         .gif-viewport { display: none; grid-template-columns: repeat(4, 1fr); gap: 10px; justify-items: center; }
         .gif-viewport.active { display: grid; }
         .gif-viewport img { width: 50px; height: 50px; cursor: pointer; transition: 0.2s; border-radius: 10px; padding: 3px; object-fit: contain; -webkit-tap-highlight-color: transparent; }
         .gif-viewport img:active, .gif-viewport img:hover { transform: scale(1.15); }
         
-        .live-chat-container {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px;
-            padding: 30px 20px 20px 20px; margin-top: 40px; position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 15px 35px rgba(0,0,0,0.5);
-        }
-        .live-chat-container::before {
-            content: '🔴 Live Messages'; position: absolute; top: -14px; left: 20px;
-            background: var(--dark-bg); color: #38bdf8; padding: 5px 15px;
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-            border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); animation: pulse-live 2s infinite;
-        }
+        .live-chat-container { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 30px 20px 20px 20px; margin-top: 40px; position: relative; box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 15px 35px rgba(0,0,0,0.5); }
+        .live-chat-container::before { content: '🔴 Live Messages'; position: absolute; top: -14px; left: 20px; background: var(--dark-bg); color: #38bdf8; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); animation: pulse-live 2s infinite; }
         @keyframes pulse-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-
         .chat-board { max-height: 450px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 8px;}
         .chat-board::-webkit-scrollbar { width: 4px; }
         .chat-board::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.5); border-radius: 10px; }
 
-        .chat-bubble { 
-            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)); 
-            border: 1px solid rgba(255,255,255,0.05); border-left: 3px solid var(--accent-glow);
-            border-radius: 0 16px 16px 16px; padding: 15px; position: relative;
-            backdrop-filter: blur(5px); transition: transform 0.3s ease; text-align: left;
-        }
+        .chat-bubble { background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)); border: 1px solid rgba(255,255,255,0.05); border-left: 3px solid var(--accent-glow); border-radius: 0 16px 16px 16px; padding: 15px; position: relative; backdrop-filter: blur(5px); transition: transform 0.3s ease; text-align: left; }
         .chat-bubble:hover { transform: translateX(5px); border-left-color: var(--accent-gold); }
         .chat-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
         .chat-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
@@ -393,12 +245,7 @@
         .footer-sec { text-align: center; padding: 60px 20px 30px 20px; position: relative; z-index: 2; }
         .closing-text-en { font-family: var(--font-script); font-size: clamp(1.4rem, 6vw, 1.8rem); color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
         .closing-arab-small { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--text-muted); margin-top: 30px; font-weight: 400; opacity: 0.8; letter-spacing: 1px; }
-        
-        .wa-footer-button {
-            display: inline-flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; 
-            margin: 20px auto 10px auto; background: rgba(37, 211, 102, 0.2); border: 1px solid #25D366;
-            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); text-decoration: none; transition: 0.3s;
-        }
+        .wa-footer-button { display: inline-flex; align-items: center; justify-content: center; width: 55px; height: 55px; border-radius: 50%; margin: 20px auto 10px auto; background: rgba(37, 211, 102, 0.2); border: 1px solid #25D366; box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); text-decoration: none; transition: 0.3s; }
         .wa-footer-button:hover { transform: scale(1.1); background: #25D366; }
         .wa-footer-button i { color: #25D366; font-size: 1.8rem; }
         .wa-footer-button:hover i { color: #fff; }
@@ -546,10 +393,10 @@
             </div>
 
             <div class="map-container" data-aos="fade-up">
-                <iframe src="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" allowfullscreen></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.310049201831!2d119.85304407421375!3d-0.8931221990928503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d8beffe139c2fc9%3A0x6b14d2e82b75a1c2!2sWisma%20Donggala!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" loading="lazy" allowfullscreen></iframe>
             </div>
             
-            <a href="https://maps.google.com/maps?q=Wisma%20Donggala,%20Jl.%20Diponegoro%20No.6,%20Palu" target="_blank" class="btn-aesthetic">
+            <a href="https://maps.app.goo.gl/ContohLinkMaps" target="_blank" class="btn-aesthetic">
                 <i class="fa-solid fa-map-location-dot"></i> Buka Google Maps
             </a>
         </div>
@@ -600,7 +447,7 @@
                     <option value="Tidak Hadir">Maaf, Tidak Hadir</option>
                 </select>
 
-                <div id="pesanTamuFake" contenteditable="true" inputmode="text" class="form-control" style="min-height: 100px; cursor: text; white-space: pre-wrap; overflow-y: auto; display: block;" placeholder="Tulis harapan & doa... (Bisa tempel/pilih GIF dari Keyboard)"></div>
+                <div id="pesanTamuFake" contenteditable="true" class="form-control" style="min-height: 100px; cursor: text; white-space: pre-wrap; overflow-y: auto; display: block;"></div>
                 <textarea id="pesanTamu" name="pesan" style="display:none;"></textarea>
                 
                 <div class="gif-selector">
@@ -731,10 +578,7 @@
 
         function animateStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            starsArray.forEach(star => {
-                star.update();
-                star.draw();
-            });
+            starsArray.forEach(star => { star.update(); star.draw(); });
             requestAnimationFrame(animateStars);
         }
 
@@ -752,13 +596,10 @@
                 musicBtn.classList.toggle('paused');
                 return;
             }
-            
             if (audio.paused) {
-                audio.play();
-                musicBtn.classList.remove('paused');
+                audio.play(); musicBtn.classList.remove('paused');
             } else {
-                audio.pause();
-                musicBtn.classList.add('paused');
+                audio.pause(); musicBtn.classList.add('paused');
             }
         }
 
@@ -791,53 +632,60 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
-        // URL GOOGLE SCRIPT ANDA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
-        // MENGATANGKAP GIF DARI KEYBOARD ANDROID
+        function notifikasiGifBerhasil() {
+            const el = document.getElementById('pesanTamuFake');
+            const existingCue = document.getElementById('gif-success-msg');
+            if(existingCue) existingCue.remove();
+            
+            const cue = document.createElement('div');
+            cue.style.color = '#38bdf8'; cue.style.fontSize = '0.8rem'; 
+            cue.style.marginTop = '8px'; cue.id = 'gif-success-msg';
+            cue.innerHTML = '✅ GIF/Gambar berhasil dilampirkan dari Keyboard!';
+            el.parentNode.insertBefore(cue, el.nextSibling);
+            
+            setTimeout(() => {
+                const c = document.getElementById('gif-success-msg');
+                if(c) c.remove();
+            }, 4000);
+        }
+
+        // MENANGKAP GIF DARI KEYBOARD ANDROID (Event Paste standard)
         document.getElementById('pesanTamuFake').addEventListener('paste', function(e) {
             const items = (e.clipboardData || window.clipboardData).items;
             for (let i = 0; i < items.length; i++) {
                 if (items[i].type.indexOf('image') !== -1) {
                     e.preventDefault(); 
                     const blob = items[i].getAsFile();
-                    if(blob.size > 2500000) { 
-                        alert("Maaf, file GIF dari keyboard terlalu besar. Maksimal 2.5MB.");
-                        return;
-                    }
-                    
-                    const el = document.getElementById('pesanTamuFake');
-                    const originalText = el.innerText;
-                    el.innerText = "⏳ Memproses GIF dari Keyboard...";
+                    if(blob.size > 5000000) { alert("Maaf, file GIF terlalu besar."); return; }
                     
                     const reader = new FileReader();
                     reader.onload = function(event) {
                         document.getElementById('selectedGifUrl').value = event.target.result;
                         document.querySelectorAll('.gif-viewport img').forEach(img => img.style.border = 'none');
-                        
-                        el.innerText = originalText.trim(); // kembalikan text aslinya
-                        
-                        // Menambahkan indikator sukses
-                        const cue = document.createElement('div');
-                        cue.style.color = '#38bdf8'; cue.style.fontSize = '0.8rem'; 
-                        cue.style.marginTop = '8px'; cue.id = 'gif-success-msg';
-                        cue.innerHTML = '✅ GIF Keyboard Android berhasil dilampirkan!';
-                        
-                        const existingCue = document.getElementById('gif-success-msg');
-                        if(existingCue) existingCue.remove();
-                        el.parentNode.insertBefore(cue, el.nextSibling);
-                        
-                        setTimeout(() => {
-                            const c = document.getElementById('gif-success-msg');
-                            if(c) c.remove();
-                        }, 4000);
+                        notifikasiGifBerhasil();
                     };
                     reader.readAsDataURL(blob);
                 }
             }
         });
 
-        // FUNGSI LOAD UCAPAN
+        // MENANGKAP GIF DARI KEYBOARD (Jika HP menyisipkan elemen IMG secara native)
+        document.getElementById('pesanTamuFake').addEventListener('input', function(e) {
+            const imgs = this.querySelectorAll('img');
+            if(imgs.length > 0) {
+                // Ambil gambar terakhir yang disisipkan
+                const imgUrl = imgs[imgs.length - 1].src;
+                document.getElementById('selectedGifUrl').value = imgUrl;
+                document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
+                
+                // Bersihkan tag <img> dari dalam div teks agar rapi
+                imgs.forEach(img => img.remove());
+                notifikasiGifBerhasil();
+            }
+        });
+
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
             board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.85rem; padding: 20px;"><i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan ke server...</p>';
@@ -848,30 +696,22 @@
                 .then(response => response.json())
                 .then(data => {
                     board.innerHTML = ''; 
-                    
                     let items = data.data ? data.data : (Array.isArray(data) ? data : []);
-                    
                     if(items && items.length > 0) {
                         items.reverse(); 
-                        
                         items.forEach(item => {
                             if (!item.nama) return; 
-                            
                             const bubble = document.createElement('div');
                             bubble.className = 'chat-bubble';
-                            
                             let timeString = '';
                             if (item.waktu) {
                                 let d = new Date(item.waktu);
                                 if (!isNaN(d)) {
                                     timeString = d.toLocaleDateString('id-ID', {day: 'numeric', month: 'short'}) + ' ' + d.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
-                                } else {
-                                    timeString = item.waktu;
-                                }
+                                } else { timeString = item.waktu; }
                             }
 
                             let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="Lampiran">` : '';
-                            
                             let isAbsen = item.kehadiran && item.kehadiran.toLowerCase().includes('tidak');
                             let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
                             let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
@@ -893,29 +733,36 @@
                 })
                 .catch(error => {
                     console.error('Gagal memuat ucapan:', error);
-                    board.innerHTML = '<p style="text-align:center; color:#f43f5e; font-size:0.85rem; padding: 20px;"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat pesan. Pastikan Google Script Anda sudah ditambahkan fungsi doGet().</p>';
+                    board.innerHTML = '<p style="text-align:center; color:#f43f5e; font-size:0.85rem; padding: 20px;"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat pesan.</p>';
                 });
         }
 
-        // FUNGSI KIRIM UCAPAN
         function kirimUcapan(e) {
             e.preventDefault();
             
-            // Menyalin tulisan dari elemen Fake ke Textarea Asli sebelum dikirim
             const fakeInput = document.getElementById('pesanTamuFake');
-            document.getElementById('pesanTamu').value = fakeInput.innerText.trim();
+            // Jika masih ada gambar yang tertinggal karena alasan apapun, keluarkan dulu
+            const imgs = fakeInput.querySelectorAll('img');
+            let nativelyInsertedGifUrl = null;
+            if(imgs.length > 0) {
+                nativelyInsertedGifUrl = imgs[imgs.length - 1].src;
+                imgs.forEach(i => i.remove());
+            }
+
+            const textContent = fakeInput.innerText.trim();
+            document.getElementById('pesanTamu').value = textContent;
             
             const form = e.target;
             const name = document.getElementById('namaTamu').value;
             const status = document.getElementById('konfirmasiHadir').value;
-            const msg = document.getElementById('pesanTamu').value;
+            const msg = textContent;
             
-            // Validasi jika kosong
-            if(msg === "") {
-                alert("Harap tulis pesan terlebih dahulu!");
-                return;
-            }
+            if(msg === "") { alert("Harap tulis pesan terlebih dahulu!"); return; }
 
+            // Prioritaskan GIF asli yang ditangkap langsung saat send (kalau ada)
+            if(nativelyInsertedGifUrl) {
+                document.getElementById('selectedGifUrl').value = nativelyInsertedGifUrl;
+            }
             const gifUrl = document.getElementById('selectedGifUrl').value;
             const board = document.getElementById('papanPesan');
             
@@ -952,7 +799,7 @@
                     board.insertBefore(bubble, board.firstChild);
                     
                     form.reset();
-                    fakeInput.innerText = ''; // Reset tulisan di kotak
+                    fakeInput.innerText = ''; 
                     document.querySelectorAll('.gif-viewport img').forEach(i => i.style.border = 'none');
                     document.getElementById('selectedGifUrl').value = '';
                     
@@ -966,7 +813,6 @@
                     alert('Maaf, pesan gagal terkirim. Silakan periksa koneksi internet Anda dan coba lagi.');
                     submitBtn.innerHTML = originalBtnText;
                     submitBtn.disabled = false;
-                    console.error('Error!', error.message);
                 });
         }
 
@@ -976,19 +822,13 @@
                 const isPlaying = sessionStorage.getItem('isMusicPlaying');
 
                 if (savedTime) { audio.currentTime = parseFloat(savedTime); }
-
                 if (isPlaying === 'true') {
-                    audio.play().then(() => {
-                        musicBtn.classList.remove('paused');
-                    }).catch(() => {
-                        musicBtn.classList.add('paused');
-                    });
+                    audio.play().then(() => { musicBtn.classList.remove('paused'); }).catch(() => { musicBtn.classList.add('paused'); });
                 }
             } else {
                 if (audio) audio.remove();
                 musicBtn.classList.remove('paused'); 
             }
-
             loadUcapan();
         });
     </script>

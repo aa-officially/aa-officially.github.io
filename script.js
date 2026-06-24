@@ -72,6 +72,11 @@ function openInvitation() {
     const frontContent = document.querySelector('.front-content');
     if (frontContent) { frontContent.style.opacity = '0'; }
 
+    // Paksa video di dalam buku untuk diputar (mencegah blokir autoplay dari HP)
+    if (invVideo) {
+        invVideo.play().catch(e => console.log("Autoplay dicegah browser", e));
+    }
+
     if (audio) {
         let playPromise = audio.play();
         if (playPromise !== undefined) {
@@ -81,7 +86,7 @@ function openInvitation() {
         }
     }
 
-    // Tunggu 1.9 detik sampai animasi cover buku selesai terbuka penuh
+    // TAHAP 1: Tunggu 1.9 detik sampai animasi cover buku selesai terbuka penuh
     setTimeout(() => {
         const frameContainer = document.querySelector('.inside-video-frame');
         const pagesBlock = document.querySelector('.pages-block');
@@ -141,7 +146,7 @@ function openInvitation() {
 
         void frameContainer.offsetWidth; 
         
-        // Transisi ke Full Screen
+        // TAHAP 2: Transisi Video Membesar ke Full Screen
         frameContainer.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
         frameContainer.style.top = '0px';
         frameContainer.style.left = '0px';
@@ -150,9 +155,9 @@ function openInvitation() {
         
         let isIframeLoaded = false;
 
-        // FUNGSI LOAD UNDANGAN
+        // FUNGSI LOAD UNDANGAN SPA
         const loadIframeSPA = (e) => {
-            if (e && e.type === 'touchstart') e.preventDefault(); // Mencegah double tap delay
+            if (e && e.type === 'touchstart') e.preventDefault(); 
             if(isIframeLoaded) return;
             isIframeLoaded = true;
 
@@ -190,7 +195,7 @@ function openInvitation() {
             };
         };
 
-        // FITUR SKIP: Jika disentuh atau diklik, langsung load Iframe seketika!
+        // FITUR SKIP: Jika disentuh/diklik saat Full Screen, langsung masuk undangan
         frameContainer.addEventListener('click', loadIframeSPA);
         frameContainer.addEventListener('touchstart', loadIframeSPA, {passive: false});
         if(invVideo) {
@@ -198,10 +203,10 @@ function openInvitation() {
             invVideo.addEventListener('touchstart', loadIframeSPA, {passive: false});
         }
 
-        // Auto Load setelah 1.5 Detik (1500ms) full video diputar
-        setTimeout(loadIframeSPA, 1500);
+        // TAHAP 3: Auto Load Undangan setelah 1.9 Detik video diputar mode full screen
+        setTimeout(loadIframeSPA, 1900);
 
-    }, 1900); // Tunggu animasi buku selesai (1.9 detik)
+    }, 1900); // Selesai animasi buka buku (1.9 detik)
 }
 
 // Komunikasi kontrol musik

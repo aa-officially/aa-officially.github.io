@@ -64,32 +64,18 @@ body {
 }
 
 /* =========================================
-   2. DESAIN NAMA TAMU (DI ATAS BUKU)
+   2. DESAIN NAMA TAMU 
    ========================================= */
 .external-guest-box {
-    z-index: 20;
-    text-align: center;
-    margin-bottom: 25px;
-    transition: opacity 0.5s ease;
+    z-index: 20; text-align: center; margin-bottom: 25px; transition: opacity 0.5s ease;
 }
-
 .external-guest-box p {
-    font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 4px;
-    color: rgba(255, 255, 255, 0.7);
-    text-transform: uppercase;
-    margin-bottom: 5px;
-    font-weight: 500;
+    font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.7); text-transform: uppercase; margin-bottom: 5px; font-weight: 500;
 }
-
 .external-guest-box h3 {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    color: #ffffff;
-    letter-spacing: 1px;
-    font-weight: 700;
-    text-shadow: 0 0 15px rgba(255,255,255,0.3);
+    font-family: var(--font-serif); font-size: 1.5rem; color: #ffffff;
+    letter-spacing: 1px; font-weight: 700; text-shadow: 0 0 15px rgba(255,255,255,0.3);
 }
 
 /* =========================================
@@ -118,7 +104,8 @@ body {
 .pages-block {
     position: absolute; top: 4px; bottom: 4px; left: 8px; right: 4px; 
     background-color: var(--paper-inside); border-radius: 2px 6px 6px 2px;
-    transform: translateZ(2px); z-index: 1; padding: 0; overflow: hidden; 
+    transform: translateZ(2px); z-index: 5; /* Z-INDEX DINAIKKAN AGAR VIDEO MUNCUL SAAT DIBUKA */
+    padding: 0; overflow: hidden; 
     box-shadow: inset 4px 0 10px rgba(0,0,0,0.1),
         1px 1px 0px var(--page-line-1), 2px 2px 0px var(--page-line-2),
         3px 3px 0px var(--page-line-1), 4px 4px 0px var(--page-line-2),
@@ -239,11 +226,15 @@ body {
 .wm-text-1 { font-family: var(--font-sans); font-size: 0.45rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; display: inline-block; vertical-align: middle; margin-right: 6px; }
 .wm-text-2 { font-family: var(--font-calligraphy); font-size: 1.4rem; color: #cbd5e1; letter-spacing: 1px; font-weight: 300; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); display: inline-block; vertical-align: middle; }
 
-.bank-rek { 
-    font-family: monospace; font-size: clamp(1.1rem, 6vw, 1.35rem); font-weight: 700; letter-spacing: 2px; 
-    color: #ffffff !important; 
-    text-decoration: none !important;
-    margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
+/* REVISI MAPS PADA UNDANGAN: Disesuaikan agar bisa digeser */
+.map-container {
+    border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); margin: 25px 0; position: relative; padding-bottom: 70%;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15); transition: 0.3s ease; background: #111; z-index: 10;
+}
+.map-container iframe { 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; 
+    filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); 
+    pointer-events: auto !important; /* HARUS auto agar merespon gestur */
 }
 
 /* =========================================
@@ -256,19 +247,11 @@ body {
 }
 
 @media screen and (max-width: 380px) {
-    .book-scene {
-        transform: scale(0.85); 
-    }
-    .book-scene.is-open {
-        transform: translateX(77px) scale(0.55) rotateX(5deg) rotateY(0deg) !important; 
-    }
+    .book-scene { transform: scale(0.85); }
+    .book-scene.is-open { transform: translateX(77px) scale(0.55) rotateX(5deg) rotateY(0deg) !important; }
 }
 
 @media screen and (max-width: 320px) {
-    .book-scene {
-        transform: scale(0.75);
-    }
-    .book-scene.is-open {
-        transform: translateX(67px) scale(0.48) rotateX(5deg) rotateY(0deg) !important;
-    }
+    .book-scene { transform: scale(0.75); }
+    .book-scene.is-open { transform: translateX(67px) scale(0.48) rotateX(5deg) rotateY(0deg) !important; }
 }
