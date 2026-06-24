@@ -257,7 +257,8 @@ body {
 .book-scene.is-open { 
     animation: none; 
     filter: none; 
-    transform: translateY(0) rotateX(5deg) rotateY(0deg) translateX(25%) scale(0.65) !important; 
+    /* PERBAIKAN: Menyesuaikan nilai transform agar muat di layar HP */
+    transform: translateY(0) rotateX(5deg) rotateY(0deg) translateX(30%) scale(0.6) !important; 
 }
 
 @media (min-width: 768px) {
@@ -291,6 +292,7 @@ body {
 /* =========================================
    5. KONTEN & LAINNYA
    ========================================= */
-.watermark { position: absolute; bottom: 15px; left: 0; width: 100%; text-align: center; z-index: 9999999; }
+/* PERBAIKAN: Mengembalikan posisi watermark agar tetap di tengah dan tidak terpotong */
+.watermark { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 9999999; white-space: nowrap; }
 .wm-text-1 { font-family: var(--font-sans); font-size: clamp(0.35rem, 2vw, 0.45rem); letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; display: inline-block; vertical-align: middle; margin-right: 6px; }
 .wm-text-2 { font-family: var(--font-calligraphy); font-size: clamp(1rem, 5vw, 1.4rem); color: #cbd5e1; letter-spacing: 1px; font-weight: 300; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); display: inline-block; vertical-align: middle; }

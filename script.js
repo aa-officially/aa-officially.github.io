@@ -4,9 +4,6 @@
  * =========================================================
  */
 
-// ---------------------------------------------------------
-// 1. MENANGKAP PARAMETER URL (Nama Tamu)
-// ---------------------------------------------------------
 const urlParams = new URLSearchParams(window.location.search);
 const guestName = urlParams.get('to');
 if (guestName) {
@@ -14,15 +11,11 @@ if (guestName) {
     if (guestNameEl) guestNameEl.innerText = guestName;
 }
 
-// Pengaturan kecepatan putar video
 const invVideo = document.getElementById('invitationVideo');
 if (invVideo) { 
     invVideo.playbackRate = 0.75; 
 }
 
-// ---------------------------------------------------------
-// 2. EFEK VISUAL (Bintang & Meteor)
-// ---------------------------------------------------------
 function createStars() {
     const container = document.getElementById('stars-container');
     if (!container) return; 
@@ -64,9 +57,6 @@ function createMeteors() {
 createStars();
 createMeteors();
 
-// ---------------------------------------------------------
-// 3. EFEK INTERAKSI KURSOR (Jejak Bintang)
-// ---------------------------------------------------------
 const coverPageElement = document.getElementById('cover-page');
 let lastTrailTime = 0;
 
@@ -104,9 +94,6 @@ if (coverPageElement) {
     }, { passive: true });
 }
 
-// ---------------------------------------------------------
-// 4. LOGIKA UTAMA: ANIMASI BUKU & PINDAH HALAMAN (SEAMLESS)
-// ---------------------------------------------------------
 function openInvitation() {
     const bookScene = document.getElementById('book');
     const coverPage = document.getElementById('cover-page');
@@ -184,7 +171,6 @@ function openInvitation() {
         setTimeout(() => {
             const queryString = window.location.search; 
             
-            // MENGAMBIL FILE UNDANGAN.HTML SECARA DIAM-DIAM AGAR MUSIK TIDAK MATI
             fetch('undangan.html' + queryString)
                 .then(res => res.text())
                 .then(html => {
@@ -197,13 +183,26 @@ function openInvitation() {
                         }
                     });
 
-                    // Lindungi elemen audio
-                    const audioEl = document.getElementById('bgMusic');
-                    
-                    document.body.innerHTML = '';
-                    if(audioEl) document.body.appendChild(audioEl);
+                    // PERBAIKAN: Penanganan audio yang lebih aman
+                    const existingAudio = document.getElementById('bgMusic');
+                    let isPlaying = false;
+                    let currentTime = 0;
 
-                    // Masukkan isi undangan
+                    if (existingAudio) {
+                        isPlaying = !existingAudio.paused;
+                        currentTime = existingAudio.currentTime;
+                    }
+
+                    document.body.innerHTML = '';
+                    
+                    if(existingAudio) {
+                        document.body.appendChild(existingAudio);
+                        if (isPlaying) {
+                            existingAudio.currentTime = currentTime;
+                            existingAudio.play().catch(e => console.log('Audio autoplay prevented'));
+                        }
+                    }
+
                     Array.from(doc.body.childNodes).forEach(node => {
                         if (node.id === 'bgMusic') return; 
                         
@@ -220,7 +219,6 @@ function openInvitation() {
                     window.history.pushState({}, '', 'undangan.html' + queryString);
                 })
                 .catch(() => {
-                    // Jika gagal, kembali ke metode normal
                     window.location.href = 'undangan.html' + queryString;
                 });
         }, 3500);
