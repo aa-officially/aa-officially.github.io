@@ -173,9 +173,9 @@ function openInvitation() {
         frameContainer.style.zIndex = '999999';
         frameContainer.style.backgroundColor = '#050505';
         
-        /* PERBAIKAN: Cegah video terpotong di HP */
+        /* PERBAIKAN: Ubah jadi cover secara mutlak agar fullscreen tanpa batas hitam! */
         if (invVideo) {
-            invVideo.style.objectFit = window.innerWidth < 480 ? 'contain' : 'cover'; 
+            invVideo.style.objectFit = 'cover'; 
         }
         void frameContainer.offsetWidth; 
         
@@ -183,7 +183,7 @@ function openInvitation() {
         frameContainer.style.top = '0px';
         frameContainer.style.left = '0px';
         frameContainer.style.width = '100vw';
-        frameContainer.style.height = '100dvh'; /* PERBAIKAN: Gunakan dvh */
+        frameContainer.style.height = '100dvh';
         
         setTimeout(() => {
             if (audio) {

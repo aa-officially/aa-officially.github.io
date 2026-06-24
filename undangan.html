@@ -38,12 +38,20 @@
             background-color: var(--dark-bg); 
             color: var(--text-main); font-family: var(--font-sans); overflow-x: hidden; 
             -webkit-font-smoothing: antialiased;
+            /* PERBAIKAN: Animasi load agar tampilan yang delay tertutupi efek fade in halus */
+            animation: smoothLoad 1.5s ease-out forwards;
+        }
+
+        @keyframes smoothLoad {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* --- BACKGROUND VIDEO CONTAINER --- */
         .main-background-video {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; 
             object-fit: cover; z-index: -2; opacity: 0.25; pointer-events: none;
+            background-color: var(--dark-bg);
         }
 
         .ambient-light {
@@ -313,7 +321,6 @@
 </head>
 <body>
 
-    <!-- PERBAIKAN: preload="auto" agar video tampil di HP -->
     <video autoplay loop muted playsinline class="main-background-video" preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -333,7 +340,7 @@
             <video autoplay loop muted playsinline class="hero-video">
                 <source src="section1.mp4" type="video/mp4">
             </video>
-            <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
+            <div class="hero-content" data-aos="zoom-out" data-aos-duration="1200">
                 <div class="hero-pretitle">The Wedding Of</div>
                 <div class="hero-names-wrap">
                     <div class="hero-name">Aulia</div>
@@ -344,7 +351,6 @@
                 
                 <div class="hero-cal-wrap">
                     <span class="hero-cal-label">Simpan ke Kalender:</span>
-                    <!-- PERBAIKAN: Tombol Calendar Tunggal -->
                     <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Aulia+%26+Amar&dates=20260628T020000Z/20260628T050000Z&details=Acara+pernikahan+Aulia+dan+Amar&location=Wisma+Donggala,+Palu" target="_blank" class="btn-aesthetic" style="width: auto;">
                         <i class="fa-regular fa-calendar-plus"></i> Ingatkan Saya
                     </a>
@@ -443,7 +449,6 @@
                 <div class="venue-address">(Jl. Diponegoro No.6, Lere, Kec. Palu Bar., Kota Palu, Sulawesi Tengah)</div>
             </div>
 
-            <!-- PERBAIKAN: Embed & Link Google Maps diperbaiki[cite: 12] -->
             <div class="map-container">
                 <iframe src="https://maps.google.com/maps?q=Wisma%20Donggala,%20Palu&t=&z=15&ie=UTF8&iwloc=&output=embed" allowfullscreen="" loading="lazy"></iframe>
             </div>
@@ -562,9 +567,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init({ duration: 1200, once: false, offset: 50 });
+        // PERBAIKAN: durasi dipercepat agar elemen tidak tertahan terlalu lama saat di-scroll
+        AOS.init({ duration: 900, once: true, offset: 50 });
 
-        // --- SISTEM KEMBALI KE SAMPUL SAAT REFRESH ---
         const navEntries = performance.getEntriesByType("navigation");
         if (navEntries.length > 0 && navEntries[0].type === "reload") {
             window.location.href = "index.html" + window.location.search;
@@ -681,7 +686,6 @@
         // --- GOOGLE SHEETS CONNECTION ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
-        // FUNGSI MENGAMBIL DATA KOMENTAR LAMA (TIDAK HILANG)
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
             board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Memuat doa & ucapan...</p>';
@@ -689,9 +693,7 @@
             fetch(scriptURL)
                 .then(response => response.json())
                 .then(data => {
-                    board.innerHTML = ''; // Bersihkan loading
-                    
-                    // Jika data ada
+                    board.innerHTML = ''; 
                     if(data && data.length > 0) {
                         data.forEach(item => {
                             const bubble = document.createElement('div');
@@ -747,7 +749,6 @@
                         <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"${msg}"</p>
                         ${gifHtml}
                     `;
-                    // Hapus pesan kosong jika ada
                     const emptyMsg = board.querySelector('p');
                     if(emptyMsg) emptyMsg.remove();
 
@@ -767,7 +768,6 @@
                 });
         }
 
-        // --- INIT SAAT HALAMAN DIMUAT ---
         window.addEventListener('DOMContentLoaded', () => {
             const savedTime = sessionStorage.getItem('savedMusicTime');
             const isPlaying = sessionStorage.getItem('isMusicPlaying');
@@ -784,7 +784,6 @@
                 });
             }
 
-            // PERBAIKAN: Muat ucapan lama dari database agar tidak hilang
             loadUcapan();
         });
     </script>
