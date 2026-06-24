@@ -81,7 +81,7 @@ function openInvitation() {
         }
     }
 
-    // Tunggu 1.2 detik sampai animasi cover buku selesai terbuka penuh
+    // Tunggu 1.9 detik sampai animasi cover buku selesai terbuka penuh
     setTimeout(() => {
         const frameContainer = document.querySelector('.inside-video-frame');
         const pagesBlock = document.querySelector('.pages-block');
@@ -129,7 +129,6 @@ function openInvitation() {
             invVideo.style.borderRadius = '0';
         }
 
-        // PERBAIKAN: Hilangkan text arabic saat mulai full video (tanpa keterangan)
         const dateArabic = document.querySelector('.inside-date-arabic');
         if (dateArabic) dateArabic.style.display = 'none';
 
@@ -152,7 +151,8 @@ function openInvitation() {
         let isIframeLoaded = false;
 
         // FUNGSI LOAD UNDANGAN
-        const loadIframeSPA = () => {
+        const loadIframeSPA = (e) => {
+            if (e && e.type === 'touchstart') e.preventDefault(); // Mencegah double tap delay
             if(isIframeLoaded) return;
             isIframeLoaded = true;
 
@@ -190,14 +190,18 @@ function openInvitation() {
             };
         };
 
-        // FITUR SKIP: Jika diklik, langsung load Iframe seketika!
+        // FITUR SKIP: Jika disentuh atau diklik, langsung load Iframe seketika!
         frameContainer.addEventListener('click', loadIframeSPA);
-        if(invVideo) invVideo.addEventListener('click', loadIframeSPA);
+        frameContainer.addEventListener('touchstart', loadIframeSPA, {passive: false});
+        if(invVideo) {
+            invVideo.addEventListener('click', loadIframeSPA);
+            invVideo.addEventListener('touchstart', loadIframeSPA, {passive: false});
+        }
 
-        // Auto Load setelah 2 Detik (2000ms) full video diputar
-        setTimeout(loadIframeSPA, 2000);
+        // Auto Load setelah 1.5 Detik (1500ms) full video diputar
+        setTimeout(loadIframeSPA, 1500);
 
-    }, 1200); // Tunggu animasi buku selesai (1.2 detik)
+    }, 1900); // Tunggu animasi buku selesai (1.9 detik)
 }
 
 // Komunikasi kontrol musik
