@@ -6,7 +6,7 @@ if (guestName) {
 }
 
 const invVideo = document.getElementById('invitationVideo');
-const bgVideo = document.querySelector('.cover-bg-video'); // Tangkap video background
+const bgVideo = document.querySelector('.cover-bg-video');
 
 if (invVideo) { 
     invVideo.playbackRate = 0.75; 
@@ -46,9 +46,6 @@ if (coverPageElement) {
     }, { passive: true });
 }
 
-// PERBAIKAN LAG UTAMA: Hapus fungsi preloadedIframe yang memakan RAM
-// Kita hanya meload iframe tepat saat dibutuhkan.
-
 function openInvitation() {
     const bookScene = document.getElementById('book');
     const coverPage = document.getElementById('cover-page');
@@ -86,13 +83,11 @@ function openInvitation() {
     let isIframeLoaded = false;
     let sequenceTimeout1, sequenceTimeout2;
 
-    // Fungsi untuk meload halaman undangan (SPA)
     const loadIframeSPA = (e) => {
         if (e && e.type === 'touchstart') e.preventDefault(); 
         if(isIframeLoaded) return;
         isIframeLoaded = true;
 
-        // Bersihkan timeout jika user melakukan SKIP (klik layar)
         clearTimeout(sequenceTimeout1);
         clearTimeout(sequenceTimeout2);
 
@@ -121,6 +116,20 @@ function openInvitation() {
                 if (coverPage) coverPage.style.opacity = '0';
                 
                 setTimeout(() => {
+                    // --- PERBAIKAN RAM SUPER KETAT ---
+                    // Matikan video sepenuhnya ke akar untuk melegakan RAM HP
+                    if(invVideo) { 
+                        invVideo.pause(); 
+                        invVideo.removeAttribute('src'); 
+                        invVideo.load(); 
+                    }
+                    if(bgVideo) { 
+                        bgVideo.pause(); 
+                        bgVideo.removeAttribute('src'); 
+                        bgVideo.load(); 
+                    }
+                    // ---------------------------------
+
                     if(frameContainer) frameContainer.remove();
                     if (coverPage) coverPage.remove();
                     iframe.style.zIndex = '1'; 
@@ -129,17 +138,15 @@ function openInvitation() {
         };
     };
 
-    // Fungsi klik layar untuk SKIP
     const skipAction = (e) => {
         loadIframeSPA(e);
     };
 
-    // TAHAP KEDUA: Setelah buku terbuka 1 detik, buat video layar penuh
+    // TAHAP KEDUA: Buka buku (1 detik) + Diam di buku (1 detik) = Total 2 detik
     sequenceTimeout1 = setTimeout(() => {
         if (!frameContainer) return;
         
         document.body.appendChild(frameContainer);
-        // Terapkan class fullscreen
         frameContainer.classList.add('fullscreen-mode');
 
         const dateArabic = document.querySelector('.inside-date-arabic');
@@ -147,7 +154,6 @@ function openInvitation() {
 
         if (coverPage) coverPage.style.display = 'none';
 
-        // Tambahkan event listener untuk SKIP saat video layar penuh
         frameContainer.style.cursor = 'pointer';
         frameContainer.addEventListener('click', skipAction);
         frameContainer.addEventListener('touchstart', skipAction, {passive: false});
@@ -155,9 +161,9 @@ function openInvitation() {
         // TAHAP KETIGA: Setelah video berjalan tanpa buku 1 detik, load undangan
         sequenceTimeout2 = setTimeout(() => {
             if(!isIframeLoaded) loadIframeSPA();
-        }, 1000); // 1 detik video fullscreen
+        }, 1000); 
 
-    }, 1000); // 1 detik animasi buku terbuka
+    }, 2000); 
 }
 
 window.addEventListener('message', (event) => {

@@ -50,12 +50,6 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        .main-background-video {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh; 
-            object-fit: cover; z-index: -2; opacity: 0.25; pointer-events: none;
-            background-color: var(--dark-bg);
-        }
-
         .ambient-light { position: fixed; border-radius: 50%; filter: blur(140px); z-index: -1; opacity: 0.15; pointer-events: none; }
         .light-1 { width: 320px; height: 320px; background: #0284c7; top: 10%; left: -5%; }
         .light-2 { width: 380px; height: 380px; background: #b45309; bottom: 10%; right: -10%; opacity: 0.1; }
@@ -185,7 +179,7 @@
         .map-container iframe { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; 
             filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); 
-            pointer-events: auto !important; 
+            touch-action: auto; 
         }
 
         .btn-aesthetic { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: rgba(255,255,255,0.06); color: #fff; padding: 16px 24px; border-radius: 12px; font-family: var(--font-sans); font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; transition: 0.4s; }
@@ -250,8 +244,6 @@
     </style>
 </head>
 <body>
-
-   
 
     <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
     <div class="music-btn" id="musicToggle" onclick="toggleMusic()">
