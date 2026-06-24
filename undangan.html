@@ -269,7 +269,6 @@
         .atm-card::after { content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 30px; background: url('https://img.icons8.com/color/48/sim-card-chip.png') center/contain no-repeat; opacity: 0.8; }
         .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 4px; }
         
-        /* PERBAIKAN REKENING BANK: */
         .bank-rek { 
             font-family: monospace; font-size: clamp(1.1rem, 6vw, 1.35rem); font-weight: 700; letter-spacing: 2px; 
             color: #ffffff !important; 
@@ -302,15 +301,38 @@
         .gif-viewport img { width: 42px; height: 42px; cursor: pointer; transition: 0.2s; border-radius: 8px; padding: 2px; }
         .gif-viewport img:hover { transform: scale(1.15); }
         
-        .chat-board { margin-top: 25px; text-align: left; max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 5px;}
-        .chat-board::-webkit-scrollbar { width: 5px; }
-        .chat-board::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+        /* --- TAMPILAN LIVE CHAT BARU YANG KEREN --- */
+        .live-chat-container {
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px;
+            padding: 30px 20px 20px 20px; margin-top: 40px; position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 15px 35px rgba(0,0,0,0.5);
+        }
+        .live-chat-container::before {
+            content: '🔴 Live Messages'; position: absolute; top: -14px; left: 20px;
+            background: var(--dark-bg); color: #38bdf8; padding: 5px 15px;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+            border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); animation: pulse-live 2s infinite;
+        }
+        @keyframes pulse-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        .chat-bubble { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 15px; }
-        .chat-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .chat-name { font-size: 0.85rem; font-weight: 600; color: var(--accent-glow); }
-        .badge-hadir { font-size: 0.65rem; background: rgba(56, 189, 248, 0.12); color: var(--accent-glow); padding: 3px 8px; border-radius: 20px; font-weight: 600; }
-        .chat-gif { width: 35px; height: 35px; margin-top: 10px; display: block; }
+        .chat-board { max-height: 450px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; padding-right: 8px;}
+        .chat-board::-webkit-scrollbar { width: 4px; }
+        .chat-board::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.5); border-radius: 10px; }
+
+        .chat-bubble { 
+            background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01)); 
+            border: 1px solid rgba(255,255,255,0.05); border-left: 3px solid var(--accent-glow);
+            border-radius: 0 16px 16px 16px; padding: 15px; position: relative;
+            backdrop-filter: blur(5px); transition: transform 0.3s ease; text-align: left;
+        }
+        .chat-bubble:hover { transform: translateX(5px); border-left-color: var(--accent-gold); }
+        .chat-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+        .chat-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
+        .chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: auto; font-family: monospace; }
+        .badge-hadir { font-size: 0.6rem; background: rgba(56, 189, 248, 0.15); color: var(--accent-glow); padding: 4px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; }
+        .badge-absen { font-size: 0.6rem; background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 4px 8px; border-radius: 20px; font-weight: 700; letter-spacing: 1px; }
+        .chat-gif { max-width: 45px; height: auto; margin-top: 10px; display: block; border-radius: 8px; }
 
         /* --- FOOTER CLOSING --- */
         .footer-sec { text-align: center; padding: 60px 20px 30px 20px; position: relative; z-index: 2; }
@@ -330,7 +352,6 @@
 </head>
 <body>
 
-    <!-- PERBAIKAN: Menambahkan webkit-playsinline agar optimal di iOS / Browser HP -->
     <video autoplay loop muted playsinline webkit-playsinline class="main-background-video" preload="auto">
         <source src="background.mp4" type="video/mp4">
     </video>
@@ -554,8 +575,11 @@
                 <button type="submit" class="btn-aesthetic"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan</button>
             </form>
 
-            <div class="chat-board" id="papanPesan">
-                <!-- Komentar akan di-load di sini -->
+            <!-- TAMPILAN LIVE CHAT BARU -->
+            <div class="live-chat-container" data-aos="fade-up">
+                <div class="chat-board" id="papanPesan">
+                    <!-- Komentar akan di-load di sini -->
+                </div>
             </div>
         </div>
 
@@ -692,14 +716,14 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
+        // URL GOOGLE SCRIPT ANDA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
-        // PERBAIKAN: Penanganan Cache Browser & Antisipasi Struktur Data JSON
+        // FUNGSI LOAD UCAPAN (Live View dari Google Spreadsheet)
         function loadUcapan() {
             const board = document.getElementById('papanPesan');
-            board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;"><i class="fa-solid fa-spinner fa-spin"></i> Memuat doa & ucapan...</p>';
+            board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.85rem; padding: 20px;"><i class="fa-solid fa-spinner fa-spin"></i> Menghubungkan ke server...</p>';
 
-            // Tambahkan parameter waktu (?t=...) agar browser tidak meload cache lama
             const fetchUrl = scriptURL + '?action=read&t=' + new Date().getTime();
 
             fetch(fetchUrl)
@@ -707,40 +731,57 @@
                 .then(data => {
                     board.innerHTML = ''; 
                     
-                    // Antisipasi format data yang dikirim Google Apps Script
                     let items = data.data ? data.data : (Array.isArray(data) ? data : []);
                     
                     if(items && items.length > 0) {
-                        // Memastikan urutan komentar memunculkan yang terbaru di atas
-                        items.reverse(); 
+                        items.reverse(); // Balik urutan agar terbaru di atas
                         
                         items.forEach(item => {
-                            if (!item.nama) return; // Lewati baris kosong
+                            if (!item.nama) return; 
                             
                             const bubble = document.createElement('div');
                             bubble.className = 'chat-bubble';
+                            
+                            // Format Waktu Pengiriman
+                            let timeString = '';
+                            if (item.waktu) {
+                                let d = new Date(item.waktu);
+                                if (!isNaN(d)) {
+                                    timeString = d.toLocaleDateString('id-ID', {day: 'numeric', month: 'short'}) + ' ' + d.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
+                                } else {
+                                    timeString = item.waktu;
+                                }
+                            }
+
                             let gifHtml = item.gif ? `<img src="${item.gif}" class="chat-gif" alt="gif">` : '';
+                            
+                            // Logika indikator warna badge kehadiran
+                            let isAbsen = item.kehadiran && item.kehadiran.toLowerCase().includes('tidak');
+                            let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
+                            let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
                             
                             bubble.innerHTML = `
                                 <div class="chat-header">
                                     <span class="chat-name">${item.nama}</span>
-                                    <span class="badge-hadir"><i class="fa-solid fa-check"></i> ${item.kehadiran || 'Hadir'}</span>
+                                    <span class="${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${item.kehadiran || 'Hadir'}</span>
+                                    <span class="chat-time">${timeString}</span>
                                 </div>
-                                <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"${item.pesan}"</p>
+                                <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; margin-top: 5px;">"${item.pesan}"</p>
                                 ${gifHtml}
                             `;
                             board.appendChild(bubble);
                         });
                     } else {
-                        board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Jadilah yang pertama memberikan ucapan!</p>';
+                        board.innerHTML = '<p style="text-align:center; color:var(--text-muted); font-size:0.85rem; padding: 20px;">Jadilah yang pertama memberikan ucapan!</p>';
                     }
                 })
                 .catch(error => {
                     console.error('Gagal memuat ucapan:', error);
-                    board.innerHTML = '<p style="text-align:center; color:#fff; font-size:0.8rem;">Pesan belum bisa dimuat, pastikan koneksi internet Anda stabil.</p>';
+                    board.innerHTML = '<p style="text-align:center; color:#f43f5e; font-size:0.85rem; padding: 20px;"><i class="fa-solid fa-triangle-exclamation"></i> Gagal memuat pesan. Pastikan Google Script Anda sudah ditambahkan fungsi doGet().</p>';
                 });
         }
 
+        // FUNGSI KIRIM UCAPAN
         function kirimUcapan(e) {
             e.preventDefault();
             
@@ -758,16 +799,25 @@
 
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
                 .then(response => {
+                    // Update tampilan lokal segera tanpa menunggu reload
                     const bubble = document.createElement('div');
                     bubble.className = 'chat-bubble';
+                    
+                    let now = new Date();
+                    let timeString = now.toLocaleDateString('id-ID', {day: 'numeric', month: 'short'}) + ' ' + now.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
+                    
                     let gifHtml = gifUrl ? `<img src="${gifUrl}" class="chat-gif" alt="gif">` : '';
+                    let isAbsen = status.toLowerCase().includes('tidak');
+                    let badgeClass = isAbsen ? 'badge-absen' : 'badge-hadir';
+                    let iconClass = isAbsen ? 'fa-xmark' : 'fa-check';
                     
                     bubble.innerHTML = `
                         <div class="chat-header">
                             <span class="chat-name">${name}</span>
-                            <span class="badge-hadir"><i class="fa-solid fa-check"></i> ${status}</span>
+                            <span class="${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${status}</span>
+                            <span class="chat-time">${timeString}</span>
                         </div>
-                        <p style="font-size: 0.8rem; color: #fff; line-height: 1.5;">"${msg}"</p>
+                        <p style="font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; margin-top: 5px;">"${msg}"</p>
                         ${gifHtml}
                     `;
                     const emptyMsg = board.querySelector('p');
@@ -805,6 +855,7 @@
                 });
             }
 
+            // Jalankan fungsi load data komentar
             loadUcapan();
         });
     </script>
