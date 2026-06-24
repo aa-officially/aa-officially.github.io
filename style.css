@@ -112,8 +112,21 @@ body {
         5px 5px 0px var(--page-line-1), 6px 6px 0px var(--page-line-2);
 }
 
-.inside-video-frame { position: relative; width: 100%; height: 100%; }
-.inside-video-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.inside-video-frame { 
+    position: relative; 
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden; /* Tambahan agar rapi saat transisi */
+    border-radius: inherit; /* Tambahan untuk melengkung di dalam buku */
+    will-change: top, left, width, height, transform; /* Akselerasi Hardware GPU */
+}
+
+.inside-video-frame video { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block; 
+}
 
 .inside-date-arabic {
     position: absolute; bottom: 25px; left: 0; width: 100%; text-align: center; font-family: var(--font-arabic);

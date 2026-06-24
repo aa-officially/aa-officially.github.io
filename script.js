@@ -62,17 +62,21 @@ function openInvitation() {
     const coverPage = document.getElementById('cover-page');
     const audio = document.getElementById('bgMusic');
     const guestBox = document.getElementById('guestBox');
+    const frameContainer = document.querySelector('.inside-video-frame');
     
-    if (!bookScene) return;
+    // Cegah double klik
+    if (!bookScene || bookScene.classList.contains('is-open')) return;
 
     bookScene.classList.add('is-open');
-    bookScene.style.pointerEvents = 'none';
+    bookScene.onclick = null; // Matikan klik pada buku setelah terbuka
+    
+    // REVISI 1: Hapus pointerEvents = 'none' agar video TETAP BISA DIKLIK!
 
     if (guestBox) guestBox.style.opacity = '0';
     const frontContent = document.querySelector('.front-content');
     if (frontContent) { frontContent.style.opacity = '0'; }
 
-    // Paksa video di dalam buku untuk diputar (mencegah blokir autoplay dari HP)
+    // Paksa video putar
     if (invVideo) {
         invVideo.play().catch(e => console.log("Autoplay dicegah browser", e));
     }
@@ -80,133 +84,134 @@ function openInvitation() {
     if (audio) {
         let playPromise = audio.play();
         if (playPromise !== undefined) {
-            playPromise.catch(error => {
+            playPromise.catch(() => {
                 document.addEventListener('click', () => audio.play(), { once: true });
             });
         }
     }
 
-    // TAHAP 1: Tunggu 1.9 detik sampai animasi cover buku selesai terbuka penuh
-    setTimeout(() => {
-        const frameContainer = document.querySelector('.inside-video-frame');
-        const pagesBlock = document.querySelector('.pages-block');
-        
-        if (!frameContainer) return;
-        const rect = frameContainer.getBoundingClientRect();
-        
-        if (coverPage) coverPage.style.perspective = 'none';
-        bookScene.style.transform = 'none';
-        bookScene.style.transformStyle = 'flat';
-        bookScene.style.animation = 'none';
-        bookScene.style.filter = 'none';
-        
-        if (pagesBlock) {
-            pagesBlock.style.transform = 'none';
-            pagesBlock.style.overflow = 'visible';
-            pagesBlock.style.boxShadow = 'none';
-            pagesBlock.style.background = 'transparent';
-        }
+    // Variabel dan Fungsi untuk memuat undangan
+    let isIframeLoaded = false;
+    const loadIframeSPA = (e) => {
+        if (e && e.type === 'touchstart') e.preventDefault(); 
+        if(isIframeLoaded) return;
+        isIframeLoaded = true;
 
-        document.querySelectorAll('.page, .hardcover-front, .hardcover-back, .book-spine, .monogram-overlay').forEach(p => {
-            if(p) p.style.display = 'none';
-        });
+        const iframe = document.createElement('iframe');
+        const params = new URLSearchParams(window.location.search);
+        params.set('spa', '1');
         
-        document.body.appendChild(frameContainer);
-        
-        frameContainer.style.position = 'fixed';
-        frameContainer.style.margin = '0';
-        frameContainer.style.padding = '0';
-        frameContainer.style.borderRadius = '0'; 
-        frameContainer.style.top = rect.top + 'px';
-        frameContainer.style.left = rect.left + 'px';
-        frameContainer.style.width = rect.width + 'px';
-        frameContainer.style.height = rect.height + 'px';
-        frameContainer.style.zIndex = '999999';
-        frameContainer.style.backgroundColor = '#050505';
-        
-        if (invVideo) {
-            invVideo.style.position = 'absolute';
-            invVideo.style.top = '0';
-            invVideo.style.left = '0';
-            invVideo.style.width = '100%';
-            invVideo.style.height = '100%';
-            invVideo.style.objectFit = 'cover'; 
-            invVideo.style.borderRadius = '0';
-        }
+        iframe.src = 'undangan.html?' + params.toString();
+        iframe.style.position = 'fixed';
+        iframe.style.top = '0';
+        iframe.style.left = '0';
+        iframe.style.width = '100vw';
+        iframe.style.height = '100vh';
+        iframe.style.border = 'none';
+        iframe.style.zIndex = '9999998'; 
+        iframe.style.opacity = '0';
+        iframe.style.transition = 'opacity 1.2s ease';
+        document.body.appendChild(iframe);
 
-        const dateArabic = document.querySelector('.inside-date-arabic');
-        if (dateArabic) dateArabic.style.display = 'none';
-
-        const watermark = document.querySelector('.watermark');
-        if (watermark) {
-            document.body.appendChild(watermark);
-            watermark.style.position = 'fixed';
-            watermark.style.zIndex = '9999999';
-        }
-
-        void frameContainer.offsetWidth; 
-        
-        // TAHAP 2: Transisi Video Membesar ke Full Screen
-        frameContainer.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
-        frameContainer.style.top = '0px';
-        frameContainer.style.left = '0px';
-        frameContainer.style.width = '100vw';
-        frameContainer.style.height = window.innerHeight + 'px'; 
-        
-        let isIframeLoaded = false;
-
-        // FUNGSI LOAD UNDANGAN SPA
-        const loadIframeSPA = (e) => {
-            if (e && e.type === 'touchstart') e.preventDefault(); 
-            if(isIframeLoaded) return;
-            isIframeLoaded = true;
-
-            const iframe = document.createElement('iframe');
-            const params = new URLSearchParams(window.location.search);
-            params.set('spa', '1');
+        iframe.onload = () => {
+            iframe.style.opacity = '1';
             
-            iframe.src = 'undangan.html?' + params.toString();
-            iframe.style.position = 'fixed';
-            iframe.style.top = '0';
-            iframe.style.left = '0';
-            iframe.style.width = '100vw';
-            iframe.style.height = '100vh';
-            iframe.style.border = 'none';
-            iframe.style.zIndex = '9999998'; 
-            iframe.style.opacity = '0';
-            iframe.style.transition = 'opacity 1.2s ease';
-            document.body.appendChild(iframe);
-
-            iframe.onload = () => {
-                iframe.style.opacity = '1';
+            setTimeout(() => {
+                if(frameContainer) frameContainer.style.opacity = '0';
+                if (coverPage) coverPage.style.opacity = '0';
                 
                 setTimeout(() => {
-                    frameContainer.style.opacity = '0';
-                    if (coverPage) coverPage.style.opacity = '0';
-                    if (watermark) watermark.style.opacity = '0';
-                    
-                    setTimeout(() => {
-                        frameContainer.remove();
-                        if (coverPage) coverPage.remove();
-                        if (watermark) watermark.remove();
-                        iframe.style.zIndex = '1'; 
-                    }, 1200);
-                }, 800);
-            };
+                    if(frameContainer) frameContainer.remove();
+                    if (coverPage) coverPage.remove();
+                    iframe.style.zIndex = '1'; 
+                }, 1200);
+            }, 800);
         };
+    };
 
-        // FITUR SKIP: Jika disentuh/diklik saat Full Screen, langsung masuk undangan
+    // Jadikan video bisa diklik kapan saja untuk SKIP langsung ke isi undangan
+    if (frameContainer) {
+        frameContainer.style.cursor = 'pointer';
         frameContainer.addEventListener('click', loadIframeSPA);
         frameContainer.addEventListener('touchstart', loadIframeSPA, {passive: false});
-        if(invVideo) {
-            invVideo.addEventListener('click', loadIframeSPA);
-            invVideo.addEventListener('touchstart', loadIframeSPA, {passive: false});
-        }
+    }
 
-        // TAHAP 3: Auto Load Undangan setelah 1.9 Detik video diputar mode full screen
-        setTimeout(loadIframeSPA, 1900);
+    // TAHAP 1: Tunggu 1.9 detik sampai animasi cover buku selesai terbuka penuh
+    setTimeout(() => {
+        
+        // REVISI 2: TAHAP 1.5 - Tahan video di dalam buku selama 1.5 DETIK
+        setTimeout(() => {
+            if(isIframeLoaded) return; // Jika user sudah klik skip, batalkan transisi
 
-    }, 1900); // Selesai animasi buka buku (1.9 detik)
+            if (!frameContainer) return;
+            const rect = frameContainer.getBoundingClientRect();
+            
+            // Matikan efek 3D agar transisi mulus dan tidak patah
+            if (coverPage) coverPage.style.perspective = 'none';
+            bookScene.style.transform = 'none';
+            bookScene.style.transformStyle = 'flat';
+            bookScene.style.animation = 'none';
+            bookScene.style.filter = 'none';
+            
+            // Sembunyikan elemen buku lainnya
+            document.querySelectorAll('.page, .hardcover-front, .hardcover-back, .book-spine, .monogram-overlay').forEach(p => {
+                if(p) p.style.display = 'none';
+            });
+            
+            // Ekstrak video ke body
+            document.body.appendChild(frameContainer);
+            
+            // Setup koordinat awal (Persis seperti posisi di buku)
+            frameContainer.style.position = 'fixed';
+            frameContainer.style.margin = '0';
+            frameContainer.style.padding = '0';
+            frameContainer.style.borderRadius = '6px'; // Sesuaikan radius pinggiran buku
+            frameContainer.style.top = rect.top + 'px';
+            frameContainer.style.left = rect.left + 'px';
+            frameContainer.style.width = rect.width + 'px';
+            frameContainer.style.height = rect.height + 'px';
+            frameContainer.style.zIndex = '999999';
+            frameContainer.style.backgroundColor = '#050505';
+            
+            if (invVideo) {
+                invVideo.style.position = 'absolute';
+                invVideo.style.top = '0';
+                invVideo.style.left = '0';
+                invVideo.style.width = '100%';
+                invVideo.style.height = '100%';
+                invVideo.style.objectFit = 'cover'; 
+                invVideo.style.borderRadius = 'inherit';
+            }
+
+            const dateArabic = document.querySelector('.inside-date-arabic');
+            if (dateArabic) dateArabic.style.display = 'none';
+
+            const watermark = document.querySelector('.watermark');
+            if (watermark) {
+                document.body.appendChild(watermark);
+                watermark.style.position = 'fixed';
+                watermark.style.zIndex = '9999999';
+            }
+
+            // REVISI 3: Memaksa browser melakukan reflow agar animasi tidak lompat (Penting untuk anti-patah)
+            void frameContainer.offsetWidth; 
+            
+            // TAHAP 2: Transisi Video Membesar ke Full Screen
+            frameContainer.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            frameContainer.style.top = '0px';
+            frameContainer.style.left = '0px';
+            frameContainer.style.width = '100vw';
+            frameContainer.style.height = window.innerHeight + 'px'; 
+            frameContainer.style.borderRadius = '0px';
+            
+            // TAHAP 3: Auto Load Undangan setelah transisi video selesai
+            setTimeout(() => {
+                if(!isIframeLoaded) loadIframeSPA();
+            }, 800);
+
+        }, 1500); // <-- JEDA 1.5 DETIK VIDEO DI DALAM BUKU
+
+    }, 1900); // JEDA 1.9 DETIK MENUNGGU BUKU TERBUKA
 }
 
 // Komunikasi kontrol musik
