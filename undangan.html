@@ -14,7 +14,8 @@
     
     <style>
         :root {
-            --dark-bg: #050a10;
+            --dark-bg: #030710;
+            --card-bg: #091322;
             --accent-glow: #38bdf8;
             --accent-gold: #fde047;
             --text-main: #f8fafc;
@@ -30,115 +31,93 @@
         html { scroll-behavior: smooth; }
         
         body { 
-            /* Gradasi Solid Menggantikan Canvas & Blur Berat */
-            background: radial-gradient(circle at top right, #0a1322, var(--dark-bg) 60%);
+            /* Desain Background Premium Tanpa Filter Berat Bebas Lag */
+            background: radial-gradient(circle at top, #0c1a30 0%, var(--dark-bg) 70%);
             color: var(--text-main); font-family: var(--font-sans); overflow-x: hidden; 
-            -webkit-font-smoothing: antialiased; animation: smoothLoad 1s ease-out forwards;
+            -webkit-font-smoothing: antialiased; animation: smoothLoad 0.8s ease-out forwards;
         }
-        @keyframes smoothLoad { 0% { opacity: 0; transform: translateY(10px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes smoothLoad { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-        .mobile-wrapper { 
-            width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; 
-            padding-bottom: 80px; overflow: hidden; transform: translateZ(0); background: transparent;
-        }
+        .mobile-wrapper { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; padding-bottom: 80px; }
 
         .music-btn {
             position: fixed; top: 20px; right: 20px; width: 45px; height: 45px;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 1000;
             cursor: pointer; color: #fff; animation: spin 5s linear infinite;
         }
-        .music-btn.paused { animation-play-state: paused; border-color: rgba(255,255,255,0.1); color: var(--text-muted); }
+        .music-btn.paused { animation-play-state: paused; color: var(--text-muted); }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* Optimasi Glass Card Tanpa Backdrop-Filter Berat */
         .glass-card {
-            background: rgba(20, 30, 48, 0.6); border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px; padding: 40px 25px; margin: 0 20px 45px 20px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; z-index: 2; overflow: hidden; transform: translateZ(0); 
+            background: var(--card-bg); border: 1px solid rgba(56, 189, 248, 0.15);
+            border-radius: 24px; padding: 35px 20px; margin: 0 20px 40px 20px; text-align: center;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.6); position: relative; z-index: 2;
         }
 
-        .theme-video-container { width: 100%; border-radius: 20px; overflow: hidden; background: #000; padding: 5px; border: 1px solid rgba(255,255,255,0.1); }
-        .theme-video { width: 100%; display: block; object-fit: cover; border-radius: 14px; filter: brightness(0.9); }
+        .theme-video-container { width: 100%; border-radius: 16px; overflow: hidden; background: #000; padding: 4px; border: 1px solid rgba(255,255,255,0.1); }
+        .theme-video { width: 100%; display: block; object-fit: cover; border-radius: 12px; }
 
-        .hero-section { position: relative; width: 100%; min-height: 85vh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 6vh; z-index: 2; }
-        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.7; mask-image: linear-gradient(to bottom, black 65%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 100%); }
+        .hero-section { position: relative; width: 100%; min-height: 80vh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 5vh; z-index: 2; }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.65; mask-image: linear-gradient(to bottom, black 70%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%); }
         .hero-content { position: relative; z-index: 2; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; }
         
-        .hero-pretitle { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; color: #fff; margin-bottom: 15px; }
-        .hero-name { font-family: var(--font-signature); font-size: clamp(3rem, 14vw, 5.2rem); line-height: 1.1; background: linear-gradient(135deg, #fff7ad, #fde047, #ca8a04); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-ampersand { font-family: var(--font-script); font-size: 2rem; margin: 10px 0; color: #fff; font-style: italic; }
-        .hero-date { font-family: var(--font-sans); font-size: 1.05rem; letter-spacing: 6px; margin-top: 15px; font-weight: 700; color: #fff; padding: 10px 25px; border-radius: 30px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+        .hero-pretitle { font-family: var(--font-serif); font-size: 1.1rem; letter-spacing: 5px; text-transform: uppercase; color: #fff; margin-bottom: 10px; }
+        .hero-name { font-family: var(--font-signature); font-size: clamp(3rem, 14vw, 5rem); line-height: 1.1; background: linear-gradient(135deg, #fff7ad, #fde047, #ca8a04); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-ampersand { font-family: var(--font-script); font-size: 1.8rem; margin: 8px 0; color: #fff; font-style: italic; }
+        .hero-date { font-family: var(--font-sans); font-size: 1rem; letter-spacing: 5px; margin-top: 12px; font-weight: 700; color: #fff; padding: 8px 22px; border-radius: 30px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
 
-        /* Marquee */
-        .marquee-container { width: 100%; overflow: hidden; background: rgba(56, 189, 248, 0.05); border-top: 1px solid rgba(56, 189, 248, 0.2); border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding: 12px 0; margin-bottom: 45px; margin-top: 30px; white-space: nowrap; position: relative; }
-        .marquee-content { display: inline-flex; align-items: center; animation: marquee 20s linear infinite; padding-left: 30px; }
+        .marquee-container { width: 100%; overflow: hidden; background: rgba(56, 189, 248, 0.04); border-top: 1px solid rgba(56, 189, 248, 0.15); border-bottom: 1px solid rgba(56, 189, 248, 0.15); padding: 10px 0; margin-bottom: 40px; margin-top: 25px; white-space: nowrap; }
+        .marquee-content { display: inline-flex; align-items: center; animation: marquee 20s linear infinite; }
         .marquee-group { display: flex; align-items: center; gap: 30px; padding-right: 30px; }
-        .marquee-text-item { font-size: 0.85rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
-        .marquee-arabic { font-family: var(--font-arabic); font-size: 1.3rem; color: var(--accent-gold); }
-        .marquee-star { color: var(--accent-glow); font-size: 0.8rem; }
+        .marquee-text-item { font-size: 0.8rem; color: var(--text-main); letter-spacing: 2px; text-transform: uppercase; font-weight: 600; }
+        .marquee-arabic { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--accent-gold); }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .section-title { font-family: var(--font-script); font-size: clamp(2rem, 8vw, 2.8rem); color: #fff; margin-bottom: 5px; font-style: italic; }
-        .section-subtitle { font-size: 0.6rem; letter-spacing: 5px; text-transform: uppercase; color: var(--accent-glow); margin-bottom: 25px; font-weight: 700; }
-        .bismillah-text { font-family: var(--font-arabic); font-size: 1.6rem; margin-bottom: 15px; color: #d4af37; font-weight: 400; }
-        .text-p { font-size: 0.85rem; line-height: 1.8; color: var(--text-muted); margin-bottom: 15px; font-weight: 300; }
+        .section-title { font-family: var(--font-script); font-size: clamp(2rem, 8vw, 2.6rem); color: #fff; margin-bottom: 4px; font-style: italic; }
+        .section-subtitle { font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase; color: var(--accent-glow); margin-bottom: 20px; font-weight: 700; }
+        .bismillah-text { font-family: var(--font-arabic); font-size: 1.5rem; margin-bottom: 12px; color: #d4af37; }
+        .text-p { font-size: 0.85rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 12px; }
 
-        .couple-container { display: flex; flex-direction: column; gap: 40px; margin-top: 30px; position: relative; }
-        .profile-img-box { width: 140px; height: 160px; margin: 0 auto 15px auto; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.2); }
+        .couple-container { display: flex; flex-direction: column; gap: 35px; margin-top: 25px; }
+        .profile-img-box { width: 130px; height: 150px; margin: 0 auto 12px auto; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); }
         .profile-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-name { font-family: var(--font-signature); font-size: clamp(2.2rem, 10vw, 3.2rem); color: #fff; line-height: 1; }
-        .profile-parents { font-size: 0.8rem; color: var(--text-muted); margin-top: 5px; }
+        .profile-name { font-family: var(--font-signature); font-size: clamp(2.2rem, 10vw, 3rem); color: #fff; }
+        .profile-parents { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
         .parent-name { font-weight: 600; color: #e2e8f0; }
 
-        /* Countdown */
-        .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0; }
-        .count-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 15px 5px; }
-        .c-num { font-family: var(--font-serif); font-size: clamp(1.4rem, 6vw, 1.8rem); font-weight: 700; color: #fff; }
-        .c-label { display: block; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-glow); margin-top: 5px; font-weight: 600; }
+        .countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 25px 0; }
+        .count-item { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 12px 4px; }
+        .c-num { font-family: var(--font-serif); font-size: clamp(1.3rem, 6vw, 1.7rem); font-weight: 700; color: #fff; }
+        .c-label { display: block; font-size: 0.55rem; text-transform: uppercase; color: var(--accent-glow); margin-top: 4px; font-weight: 600; }
 
-        /* Agenda */
-        .agenda-ticket { background: rgba(10, 15, 25, 0.8); border: 1px solid rgba(255,255,255,0.1); border-left: 4px solid var(--accent-glow); border-radius: 16px; padding: 20px; margin-bottom: 20px; text-align: left; display: flex; align-items: center; gap: 20px; }
-        .agenda-icon-box { width: 50px; height: 50px; background: rgba(56, 189, 248, 0.1); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; color: var(--accent-glow); flex-shrink: 0; }
-        .agenda-title { font-family: var(--font-signature); font-size: 2.2rem; color: var(--accent-gold); margin-bottom: 5px; line-height: 1; }
-        .agenda-detail { font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+        .agenda-ticket { background: rgba(5, 10, 20, 0.5); border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid var(--accent-glow); border-radius: 14px; padding: 18px; margin-bottom: 18px; text-align: left; display: flex; align-items: center; gap: 15px; }
+        .agenda-icon-box { width: 45px; height: 45px; background: rgba(56, 189, 248, 0.08); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: var(--accent-glow); flex-shrink: 0; }
+        .agenda-title { font-family: var(--font-signature); font-size: 2rem; color: var(--accent-gold); margin-bottom: 4px; }
+        .agenda-detail { font-size: 0.8rem; color: var(--text-main); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
 
-        /* Maps Perbaikan (Poin 5) */
-        .map-container { border-radius: 20px; overflow: hidden; border: 2px solid rgba(255,255,255,0.15); margin: 25px 0; position: relative; padding-bottom: 70%; background: #111; z-index: 10; }
-        /* Pointer events auto agar map bisa digeser langsung */
-        .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.2); pointer-events: auto; touch-action: pan-x pan-y; }
+        /* Google Maps Perbaikan Fungsi Scroll & Geser Secara Langsung */
+        .map-container { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.15); margin: 20px 0; position: relative; padding-bottom: 65%; background: #000; z-index: 10; }
+        .map-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: invert(90%) hue-rotate(180deg); pointer-events: auto !important; touch-action: auto !important; }
 
-        .btn-aesthetic { display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: rgba(255,255,255,0.1); color: #fff; padding: 16px 24px; border-radius: 12px; font-weight: 600; font-size: 0.8rem; letter-spacing: 1px; border: 1px solid rgba(255,255,255,0.2); cursor: pointer; text-decoration: none; }
+        .btn-aesthetic { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: rgba(255,255,255,0.08); color: #fff; padding: 14px 20px; border-radius: 10px; font-weight: 600; font-size: 0.8rem; border: 1px solid rgba(255,255,255,0.15); cursor: pointer; text-decoration: none; }
 
-        /* Bank */
-        .gift-wrapper-box { background-color: #0b111a; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); margin: 0 0 45px 0; padding: 45px 20px; text-align: center; }
-        .atm-card { background: linear-gradient(135deg, #1e293b 0%, #020617 100%); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 25px 20px; margin-top: 25px; text-align: left; position: relative; overflow: hidden; }
-        .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: #fff; padding: 4px 8px; border-radius: 4px; }
-        .bank-rek { font-family: monospace; font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; color: #fff; margin-bottom: 6px; }
-        .bank-name { font-size: 0.8rem; color: #cbd5e1; text-transform: uppercase; margin-bottom: 18px; }
-        .btn-copy-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 12px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; width: 100%; font-weight: 600; }
+        /* Wedding Gift Box */
+        .gift-wrapper-box { background-color: #060d1a; border-radius: 20px; border: 1px solid rgba(56, 189, 248, 0.15); margin: 0 20px 40px 20px; padding: 35px 15px; text-align: center; }
+        .atm-card { background: linear-gradient(135deg, #0f1a2e 0%, #020710 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 22px 18px; margin-top: 20px; text-align: left; position: relative; overflow: hidden; }
+        .bank-logo { height: 24px; margin-bottom: 14px; display: block; background: #fff; padding: 2px 6px; border-radius: 4px; }
+        .bank-rek { font-family: monospace; font-size: 1.25rem; font-weight: 700; letter-spacing: 2px; color: #fff; margin-bottom: 4px; }
+        .bank-name { font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase; margin-bottom: 14px; }
+        .btn-copy-card { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; width: 100%; font-weight: 600; }
 
-        /* Formulir */
-        .form-control { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 14px 16px; color: #fff; font-family: var(--font-sans); font-size: 0.85rem; margin-bottom: 15px; }
-        
-        .live-chat-container { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 20px; padding: 30px 20px 20px 20px; margin-top: 40px; position: relative; }
-        .live-chat-container::before { content: '🔴 Live Messages'; position: absolute; top: -14px; left: 20px; background: var(--dark-bg); color: #38bdf8; padding: 5px 15px; font-size: 0.7rem; font-weight: 700; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; }
-        .chat-board { max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .chat-bubble { background: rgba(255,255,255,0.05); border-left: 3px solid var(--accent-glow); border-radius: 0 16px 16px 16px; padding: 15px; text-align: left; }
-        .chat-header { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
-        .chat-name { font-size: 0.9rem; font-weight: 700; color: #fff; }
-        .chat-time { font-size: 0.65rem; color: rgba(255,255,255,0.4); margin-left: auto; }
-        .badge-hadir { font-size: 0.6rem; background: rgba(56, 189, 248, 0.15); color: var(--accent-glow); padding: 4px 8px; border-radius: 20px; }
-        .badge-absen { font-size: 0.6rem; background: rgba(244, 63, 94, 0.15); color: #f43f5e; padding: 4px 8px; border-radius: 20px; }
-
-        .footer-sec { text-align: center; padding: 60px 20px 30px 20px; }
-        .closing-text-en { font-family: var(--font-script); font-size: 1.6rem; color: var(--accent-gold); margin-bottom: 15px; font-style: italic; }
-        .closing-arab-small { font-family: var(--font-arabic); font-size: 1.2rem; color: var(--text-muted); margin-top: 30px; }
-        .wa-footer-button { display: inline-flex; justify-content: center; align-items: center; width: 55px; height: 55px; border-radius: 50%; margin: 20px auto; background: rgba(37, 211, 102, 0.2); border: 1px solid #25D366; text-decoration: none; color: #25D366; font-size: 1.8rem; }
+        .form-control { width: 100%; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 12px 14px; color: #fff; font-size: 0.8rem; margin-bottom: 12px; }
+        .footer-sec { text-align: center; padding: 50px 20px 20px 20px; }
+        .closing-text-en { font-family: var(--font-script); font-size: 1.5rem; color: var(--accent-gold); margin-bottom: 12px; font-style: italic; }
+        .closing-arab-small { font-family: var(--font-arabic); font-size: 1.1rem; color: var(--text-muted); margin-top: 25px; }
+        .wa-footer-button { display: inline-flex; justify-content: center; align-items: center; width: 50px; height: 50px; border-radius: 50%; margin: 15px auto; background: rgba(37, 211, 102, 0.15); border: 1px solid #25D366; text-decoration: none; color: #25D366; font-size: 1.6rem; }
     </style>
 </head>
 <body>
-    <audio id="bgMusic" src="Wedding Nasheed.mp3" loop></audio>
     <div class="music-btn" id="musicToggle" onclick="toggleMusic()"><i class="fa-solid fa-music"></i></div>
 
     <div class="mobile-wrapper">
@@ -152,8 +131,8 @@
                 <div class="hero-ampersand">&</div>
                 <div class="hero-name">Amar</div>
                 <div class="hero-date">28 . 06 . 2026</div>
-                <div style="margin-top: 25px;">
-                    <a href="#" target="_blank" class="btn-aesthetic" style="width: auto;"><i class="fa-regular fa-calendar-plus"></i> Ingatkan Saya</a>
+                <div style="margin-top: 20px;">
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Pernikahan+Aulia+%26+Amar&dates=20260628T020000Z/20260628T050000Z&location=Wisma+Donggala,+Palu" target="_blank" class="btn-aesthetic" style="width: auto;"><i class="fa-regular fa-calendar-plus"></i> Ingatkan Saya</a>
                 </div>
             </div>
         </section>
@@ -162,16 +141,12 @@
             <div class="marquee-content">
                 <div class="marquee-group">
                     <span class="marquee-arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
-                    <i class="fa-solid fa-star-of-life marquee-star"></i>
                     <span class="marquee-text-item">Amar & Aulia</span>
-                    <i class="fa-solid fa-star-of-life marquee-star"></i>
                     <span class="marquee-text-item">Happy Wedding</span>
                 </div>
                 <div class="marquee-group">
                     <span class="marquee-arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
-                    <i class="fa-solid fa-star-of-life marquee-star"></i>
                     <span class="marquee-text-item">Amar & Aulia</span>
-                    <i class="fa-solid fa-star-of-life marquee-star"></i>
                     <span class="marquee-text-item">Happy Wedding</span>
                 </div>
             </div>
@@ -193,7 +168,7 @@
                 <h2 class="profile-name">Amar</h2>
                 <p class="profile-parents">Putra dari<br><span class="parent-name">Bapak H. Mansur (Alm) & Ibu Hj. Yulianti</span></p>
 
-                <div style="font-family: var(--font-signature); font-size: 3rem; color: var(--accent-glow);">&</div>
+                <div style="font-family: var(--font-signature); font-size: 2.8rem; color: var(--accent-glow); margin: 10px 0;">&</div>
 
                 <div class="profile-img-box"><img src="female_section3.png" alt="Aulia"></div>
                 <h2 class="profile-name">Aulia Ninda A.</h2>
@@ -224,6 +199,15 @@
                 </div>
             </div>
 
+            <div class="agenda-ticket">
+                <div class="agenda-icon-box"><i class="fa-solid fa-champagne-glasses"></i></div>
+                <div class="agenda-content">
+                    <div class="agenda-title">Resepsi</div>
+                    <div class="agenda-detail"><i class="fa-solid fa-calendar-day"></i> Minggu, 28 Juni 2026</div>
+                    <div class="agenda-detail"><i class="fa-solid fa-clock"></i> 11.00 WITA - Selesai</div>
+                </div>
+            </div>
+
             <div class="map-container" data-aos="fade-up">
                 <iframe src="https://maps.app.goo.gl/VABu83iDPcuZFDQd7" loading="lazy" allowfullscreen></iframe>
             </div>
@@ -241,11 +225,21 @@
 
         <div class="gift-wrapper-box" data-aos="fade-up">
             <h2 class="section-title">Wedding Gift</h2>
+            <div class="section-subtitle">e-gift</div>
+            <p class="text-p" style="color:#94a3b8;">Bagi keluarga dan sahabat yang ingin mengirimkan kado digital:</p>
+            
             <div class="atm-card">
                 <img src="bsi.png" alt="BSI" class="bank-logo">
                 <div class="bank-rek">7292 5603 24</div>
                 <div class="bank-name">A.N Aulia Ninda Agustianti</div>
                 <button class="btn-copy-card" onclick="copyToClipboard('7292560324', 'BSI')">Salin Rekening</button>
+            </div>
+
+            <div class="atm-card">
+                <img src="aladin.png" alt="Aladin" class="bank-logo">
+                <div class="bank-rek">5084 5880 043</div>
+                <div class="bank-name">A.N Amar Mansur</div>
+                <button class="btn-copy-card" onclick="copyToClipboard('50845880043', 'Bank Aladin')">Salin Rekening</button>
             </div>
         </div>
 
@@ -253,29 +247,20 @@
             <h3 class="closing-text-en">Thank you for being part of our journey.</h3>
             <div class="closing-arab-small">وَالسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللّٰهِ وَبَرَكَاتُهُ</div>
             <a href="https://wa.me/6281298921587" target="_blank" class="wa-footer-button"><i class="fa-brands fa-whatsapp"></i></a>
-            </div>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        AOS.init({ duration: 900, once: true, offset: 50 });
+        AOS.init({ duration: 800, once: true });
 
-        const urlParamsSPA = new URLSearchParams(window.location.search);
-        const isSPA = urlParamsSPA.get('spa') === '1';
-
-        const audio = document.getElementById('bgMusic');
+        const isSPA = new URLSearchParams(window.location.search).get('spa') === '1';
         const musicBtn = document.getElementById('musicToggle');
 
         function toggleMusic() {
             if (isSPA) {
                 window.parent.postMessage('toggleMusic', '*');
                 musicBtn.classList.toggle('paused');
-                return;
-            }
-            if (audio.paused) {
-                audio.play(); musicBtn.classList.remove('paused');
-            } else {
-                audio.pause(); musicBtn.classList.add('paused');
             }
         }
 
@@ -296,20 +281,17 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            if (!isSPA) {
-                const isPlaying = sessionStorage.getItem('isMusicPlaying');
-                if (isPlaying === 'true') { audio.play().then(() => musicBtn.classList.remove('paused')); }
-            } else {
-                if (audio) audio.remove();
-                musicBtn.classList.remove('paused'); 
-            }
-
-            // Lazy Load Videos untuk cegah lag
+            if (isSPA) { musicBtn.classList.remove('paused'); }
+            
+            // Lazy load & mematikan video di luar jangkauan layar agar HP tidak lag/patah-patah
             let videos = document.querySelectorAll("video");
             let observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) { entry.target.play().catch(e => console.log(e)); } 
-                    else { entry.target.pause(); }
+                    if (entry.isIntersecting) { 
+                        entry.target.play().catch(() => {}); 
+                    } else { 
+                        entry.target.pause(); 
+                    }
                 });
             }, { threshold: 0.1 }); 
             videos.forEach(video => observer.observe(video));

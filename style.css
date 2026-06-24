@@ -1,13 +1,8 @@
 :root {
     --bg-dark: #000000; 
-    --cover-main: #121212; 
-    --cover-light: #1f1f1f; 
-    --cover-edge: #000000; 
-    --spine-color: #0a0a0a; 
+    --cover-main: #111111; 
+    --cover-light: #1c1c1c; 
     --paper-inside: #fdfbf7; 
-    --page-line-1: #f4f2ea; 
-    --page-line-2: #c4c1b3; 
-    --gold-main: #cbd5e1;
     --font-serif: 'Cinzel', serif; 
     --font-sans: 'Montserrat', sans-serif;
     --font-calligraphy: 'Alex Brush', cursive; 
@@ -22,107 +17,63 @@ body { background: var(--bg-dark); font-family: var(--font-sans); overflow-x: hi
     background-color: var(--bg-dark); z-index: 9999; display: flex; flex-direction: column; 
     align-items: center; justify-content: center; perspective: 1500px; overflow: hidden;
 }
+.cover-bg-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; opacity: 0.35; pointer-events: none; }
 
-.cover-bg-video {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover; z-index: 1; opacity: 0.35; pointer-events: none;
-}
-
-.external-guest-box { z-index: 20; text-align: center; margin-bottom: 25px; transition: opacity 0.5s ease; }
-.external-guest-box p { font-family: var(--font-sans); font-size: 0.65rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; margin-bottom: 5px; font-weight: 500; }
-.external-guest-box h3 { font-family: var(--font-serif); font-size: 1.5rem; color: #ffffff; letter-spacing: 1px; font-weight: 700; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+.external-guest-box { z-index: 20; text-align: center; margin-bottom: 25px; transition: opacity 0.4s; }
+.external-guest-box p { font-size: 0.65rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; margin-bottom: 5px; }
+.external-guest-box h3 { font-family: var(--font-serif); font-size: 1.5rem; color: #ffffff; letter-spacing: 1px; }
 
 .book-scene { 
-    position: relative; width: 280px; height: 440px; cursor: pointer; 
-    transform-style: preserve-3d; z-index: 10; animation: floatBook 6s ease-in-out infinite; 
-    transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1); will-change: transform; 
+    position: relative; width: 280px; height: 440px; cursor: pointer; transform-style: preserve-3d; z-index: 10; 
+    animation: floatBook 5s ease-in-out infinite; transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1); will-change: transform; 
 }
-@keyframes floatBook { 
-    0%, 100% { transform: translateY(0) rotateX(12deg) rotateY(-8deg); } 
-    50% { transform: translateY(-15px) rotateX(8deg) rotateY(-4deg); } 
-}
+@keyframes floatBook { 0%, 100% { transform: translateY(0) rotateX(12deg) rotateY(-8deg); } 50% { transform: translateY(-12px) rotateX(8deg) rotateY(-4deg); } }
 
-.hardcover-back {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--cover-main);
-    border-radius: 2px 8px 8px 2px; transform: translateZ(0px); border: 1px solid var(--cover-edge); box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-}
-
-.pages-block {
-    position: absolute; top: 4px; bottom: 4px; left: 8px; right: 4px; background-color: var(--paper-inside);
-    border-radius: 2px 6px 6px 2px; transform: translateZ(2px); z-index: 5; overflow: hidden; 
-}
-.inside-video-frame { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; will-change: transform, opacity; }
+.hardcover-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--cover-main); border-radius: 2px 8px 8px 2px; transform: translateZ(0px); box-shadow: 2px 2px 8px rgba(0,0,0,0.8); }
+.pages-block { position: absolute; top: 4px; bottom: 4px; left: 8px; right: 4px; background-color: var(--paper-inside); border-radius: 2px 6px 6px 2px; transform: translateZ(2px); z-index: 5; overflow: hidden; }
+.inside-video-frame { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; }
 .inside-video-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.inside-date-arabic { position: absolute; bottom: 25px; left: 0; width: 100%; text-align: center; font-family: var(--font-arabic); font-size: 1.5rem; color: #ffffff; letter-spacing: 5px; z-index: 5; }
 
-.inside-date-arabic {
-    position: absolute; bottom: 25px; left: 0; width: 100%; text-align: center; font-family: var(--font-arabic);
-    font-size: 1.5rem; font-weight: bold; color: #ffffff; letter-spacing: 5px; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); z-index: 5; pointer-events: none;
-}
-
-.page {
-    position: absolute; top: 4px; bottom: 4px; left: 8px; right: 4px; border-radius: 2px 6px 6px 2px;
-    transform-origin: left center; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-}
+.page { position: absolute; top: 4px; bottom: 4px; left: 8px; right: 4px; border-radius: 2px 6px 6px 2px; transform-origin: left center; transform-style: preserve-3d; transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1); }
 .page-1 { z-index: 8; background: var(--paper-inside); }
 .page-2 { z-index: 7; background: var(--paper-inside); }
 .page-3 { z-index: 6; background: none; }
-.page-front { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: var(--paper-inside); backface-visibility: hidden; }
-.page-back { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background-color: var(--paper-inside); backface-visibility: hidden; transform: rotateY(180deg); overflow: hidden; }
-.page-back img { width: 100%; height: 100%; display: block; object-fit: cover;}
+.page-front { position: absolute; width: 100%; height: 100%; background: var(--paper-inside); backface-visibility: hidden; }
+.page-back { position: absolute; width: 100%; height: 100%; background-color: var(--paper-inside); backface-visibility: hidden; transform: rotateY(180deg); overflow: hidden; }
+.page-back img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-.book-spine {
-    position: absolute; top: 0; left: -12px; width: 24px; height: 100%; background: linear-gradient(to right, #050505, var(--cover-main), #000);
-    border-radius: 12px 0 0 12px; transform: translateZ(6px);
-}
+.book-spine { position: absolute; top: 0; left: -12px; width: 24px; height: 100%; background: linear-gradient(to right, #000, var(--cover-main), #000); border-radius: 12px 0 0 12px; transform: translateZ(6px); }
+.hardcover-front { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #0d0d0d; border-radius: 2px 8px 8px 2px; transform-origin: left center; transform: translateZ(12px); transform-style: preserve-3d; overflow: hidden; z-index: 15; backface-visibility: hidden; will-change: transform; }
+.cover-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; object-fit: cover; }
 
-.hardcover-front {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #0a0a0a;
-    border-radius: 2px 8px 8px 2px; transform-origin: left center; transform: translateZ(12px); transform-style: preserve-3d; 
-    border: 1px solid #1a2e25; overflow: hidden; z-index: 15; backface-visibility: hidden; will-change: transform;
-}
-.cover-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; object-fit: cover;}
-
-.front-content { 
-    position: absolute; top: 25px; bottom: 25px; left: 15px; right: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; 
-    transform: translateZ(2px); z-index: 2; padding-top: 45px; transition: opacity 0.5s ease; pointer-events: none;
-}
-.pre-title { font-family: var(--font-sans); font-size: 0.55rem; font-weight: 700; letter-spacing: 6px; color: #1a3626; margin-bottom: 10px; text-transform: uppercase; text-shadow: 1px 1px 0px rgba(255,255,255,0.9); }
-.shimmer-text { 
-    background: linear-gradient(to right, #0f291e 20%, #29543b 40%, #29543b 60%, #0f291e 80%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--font-calligraphy); 
-    font-size: clamp(2.4rem, 11vw, 3.2rem); font-weight: 600; line-height: 1.1; margin: 0; text-align: center; animation: shine 4s linear infinite;
-}
-.elegant-date { font-family: var(--font-sans); font-size: 0.75rem; color: #1a3626; margin-top: 8px; letter-spacing: 5px; font-weight: 600; text-shadow: 1px 1px 0px rgba(255,255,255,0.9); }
+.front-content { position: absolute; top: 25px; bottom: 25px; left: 15px; right: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; transform: translateZ(2px); z-index: 2; padding-top: 45px; transition: opacity 0.4s; pointer-events: none; }
+.pre-title { font-size: 0.55rem; font-weight: 700; letter-spacing: 6px; color: #1a3626; margin-bottom: 10px; text-transform: uppercase; }
+.shimmer-text { background: linear-gradient(to right, #0f291e 20%, #29543b 40%, #29543b 60%, #0f291e 80%); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-family: var(--font-calligraphy); font-size: clamp(2.4rem, 11vw, 3.2rem); font-weight: 600; text-align: center; animation: shine 4s linear infinite; }
+.elegant-date { font-size: 0.75rem; color: #1a3626; margin-top: 8px; letter-spacing: 5px; font-weight: 600; }
 @keyframes shine { to { background-position: 200% center; } }
 
-.hint-text { position: absolute; bottom: -30px; left: 0; width: 100%; text-align: center; font-size: 0.65rem; color: #fff; font-weight: 500; letter-spacing: 4px; animation: pulse 2s infinite; }
+.hint-text { position: absolute; bottom: -30px; left: 0; width: 100%; text-align: center; font-size: 0.65rem; color: #fff; letter-spacing: 4px; animation: pulse 2s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
 
 .wind-flutter { animation: rigidWindHover 3.5s ease-in-out infinite; }
 @keyframes rigidWindHover { 0%, 100% { transform: translateZ(12px) rotateY(-2deg); } 50% { transform: translateZ(12px) rotateY(-8deg); } }
 
-/* ANIMASI BUKU TERBUKA */
 .book-scene.is-open { animation: none; transform: translateX(120px) translateY(0) rotateX(5deg) rotateY(0deg); }
 .book-scene.is-open .wind-flutter { animation: none; }
 .book-scene.is-open .hardcover-front { animation: openCover 1s forwards cubic-bezier(0.645, 0.045, 0.355, 1); }
 .book-scene.is-open .page-1 { transform: translateZ(2px) rotateY(-172deg); transition-delay: 0.1s; }
-.book-scene.is-open .page-2 { transform: translateZ(2.5px) rotateY(-168deg); transition-delay: 0.2s; }
-.book-scene.is-open .page-3 { transform: translateZ(3px) rotateY(-164deg); transition-delay: 0.3s; }
+.book-scene.is-open .page-2 { transform: translateZ(2.5px) rotateY(-168deg); transition-delay: 0.15s; }
+.book-scene.is-open .page-3 { transform: translateZ(3px) rotateY(-164deg); transition-delay: 0.2s; }
 
-@keyframes openCover {
-    0% { transform: translateZ(12px) rotateY(0deg); z-index: 15; }
-    50% { z-index: 0; } 
-    100% { transform: translateZ(12px) rotateY(-175deg); z-index: 0; }
-}
+@keyframes openCover { 0% { transform: translateZ(12px) rotateY(0deg); z-index: 15; } 50% { z-index: 0; } 100% { transform: translateZ(12px) rotateY(-175deg); z-index: 0; } }
 
-.watermark { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 9999999; white-space: nowrap; transition: opacity 0.5s ease; }
-.wm-text-1 { font-family: var(--font-sans); font-size: 0.45rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; margin-right: 6px; }
+.watermark { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 9999999; white-space: nowrap; transition: opacity 0.4s; }
+.wm-text-1 { font-size: 0.45rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; margin-right: 6px; }
 .wm-text-2 { font-family: var(--font-calligraphy); font-size: 1.4rem; color: #cbd5e1; }
 
 @media screen and (max-width: 600px) { .book-scene.is-open { transform: translateX(84px) scale(0.6) rotateX(5deg) rotateY(0deg) !important; } }
 @media screen and (max-width: 380px) { .book-scene { transform: scale(0.85); } .book-scene.is-open { transform: translateX(77px) scale(0.55) rotateX(5deg) rotateY(0deg) !important; } }
 
-.inside-video-frame.fullscreen-mode {
-    position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important;
-    z-index: 999999 !important; background-color: #000 !important; border-radius: 0px !important; transition: all 0.5s ease-in-out !important; transform: none !important;
-}
+.inside-video-frame.fullscreen-mode { position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 999999 !important; background-color: #000 !important; border-radius: 0px !important; transform: none !important; }
 .inside-video-frame.fullscreen-mode video { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; border-radius: 0px !important; }

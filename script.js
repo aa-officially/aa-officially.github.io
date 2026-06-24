@@ -7,12 +7,7 @@ if (guestName) {
 
 const invVideo = document.getElementById('invitationVideo');
 const bgVideo = document.querySelector('.cover-bg-video');
-
-if (invVideo) { 
-    invVideo.playbackRate = 0.75; 
-}
-
-const coverPageElement = document.getElementById('cover-page');
+if (invVideo) { invVideo.playbackRate = 0.75; }
 
 function openInvitation() {
     const bookScene = document.getElementById('book');
@@ -24,7 +19,6 @@ function openInvitation() {
     
     if (!bookScene || bookScene.classList.contains('is-open')) return;
 
-    // TAHAP 1: Buka Buku (1 detik)
     bookScene.classList.add('is-open');
     bookScene.onclick = null; 
     
@@ -33,10 +27,10 @@ function openInvitation() {
     if (frontContent) frontContent.style.opacity = '0';
     if (watermark) watermark.style.opacity = '0';
 
-    if (bgVideo) bgVideo.pause(); // Hentikan video belakang agar tidak lag
+    if (bgVideo) bgVideo.pause();
 
     if (invVideo) {
-        invVideo.play().catch(e => console.log("Autoplay dicegah browser", e));
+        invVideo.play().catch(e => console.log("Autoplay ditangguhkan", e));
     }
 
     if (audio) {
@@ -48,17 +42,16 @@ function openInvitation() {
 
     let isIframeLoaded = false;
     let isSkipped = false;
-    let sequenceTimeout1, sequenceTimeout2;
+    let seq1, seq2;
 
     const loadIframeSPA = (e) => {
         if (e && e.type === 'touchstart') e.preventDefault(); 
         if(isIframeLoaded) return;
         isIframeLoaded = true;
 
-        clearTimeout(sequenceTimeout1);
-        clearTimeout(sequenceTimeout2);
-
-        if (watermark) watermark.remove(); // Hapus permanen watermark
+        clearTimeout(seq1);
+        clearTimeout(seq2);
+        if (watermark) watermark.remove();
 
         let iframe = document.createElement('iframe');
         const params = new URLSearchParams(window.location.search);
@@ -72,20 +65,18 @@ function openInvitation() {
         iframe.style.border = 'none';
         iframe.style.zIndex = '9999998'; 
         iframe.style.opacity = '0';
-        iframe.style.transition = 'opacity 0.8s ease';
+        iframe.style.transition = 'opacity 0.6s ease';
         document.body.appendChild(iframe);
 
         iframe.onload = () => {
             iframe.style.opacity = '1';
             setTimeout(() => {
-                // Matikan video untuk hemat RAM
                 if(invVideo) { invVideo.pause(); invVideo.removeAttribute('src'); invVideo.load(); }
                 if(bgVideo) { bgVideo.pause(); bgVideo.removeAttribute('src'); bgVideo.load(); }
-                
                 if(frameContainer) frameContainer.remove();
                 if (coverPage) coverPage.remove();
                 iframe.style.zIndex = '1'; 
-            }, 800);
+            }, 600);
         };
     };
 
@@ -95,11 +86,11 @@ function openInvitation() {
         loadIframeSPA(e);
     };
 
-    // TAHAP 2: Setelah buku terbuka (1 dtk), diam dibuku (1 dtk). Total = 2 dtk.
-    sequenceTimeout1 = setTimeout(() => {
+    // Buku terbuka 1 detik, video di dalam buku berjalan 1 detik (Total 2 detik menuju Fullscreen)
+    seq1 = setTimeout(() => {
         if (isSkipped) return;
-        
         if (!frameContainer) return;
+        
         document.body.appendChild(frameContainer);
         frameContainer.classList.add('fullscreen-mode');
 
@@ -107,12 +98,13 @@ function openInvitation() {
         if (dateArabic) dateArabic.style.display = 'none';
         if (coverPage) coverPage.style.display = 'none';
 
-        // TAHAP 3: Klik langsung skip, atau tunggu 1 detik berjalan fullscreen
+        // Klik layar saat fullscreen langsung skip tanpa delay
         frameContainer.style.cursor = 'pointer';
         frameContainer.addEventListener('click', skipAction);
         frameContainer.addEventListener('touchstart', skipAction, {passive: false});
 
-        sequenceTimeout2 = setTimeout(() => {
+        // Video berjalan fullscreen selama 1 detik sebelum auto-load
+        seq2 = setTimeout(() => {
             if(!isSkipped) loadIframeSPA();
         }, 1000); 
 
