@@ -164,8 +164,11 @@ function openInvitation() {
             if(p) p.style.display = 'none';
         });
         
+        // PERBAIKAN FULLSCREEN: Menghapus batas melengkung dan memastikan video terentang penuh
         frameContainer.style.position = 'fixed';
         frameContainer.style.margin = '0';
+        frameContainer.style.padding = '0';
+        frameContainer.style.borderRadius = '0'; // Hilangkan border radius
         frameContainer.style.top = rect.top + 'px';
         frameContainer.style.left = rect.left + 'px';
         frameContainer.style.width = rect.width + 'px';
@@ -173,9 +176,14 @@ function openInvitation() {
         frameContainer.style.zIndex = '999999';
         frameContainer.style.backgroundColor = '#050505';
         
-        /* PERBAIKAN: Ubah jadi cover secara mutlak agar fullscreen tanpa batas hitam! */
         if (invVideo) {
+            invVideo.style.position = 'absolute';
+            invVideo.style.top = '0';
+            invVideo.style.left = '0';
+            invVideo.style.width = '100%';
+            invVideo.style.height = '100%';
             invVideo.style.objectFit = 'cover'; 
+            invVideo.style.borderRadius = '0';
         }
         void frameContainer.offsetWidth; 
         
@@ -183,7 +191,7 @@ function openInvitation() {
         frameContainer.style.top = '0px';
         frameContainer.style.left = '0px';
         frameContainer.style.width = '100vw';
-        frameContainer.style.height = '100dvh';
+        frameContainer.style.height = window.innerHeight + 'px'; // Gunakan innerHeight yang mutlak di semua HP
         
         setTimeout(() => {
             if (audio) {

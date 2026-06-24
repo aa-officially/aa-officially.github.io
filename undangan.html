@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    
     <title>The Wedding of Aulia & Amar</title>
     <link rel="icon" type="image/png" href="icon.png">
     
@@ -38,7 +40,6 @@
             background-color: var(--dark-bg); 
             color: var(--text-main); font-family: var(--font-sans); overflow-x: hidden; 
             -webkit-font-smoothing: antialiased;
-            /* PERBAIKAN: Animasi load agar tampilan yang delay tertutupi efek fade in halus */
             animation: smoothLoad 1.5s ease-out forwards;
         }
 
@@ -267,7 +268,15 @@
         }
         .atm-card::after { content: ''; position: absolute; top: 20px; right: 20px; width: 40px; height: 30px; background: url('https://img.icons8.com/color/48/sim-card-chip.png') center/contain no-repeat; opacity: 0.8; }
         .bank-logo { height: 26px; margin-bottom: 18px; display: block; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 4px; }
-        .bank-rek { font-family: monospace; font-size: clamp(1.1rem, 6vw, 1.35rem); font-weight: 700; letter-spacing: 2px; color: #fff; margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); }
+        
+        /* PERBAIKAN REKENING BANK: */
+        .bank-rek { 
+            font-family: monospace; font-size: clamp(1.1rem, 6vw, 1.35rem); font-weight: 700; letter-spacing: 2px; 
+            color: #ffffff !important; 
+            text-decoration: none !important;
+            margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
+        }
+        
         .bank-name { font-size: 0.75rem; color: #cbd5e1; text-transform: uppercase; margin-bottom: 15px; }
         .btn-copy-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 10px; border-radius: 12px; font-size: 0.75rem; cursor: pointer; transition: 0.3s; width: 100%; font-weight: 600; }
         .btn-copy-card:hover { background: #fff; color: #000; }
@@ -545,8 +554,7 @@
             </form>
 
             <div class="chat-board" id="papanPesan">
-                <!-- Komentar dari Google Sheet akan muncul di sini -->
-            </div>
+                </div>
         </div>
 
         <div class="footer-sec" data-aos="fade-in">
@@ -567,7 +575,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // PERBAIKAN: durasi dipercepat agar elemen tidak tertahan terlalu lama saat di-scroll
         AOS.init({ duration: 900, once: true, offset: 50 });
 
         const navEntries = performance.getEntriesByType("navigation");
@@ -683,7 +690,6 @@
             document.getElementById('selectedGifUrl').value = img.src;
         }
 
-        // --- GOOGLE SHEETS CONNECTION ---
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxwxqJlZGe4DS6P_PxuRy_-l5mFVaFBUMYu3gjs9hyz0T0imXElko7WNYP_3hdAi4oUJg/exec';
 
         function loadUcapan() {

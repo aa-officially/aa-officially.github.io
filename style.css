@@ -143,7 +143,7 @@ body {
     animation: floatBook 6s ease-in-out infinite; 
     filter: drop-shadow(0 30px 25px rgba(0,0,0,0.9));
     transition: transform 1.1s cubic-bezier(0.645, 0.045, 0.355, 1);
-    will-change: transform; /* Optimalisasi performa render HP */
+    will-change: transform; 
 }
 @keyframes floatBook { 
     0%, 100% { transform: translateY(0) rotateX(12deg) rotateY(-8deg); } 
@@ -281,13 +281,21 @@ body {
 .wm-text-1 { font-family: var(--font-sans); font-size: 0.45rem; letter-spacing: 4px; color: rgba(255, 255, 255, 0.7); text-transform: uppercase; display: inline-block; vertical-align: middle; margin-right: 6px; }
 .wm-text-2 { font-family: var(--font-calligraphy); font-size: 1.4rem; color: #cbd5e1; letter-spacing: 1px; font-weight: 300; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); display: inline-block; vertical-align: middle; }
 
+/* PERBAIKAN: Memaksa warna font di rekening bank tetap putih */
+.bank-rek { 
+    font-family: monospace; font-size: clamp(1.1rem, 6vw, 1.35rem); font-weight: 700; letter-spacing: 2px; 
+    color: #ffffff !important; 
+    text-decoration: none !important;
+    margin-bottom: 6px; text-shadow: 0 2px 5px rgba(0,0,0,0.8); 
+}
+
 /* =========================================
-   PENGATURAN RESPONSIVITAS BUKU DI HP
+   PENGATURAN RESPONSIVITAS BUKU DI HP (Android Fix)
+   Menggunakan hitungan pixel absolute (px) agar Android tidak salah kalkulasi
    ========================================= */
 @media screen and (max-width: 600px) {
     .book-scene.is-open {
-        /* PERBAIKAN: Menambahkan translateX(50%) agar buku yang terbuka 2 halaman tidak terpotong di kiri */
-        transform: scale(0.6) translateX(50%) rotateX(5deg) rotateY(0deg) !important;
+        transform: translateX(110px) scale(0.6) rotateX(5deg) rotateY(0deg) !important;
     }
 }
 
@@ -296,7 +304,7 @@ body {
         transform: scale(0.85); 
     }
     .book-scene.is-open {
-        transform: scale(0.55) translateX(50%) rotateX(5deg) rotateY(0deg) !important; 
+        transform: translateX(95px) scale(0.55) rotateX(5deg) rotateY(0deg) !important; 
     }
 }
 
@@ -305,6 +313,6 @@ body {
         transform: scale(0.75);
     }
     .book-scene.is-open {
-        transform: scale(0.48) translateX(50%) rotateX(5deg) rotateY(0deg) !important;
+        transform: translateX(85px) scale(0.48) rotateX(5deg) rotateY(0deg) !important;
     }
 }
